@@ -1,0 +1,16 @@
+<package name="xtwolotnum"
+        version="1.0.0" 
+	id="package_xtwolotnum" 
+	descrip="sets lot numbers to wo numbers"
+	developer="rshapiro" 
+	updater="2.2.5" >
+<pkgnotes>
+	Custom Professional Services - modified auto create lotserial
+</pkgnotes>
+    
+<loadappscript    file="client/scripts/assignLotSerial.js"  name="assignLotSerial"  />
+<loadappscript    file="client/scripts/createLotSerial.js"  name ="createLotSerial"  />
+ 
+<createfunction    file="dbscripts/functions/autocreatels.sql"  name="autocreatels"  />
+
+</package>
