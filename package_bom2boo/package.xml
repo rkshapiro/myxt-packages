@@ -1,0 +1,18 @@
+<package name="_bom2boo"
+        version="1.0.0" 
+	id="package_bom2boo" 
+	descrip="ASSET: BOM conversion"
+	developer="rshapiro" 
+	updater="2.2.5" >
+<pkgnotes>
+	Custom Professional Services - BOM conversion
+</pkgnotes>
+
+<createfunction    file="dbscripts/functions/createnewbom.sql"  name="createnewbom"  />
+<createfunction    file="dbscripts/functions/createnewitem.sql"  name="createnewitem"  />
+<createfunction    file="dbscripts/functions/convertbom2boo.sql"  name="convertbom2boo"  />
+<createfunction    file="dbscripts/functions/copyitem.sql"  name="copyitem"  />
+
+<loadmetasql    file="client/metasql/bom2boo-batchbom2boo.mql"  grade = "10"  />
+
+</package>

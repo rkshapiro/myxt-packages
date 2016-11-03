@@ -1,0 +1,22 @@
+﻿-- Group: bom2boo
+-- Name:  batchbom2boo
+-- Notes: 
+-- calls to functions to convert a BOM to a new item with a BOM and a Routind
+
+SELECT _bom2boo.createnewitem(
+    <text>, -- new kit item number
+    <integer>  -- kit to convert item_id
+);
+
+SELECT _bom2boo.createnewbom(
+    <text>, -- new kit item number
+    <text>,  -- item number for consumable 
+	<text>  -- item number for durable 
+);
+
+SELECT _bom2boo.convertbom2boo(
+    <integer>,  -- new consumable or durable item_id
+    <integer>,   -- kit to convert item_id
+    <text>      -- classcode pattern C- or D-
+);
+
