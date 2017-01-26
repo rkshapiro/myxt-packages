@@ -1,0 +1,15 @@
+<package name="_jobtrack"
+        version="1.0.0" 
+	id="package_jobtrack" 
+	descrip="This is a custom package created for Jewel-Craft"
+	developer="rshapiro" 
+	updater="2.2.5" >
+<pkgnotes>
+	Custom Professional Services - Supports integration of xTuple with JobTrack
+</pkgnotes>
+
+<createfunction	file="dbscripts/CREATE_jobtrack_fn_inventoryadjustment.sql"  name="inventoryadjustment"  />
+
+<createview 	file="dbscripts/CREATE_jobtrack_vw_xt_item.sql"  name="xt_item"  />
+
+</package>
