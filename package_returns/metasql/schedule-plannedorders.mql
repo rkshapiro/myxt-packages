@@ -1,0 +1,141 @@
+-- Group: schedule
+-- Name:  plannedorders
+-- Notes: used by dpsPlannedOrdersByItem, dspPlannedOrdersByPlannerCode, dspPlannedRevenueExpensesByPlannerCode. Altered by ASSET to include item class code.
+--        20150211:rek Orbit 803 - adding RA, WIP indicators
+--		  20150302:rek modified for revised _return.durable_planord_return_items_list table
+SELECT *,
+       plorevenue - plocost AS profit,
+       formatMoney(plorevenue - plocost) AS f_profit,
+       CASE WHEN plocost > plorevenue THEN 'error'
+       END AS plorevenue_xtforegroundrole,
+       CASE WHEN (planord_firm) THEN 'emphasis'
+       END AS qtforegroundrole,
+       'qty' AS planord_qty_xtnumericrole,
+       'curr' AS plocost_xtnumericrole,
+       'curr' AS plorevenue_xtnumericrole,
+       'curr' AS profit_xtnumericrole,
+       0 AS plocost_xttotalrole,
+       0 AS plorevenue_xttotalrole,
+       0 AS profit_xttotalrole
+FROM (
+SELECT planord_id, planord_itemsite_id,
+       planord.*,
+       formatPloNumber(planord_id) AS ordernum,
+       CASE WHEN (planord_type='P') THEN 'P/O'
+            WHEN (planord_type='W') THEN 'W/O'
+            WHEN (planord_type='T') THEN 'T/O'
+            ELSE '?'
+       END AS ordtype,
+       formatDate(planord.planord_duedate) AS f_duedate,
+       formatDate(planord_startdate) AS f_startdate,
+       formatQty(planord_qty) AS f_qty,
+       formatboolYN(planord_firm) AS f_firm,
+       whsinfo.warehous_code AS warehous_code,
+       supplywhsinfo.warehous_code AS supply_warehous_code,
+       item.item_number,
+       (item_descrip1 || ' ' || item_descrip2) AS item_descrip,
+       firstline(planord_comments) AS comments,
+       uom_name,
+<? if exists("useActualCost") ?>
+       (actcost(item_id) * planord_qty)
+<? elseif exists("useStandardCost") ?>
+       (stdcost(item_id) * planord_qty)
+<? else ?>
+       0
+<? endif ?> AS plocost,
+<? if exists("useListPrice") ?>
+       (item_listprice * planord_qty)
+<? elseif exists("useAveragePrice") ?>
+       (CASE WHEN(averageSalesPrice(itemsite.itemsite_id,
+                               <? value("startEvalDate") ?>,
+                               <? value("endEvalDate") ?>)=0)
+                               THEN item_listprice
+             ELSE averageSalesPrice(itemsite.itemsite_id,
+                               <? value("startEvalDate") ?>,
+                               <? value("endEvalDate") ?>)
+             END * planord_qty)
+<? else ?>
+        0
+<? endif ?> AS plorevenue,
+<? if exists("useActualCost") ?>
+       formatMoney(actcost(item_id) * planord_qty)
+<? elseif exists("useStandardCost") ?>
+       formatMoney(stdcost(item_id) * planord_qty)
+<? else ?>
+       formatMoney(0)
+<? endif ?> AS f_plocost,
+<? if exists("useListPrice") ?>
+       formatMoney(item_listprice * planord_qty)
+<? elseif exists("useAveragePrice") ?>
+       formatMoney(CASE WHEN(averageSalesPrice(itemsite.itemsite_id,
+                                               <? value("startEvalDate") ?>,
+                                               <? value("endEvalDate") ?>)=0)
+                                THEN item_listprice
+                        ELSE averageSalesPrice(itemsite.itemsite_id,
+                                               <? value("startEvalDate") ?>,
+                                               <? value("endEvalDate") ?>)
+                   END * planord_qty)
+<? else ?>
+        formatMoney(0)
+<? endif ?> AS f_plorevenue,
+(classcode_code || '-' || classcode_descrip) AS itemClasscode,
+CASE 
+	WHEN wip.onhand_qty > 0 Then 'Yes'
+	
+END as WIP,
+CASE 
+	WHEN qty_ret > 0 Then 'Yes'
+	
+END as Ret
+FROM planord JOIN itemsite ON (planord_itemsite_id=itemsite.itemsite_id)
+             JOIN whsinfo ON (itemsite.itemsite_warehous_id=whsinfo.warehous_id)
+             JOIN item ON (itemsite.itemsite_item_id=item_id)
+	     JOIN classcode ON item_classcode_id=classcode_id 
+             JOIN uom ON (item_inv_uom_id=uom_id)
+             LEFT OUTER JOIN itemsite supplyitemsite ON (planord_supply_itemsite_id=supplyitemsite.itemsite_id)
+             LEFT OUTER JOIN whsinfo supplywhsinfo ON (supplyitemsite.itemsite_warehous_id=supplywhsinfo.warehous_id)
+	     LEFT OUTER JOIN 
+		(SELECT item_number, SUM(onhand_qty) as onhand_qty 
+		FROM _wms.wip
+		GROUP BY item_number
+		) wip ON (item.item_number = wip.item_number)
+	     LEFT OUTER JOIN 
+		(
+			select child_number,planord_duedate,sum(qty_ret) as qty_ret	
+			FROM _return.durable_planord_return_items_list
+			WHERE xtindentrole = 0 
+			GROUP BY child_number,planord_duedate			
+		) dur ON
+(item.item_number = dur.child_number AND planord.planord_duedate = dur.planord_duedate   )
+WHERE ((true)
+<? if exists("type_list") ?>
+   AND planord_type IN (
+<? foreach("type_list") ?>
+  <? if not isfirst("type_list") ?>
+    ,
+  <? endif ?>
+  <? value("type_list") ?>
+<? endforeach ?>
+  )
+<? endif ?>
+<? if exists("item_id") ?>
+   AND (itemsite.itemsite_item_id=<? value("item_id") ?>)
+<? endif ?>
+<? if exists("plancode_id") ?>
+   AND (itemsite.itemsite_plancode_id=<? value("plancode_id") ?>)
+<? elseif exists("plancode_pattern") ?>
+   AND (itemsite.itemsite_plancode_id IN (SELECT plancode_id
+                                          FROM plancode
+                                          WHERE (plancode_code ~ <? value("plancode_pattern") ?>)))
+<? endif ?>
+<? if exists("warehous_id") ?>
+   AND (itemsite.itemsite_warehous_id=<? value("warehous_id") ?>)
+<? endif ?>
+<? if exists("startDate") ?>
+   AND (planord_duedate BETWEEN <? value("startDate") ?> AND <? value("endDate") ?>)
+<? endif ?>
+<? if exists("soldOnly") ?>
+   AND (item_sold)
+<? endif ?>
+ ) ) AS data
+ORDER BY planord_duedate, item_number;

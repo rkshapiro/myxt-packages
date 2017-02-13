@@ -1,0 +1,5 @@
+-- Group: WMS
+-- Name:  clear_wave_batch
+-- Notes: Clear out all records from _wms.wavebatch that are over 24 hours old.
+DELETE FROM _wms.wavebatch
+WHERE wavebatch_created < NOW() - '1 day'::INTERVAL;

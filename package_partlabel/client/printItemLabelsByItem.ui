@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <comment>This file is part of the xTuple ERP: PostBooks Edition, a free and
+open source Enterprise Resource Planning software suite,
+Copyright (c) 1999-2014 by OpenMFG LLC, d/b/a xTuple.
+It is licensed to you under the Common Public Attribution License
+version 1.0, the full text of which (including xTuple-specific Exhibits)
+is available at www.xtuple.com/CPAL.  By using this software, you agree
+to be bound by its terms.</comment>
+ <class>printItemLabelsByItem</class>
+ <widget class="QDialog" name="printItemLabelsByItem">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>508</width>
+    <height>183</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Print Part Label by Item</string>
+  </property>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>350</x>
+     <y>20</y>
+     <width>95</width>
+     <height>141</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="_7">
+    <property name="spacing">
+     <number>5</number>
+    </property>
+    <item>
+     <widget class="QPushButton" name="_close">
+      <property name="text">
+       <string>Cancel</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="_print">
+      <property name="text">
+       <string>&amp;Print</string>
+      </property>
+      <property name="default">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <spacer name="Spacer38">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeType">
+       <enum>QSizePolicy::Expanding</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+   </layout>
+  </widget>
+  <widget class="ItemCluster" name="_item">
+   <property name="geometry">
+    <rect>
+     <x>21</x>
+     <y>21</y>
+     <width>311</width>
+     <height>66</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>40</width>
+     <height>40</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QLabel" name="_reportlab">
+   <property name="geometry">
+    <rect>
+     <x>22</x>
+     <y>102</y>
+     <width>43</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Report:</string>
+   </property>
+  </widget>
+  <widget class="XComboBox" name="_report">
+   <property name="geometry">
+    <rect>
+     <x>72</x>
+     <y>100</y>
+     <width>131</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>ItemCluster</class>
+   <extends></extends>
+   <header>itemcluster.h</header>
+  </customwidget>
+  <customwidget>
+   <class>XComboBox</class>
+   <extends></extends>
+   <header>xcombobox.h</header>
+  </customwidget>
+ </customwidgets>
+ <includes>
+  <include location="global">parameter.h</include>
+ </includes>
+ <resources/>
+ <connections/>
+</ui>

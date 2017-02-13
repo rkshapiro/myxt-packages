@@ -1,0 +1,12 @@
+-- Group: RETURN 
+-- Name:  returns_list
+-- Notes: 20141029:rek Orbit 706 - used by Item Return screen and report
+--        20150211:rek Orbit 803 - no returns prior to current date
+--	  20150219:rek Orbit 803 - go back 30 days
+SELECT * FROM returns_list
+where item_number = (<? value("item_number") ?>)
+and return_date >= current_date  - 30
+<? if exists("cutoff_date") ?>
+  and return_date <= (<? value("cutoff_date") ?>)
+<? endif ?>
+ ORDER BY return_date

@@ -1,0 +1,63 @@
+-- Group: RETURN
+-- Name:  detail_logistics
+-- Notes: used by Logistics search screen. Updated to include cohead status. Properly pulls Closed records if requested.
+SELECT * FROM (
+	SELECT DISTINCT cohead_id, cust_id,
+       		cohead.*,
+		cust_number, cust_name,
+		coitem_scheddate,   
+		CASE
+         		WHEN ( (SELECT COUNT(*)
+                   		FROM coitem
+                  		WHERE ((coitem_status<>'X') AND (coitem_cohead_id=cohead_id))) = 0) THEN 'No lines'
+         		WHEN ( ( (SELECT COUNT(*)
+                     		  FROM coitem
+                    		  WHERE ((coitem_status='C')
+                      		  AND (coitem_cohead_id=cohead_id))) > 0)
+                      		  AND ( (SELECT COUNT(*)
+                               	  	 FROM coitem
+                              		 WHERE ((coitem_status NOT IN ('C','X'))
+                                	 AND (coitem_cohead_id=cohead_id))) = 0) ) THEN 'Closed'
+         		WHEN ( ( (SELECT COUNT(*)
+                     		  FROM coitem
+                    		  WHERE ((coitem_status='C')
+                      		  AND (coitem_cohead_id=cohead_id))) = 0)
+                      		  AND ( (SELECT COUNT(*)
+                               	  	 FROM coitem
+                              	  	 WHERE ((coitem_status NOT IN ('C','X'))
+                                	 AND (coitem_cohead_id=cohead_id))) > 0) ) THEN 'Open'
+         		ELSE 'Partial'
+       		END AS order_status
+	FROM cohead
+   		JOIN coitem ON coitem.coitem_cohead_id = cohead.cohead_id
+   		JOIN itemsite ON coitem.coitem_itemsite_id = itemsite.itemsite_id
+   		JOIN item ON itemsite.itemsite_item_id = item.item_id
+   		JOIN crmacct ON cohead.cohead_cust_id = crmacct.crmacct_cust_id
+   		JOIN custinfo ON cohead.cohead_cust_id = custinfo.cust_id
+   		JOIN classcode ON item.item_classcode_id = classcode.classcode_id
+   		LEFT JOIN docass ON cohead.cohead_id = docass.docass_source_id
+	WHERE 
+   		item.item_type <> 'K'::bpchar 
+   		AND crmacct.crmacct_number <> 'USDED-I3'::text 
+   		AND classcode.classcode_code <> 'DROPSHIP'::text 
+   		AND itemsite.itemsite_warehous_id <> 51 
+   		AND (docass.docass_id IS NULL OR docass.docass_target_type <> 'INCDT'::text) 
+ 		<? if exists("cust_id") ?>
+     			AND  (cohead_cust_id=<? value("cust_id") ?>)
+   		<? endif ?>
+   		<? if exists("ShipVia") ?>
+     			AND  (cohead_shipvia=<? value("ShipVia") ?>)
+   		<? endif ?>
+   		<? if exists("startdate") ?>
+     			AND  coitem_scheddate BETWEEN <? value("startdate") ?> AND <? value("enddate") ?>
+   		<? endif ?>
+	ORDER BY cohead_number
+) AS a
+WHERE (a.order_status = 'Open'::bpchar
+       OR a.order_status = 'Partial'::bpchar
+       <? if exists("include_closed") ?>
+       		OR a.order_status = 'Closed'::bpchar
+       <? endif ?>
+)
+
+  

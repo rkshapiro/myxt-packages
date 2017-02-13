@@ -1,0 +1,25 @@
+<package name="xtpartlabel"
+        version="1.0.0" 
+	id="package_partlabel" 
+	descrip="This is a custom screen that prints label forms by item."
+	developer="rshapiro" 
+	updater="2.2.5" >
+<pkgnotes>
+	Custom Professional Services - custom screen to print label forms by item
+    Screen appears on the Products > Custom menu
+    Grant customPrintPartLabel privilege to user roles that need access
+    Add partlabel report to Label Forms list in System > Setup
+</pkgnotes>
+
+<loadreport		file="client/partlabel_report.xml"  />
+<loadappui    file="client/printItemLabelsByItem.ui"  name="printItemLabelsByItem"  />
+<loadappscript    file="client/printItemLabelsByItem.js"  name="printItemLabelsByItem"  />
+
+<loadcmd name="PrintPartLabel" title="Print Part Label by Item"
+         privname="PrintPartLabel" module="Products"
+         executable="!customuiform">
+        Sample Screen Custom Command Description - view mode
+        <arg value="uiform=printItemLabelsByItem" />
+</loadcmd>
+
+</package>

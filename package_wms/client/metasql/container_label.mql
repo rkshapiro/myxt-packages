@@ -1,0 +1,5 @@
+-- Group: WMS
+-- Name:  container_label
+-- Notes: AAA container label report detail. Modified for StepLogic to pull out items based on wave number.
+select *,formatdate(coitem_scheddate) as f_scheddate 
+from _wms.getwaveitems(<? value("wave_number") ?>)

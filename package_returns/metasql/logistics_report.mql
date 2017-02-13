@@ -1,0 +1,51 @@
+-- Group: RETURN
+-- Name:  logistics_report
+-- Notes: used by logistics_report. Updated to include the "include_closed" input parameter (so the user can choose whether to display closed orders). Has a sort order fix for ORBIT 482
+SELECT _date, 
+addr_sort, 
+cust_name AS customer, 
+cust_number, 
+cust_id, 
+CASE
+WHEN cohead_holdtype = 'P'::bpchar THEN '[P]'::text
+ELSE '_'::text
+END AS holdtype, 
+(CASE
+ WHEN _name = _addr1 THEN ''::text
+ ELSE replace(_name, ','::text, ''::text)
+ END || '  '::text) || btrim((((((((((_addr1 || '  '::text) || _addr2) || '  '::text) || _addr3) || '  '::text) || city) || ', '::text) || state) || '  '::text) || zip) AS addr, 
+_order_ra, 
+_shipvia, 
+replace(_name, ','::text, ''::text) || ' Total: '::text AS _name, 
+sum(CASE
+    WHEN _in_out = 'Deliver'::text THEN _boxes::integer
+    ELSE 0
+    END) AS _deliver_boxes, 
+sum(CASE
+    WHEN _in_out = 'Return'::text THEN _boxes::integer
+    ELSE 0
+    END) AS _return_boxes,
+CASE
+WHEN <? value("customer") ?> IS NULL THEN
+'All Customers'
+ELSE
+<? value("customer") ?>::text
+END AS custparam,
+CASE
+WHEN <? value("ShipVia") ?> IS NULL THEN
+'All Shipvia'
+ELSE
+<? value("ShipVia") ?>::text
+END AS shipparam
+FROM vw_logistics
+WHERE _date BETWEEN <? value("startdate") ?> AND <? value("enddate") ?>
+AND _boxes > 0 
+AND (cust_name = <? value("customer") ?> or <? value("customer") ?> is null)
+AND (_shipvia  ~ <? value("ShipVia") ?> or <? value("ShipVia") ?> is null)
+AND (order_status='Open' OR order_status='Partial' 
+	<? if exists("include_closed") ?>
+	OR order_status='Closed'
+	<? endif ?>
+     )
+GROUP BY _date, _in_out, cohead_holdtype, addr_sort, cust_id, cust_name, _name, _addr1, _addr2, _addr3, city, state, zip, _order_ra, _shipvia, cust_number
+ORDER BY _date,cust_number,_name

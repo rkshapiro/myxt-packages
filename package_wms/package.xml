@@ -1,0 +1,42 @@
+<package name="_wms"
+        version="1.0.0" 
+	id="package_wms" 
+	descrip="wms integration"
+	developer="rshapiro" 
+	updater="2.2.5" >
+<pkgnotes>
+	Custom - Integration with WMS used by Steplogic
+</pkgnotes>
+
+<script 	file="dbscripts/misc/DELETE_wms_old.sql"  onerror="ignore"/>
+<script 	file="dbscripts/misc/CREATE_TYPE_orderitems.sql"  onerror="ignore"/>
+
+<createfunction    file="dbscripts/functions/CREATE_fn_getwaveitems.sql"  name="getwaveitems"  />
+<createfunction    file="dbscripts/functions/CREATE_fn_importinventory.sql"  name="importinventory"  />
+<createfunction    file="dbscripts/functions/CREATE_fn_insertwavebatch.sql"  name="insertwavebatch"  />
+<createfunction    file="dbscripts/functions/CREATE_fn_inventoryadjustment1.sql"  name="inventoryadjustment"  />
+<createfunction    file="dbscripts/functions/CREATE_fn_inventoryadjustment2.sql"  name="inventoryadjustment"  />
+<createfunction    file="dbscripts/functions/CREATE_fn_issuesalesline.sql"  name="issuesalesline"  />
+<createfunction    file="dbscripts/functions/CREATE_fn_itemcomponent.sql"  name="itemcomponent"  />
+<createfunction    file="dbscripts/functions/CREATE_fn_purchasereceipt.sql"  name="purchasereceipt"  />
+<createfunction    file="dbscripts/functions/CREATE_fn_returnline.sql"  name="returnline"  />
+<createfunction    file="dbscripts/functions/CREATE_fn_returnreceipt.sql"  name="returnreceipt"  />
+<createfunction    file="dbscripts/functions/CREATE_fn_scrapadjustment.sql"  name="scrapadjustment"  />
+
+<createtable 	file="dbscripts/tables/CREATE_tbl_invimport.sql"  name="invimport"  />
+<createtable 	file="dbscripts/tables/CREATE_tbl_wavebatch.sql"  name="wavebatch"  />
+<createtable 	file="dbscripts/tables/CREATE_tbl_wip.sql"  name="wip"  />
+
+<createview 	file="dbscripts/views/CREATE_vw_coitem_raitem.sql"  name="coitem_raitem"  />
+<createview 	file="dbscripts/views/CREATE_vw_purchaseorderline.sql"  name="purchaseorderline"  />
+<createview 	file="dbscripts/views/CREATE_vw_returnline.sql"  name="returnline"  />
+<createview 	file="dbscripts/views/CREATE_vw_salesorder_open.sql"  name="salesorder_open"  />
+<createview 	file="dbscripts/views/CREATE_vw_shipstatus.sql"  name="shipstatus"  />
+<createview 	file="dbscripts/views/CREATE_vw_v_item.sql"  name="v_item"  />
+
+<loadmetasql	file="client/metasql/clear_wave_batch.mql"  grade="10"  />
+<loadmetasql	file="client/metasql/container_label.mql"  grade="10"  />
+
+<loadreport		file="client/reports/containerlabel.xml"  grade="10"  />
+
+</package>

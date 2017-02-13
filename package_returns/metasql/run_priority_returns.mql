@@ -1,0 +1,4 @@
+-- Group: RETURN
+-- Name:  run_priority_returns
+-- Notes: 20150226:rek Orbit 830. This metaSql runs the function _asset.priority_returns() and should be sheduled after the Run_durable_planned_order_returns
+SELECT * FROM _asset.priority_returns();

@@ -1,0 +1,22 @@
+-- Group: RETURN
+-- Name:  RA_detail
+-- Notes: 20141024:rek Orbit 706 used in ReturnsByItem screen and report
+--        20150302:rek remove classcode 111 from rows
+--        20150303:rek remove classcode 112
+
+SELECT * FROM getitemreturns(<? value("item_number") ?>
+<? if exists("cutoff_date") ?>
+  ,<? value("cutoff_date") ?>
+<? endif ?>)
+WHERE item_classcode_id NOT IN (111,112) 
+<? if exists("rad") ?>
+  AND returned > 0 
+  <? if exists("top") ?>
+      AND xtindentrole = 0
+  <? endif ?>
+<? else ?>
+  <? if exists("top") ?>
+      AND xtindentrole = 0
+  <? endif ?>
+<? endif ?>
+ORDER By index

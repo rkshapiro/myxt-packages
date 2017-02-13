@@ -1,0 +1,4 @@
+-- Group: RETURN
+-- Name:  Run_durable_planned_order_returns
+-- Notes: 20150211:rek Orbot 803. Run the function durable_planned_order_returns() on a schedule basis.
+SELECT * FROM durable_planned_order_returns();

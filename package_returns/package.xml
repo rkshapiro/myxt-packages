@@ -1,0 +1,216 @@
+<package name="_return"
+        version="1.0.0" 
+	id="package_returns" 
+	descrip="ASSET customizations for managing the return of leased product"
+	developer="rshapiro" 
+	updater="2.2.5" >
+<pkgnotes>
+	Custom Professional Services - managing the return of leased product
+    This package also includes Planned Orders report enhancements
+</pkgnotes>
+
+<prerequisite type="Query" name="Checking for MODULES FOR LEASE cost category" >
+  <query>
+    SELECT count(*) = 1 
+    FROM public.costcat
+    WHERE costcat_code = 'MODULES FOR LEASE';
+  </query>
+  <message>
+    The MODULES FOR LEASE cost category is not defined
+  </message>
+</prerequisite>
+
+<prerequisite type="Query" name="Checking for RETURN DATE characteristic" >
+  <query>
+    SELECT count(*) = 1 
+    FROM public.char
+    WHERE char_name = 'RETURN DATE';
+  </query>
+  <message>
+    The RETURN DATE characteristic is not defined
+  </message>
+</prerequisite>
+
+<prerequisite type="Query" name="Checking for RENTAL PERIOD characteristic" >
+  <query>
+    SELECT count(*) = 1 
+    FROM public.char
+    WHERE char_name = 'RENTAL PERIOD'
+  </query>
+  <message>
+    The RENTAL PERIOD characteristic is not defined
+  </message>
+</prerequisite>
+ 
+<prerequisite type="Query" name="Checking for CannotConvertSOtoRA event type" >
+  <query>
+    SELECT count(*) = 1 
+    FROM public.evnttype
+    WHERE evnttype_name = 'CannotConvertSOtoRA';
+  </query>
+  <message>
+    The CannotConvertSOtoRA event type is not defined
+  </message>
+</prerequisite>
+
+<prerequisite type="Query" name="Checking for DuplicateRANumber event type" >
+  <query>
+    SELECT count(*) = 1 
+    FROM public.evnttype
+    WHERE evnttype_name = 'DuplicateRANumber';
+  </query>
+  <message>
+    The DuplicateRANumber event type is not defined
+  </message>
+</prerequisite>
+
+<prerequisite type="Query" name="Checking for DISASSEMBLY site" >
+  <query>
+    SELECT count(*) = 1 
+    FROM public.whsinfo
+    WHERE warehous_code = 'DISASSEMBLY';
+  </query>
+  <message>
+    The DISASSEMBLY site is not defined
+  </message>
+</prerequisite>
+
+<prerequisite type="Query" name="Checking for END_OF_LEASE reason code" >
+  <query>
+    SELECT count(*) = 1 
+    FROM public.rsncode
+    WHERE rsncode_code = 'END_OF_LEASE';
+  </query>
+  <message>
+    The END_OF_LEASE reason code is not defined
+  </message>
+</prerequisite>
+
+<script 	file="dbscripts/DELETE_asset_old.sql" />
+<script 	file="dbscripts/CREATE_TYPE_return_items_list.sql"  onerror="ignore"/>
+<script 	file="dbscripts/CREATE_TYPE_returnaging.sql"  onerror="ignore"/>
+<script     file="dbscripts/CREATE_privilege.sql" />
+
+<createtable 	file="tables/CREATE_tbl_matlistcomment.sql"  name="matlistcomment"  />
+
+<createfunction	file="functions/CREATE_fn_createraforso.sql"  name="createraforso"  />
+<createfunction	file="functions/CREATE_fn_getitemreturns.sql"  name="getitemreturns"  />
+<createfunction	file="functions/CREATE_fn_getreturndate.sql"  name="getreturndate"  />
+<createfunction	file="functions/CREATE_fn_returnaging.sql"  name="returnaging"  />
+<createfunction	file="functions/CREATE_fn_reverse_bom.sql"  name="reverse_bom"  />
+<createfunction	file="functions/CREATE_fn_islastcomment.sql"  name="islastcomment"  />
+<createfunction	file="functions/CREATE_fn_priority_returns.sql"  name="priority_returns"  />
+<createfunction	file="functions/CREATE_fn_durable_planned_order_returns.sql"  name="durable_planned_order_returns"  />
+
+<createview 	file="views/CREATE_vw_salesline_rental_period.sql"  name="salesline_rental_period"  />
+<createview 	file="views/CREATE_vw_salesline_return_date.sql"  name="salesline_return_date"  />
+<createview 	file="views/CREATE_vw_salesline_return_date_override.sql"  name="salesline_return_date_override"  />
+<createview 	file="views/CREATE_vw_coitem_raitem.sql"  name="coitem_raitem"  />
+<createview 	file="views/CREATE_vw_vw_logistics.sql"  name="vw_logistics"  />
+<createview 	file="views/CREATE_vw_order_history.sql"  name="order_history"  />
+<createview 	file="views/CREATE_vw_return_list.sql"  name="returns_list"  />
+ 
+<loadmetasql file="metasql/CreateRAforSO.mql" />
+<loadmetasql file="metasql/delivery_return_notification.mql" />
+<loadmetasql file="metasql/detail_logistics.mql" />
+<loadmetasql file="metasql/logistics_report.mql" />
+<loadmetasql file="metasql/QRY_returns_summary_report.mql" />
+<loadmetasql file="metasql/RA_detail.mql" />
+<loadmetasql file="metasql/returns_list.mql" />
+<loadmetasql file="metasql/Run_durable_planned_order_returns.mql" />
+<loadmetasql file="metasql/run_priority_returns.mql" />
+<loadmetasql file="metasql/schedule-plannedorders.mql" />
+
+<loadreport file="reports/DeliveryReturnNotification.xml"    />
+<loadreport file="reports/Logistics.xml"    />
+<loadreport file="reports/Report_ReturnsByItem.xml"    />
+<loadreport file="reports/Report_ReturnsList.xml"    />
+<loadreport file="reports/ReturnAging.xml"    />
+<loadreport file="reports/CustomerOrders.xml"    />
+<loadreport file="reports/CustomerOrderAcknowledgement.xml"    />
+
+<loadappui file="screens/Logistics.ui"          />
+<loadappui file="screens/newReturndate.ui"          />
+<loadappui file="screens/Screen_ReturnsByItem.ui"          />
+<loadappui file="screens/Screen_ReturnsList.ui"          />
+
+<loadappscript file="scripts/Logistics.js"    name="Logistics"       />
+<loadappscript file="scripts/newReturndate.js"    name="newReturndate"       />
+<loadappscript file="scripts/Screen_ReturnsByItem.js"    name="Screen_ReturnsByItem"       />
+<loadappscript file="scripts/Screen_ReturnsList.js"    name="Screen_ReturnsList"       />
+<loadappscript file="scripts/dspPlannedOrders.js"    name="dspPlannedOrders"       />
+
+<loadcmd name="DeliveryReturnNotification" title="Delivery Return Notification"
+         privname="DeliveryReturnNotification" module="CRM"
+         executable="\\ai-mars01\company\TECHNOLOGY\xTuple\openrpt\rptrender">
+    <arg value="-databaseURL=psql://exp-pluto01/asset_prod:5432"    />
+    <arg value="-passwd=1openrpt1"    />
+    <arg value="-username=openrpt"    />
+    <arg value="-loadfromDB=DeliveryReturnNotification"    />
+</loadcmd>
+
+<loadcmd name="ReturnAgingReport" title="Late Returns Report"
+         privname="ReturnAgingReport" module="Sales"
+         executable="\\ai-mars01\company\TECHNOLOGY\xTuple\openrpt\rptrender">
+    <arg value="-databaseURL=psql://exp-pluto01/asset_prod:5432"    />
+    <arg value="-passwd=1openrpt1"    />
+    <arg value="-username=openrpt"    />
+    <arg value="-loadfromDB=ReturnAging"    />
+</loadcmd>
+
+<loadcmd name="ABoxMaterialsListReport" title="A Box Materials List"
+         privname="ABoxMaterialsListReport" module="Products"
+         executable="\\ai-mars01\company\TECHNOLOGY\xTuple\openrpt\rptrender">
+    <arg value="-databaseURL=psql://exp-pluto01/asset_prod:5432"    />
+    <arg value="-passwd=1openrpt1"    />
+    <arg value="-username=openrpt"    />
+    <arg value="-loadfromDB=ABoxMaterialsList"    />
+</loadcmd>
+
+<loadcmd name="ABoxMaterialsListReport" title="A Box Materials List"
+         privname="ABoxMaterialsListReport" module="Sales"
+         executable="\\ai-mars01\company\TECHNOLOGY\xTuple\openrpt\rptrender">
+    <arg value="-databaseURL=psql://exp-pluto01/asset_prod:5432"    />
+    <arg value="-passwd=1openrpt1"    />
+    <arg value="-username=openrpt"    />
+    <arg value="-loadfromDB=ABoxMaterialsList"    />
+</loadcmd>
+
+<loadcmd name="CustomerOrderHistory" title="Customer Order History"
+         privname="CustomerOrderHistory" module="CRM"
+         executable="\\ai-mars01\company\TECHNOLOGY\xTuple\openrpt\rptrender">
+    <arg value="-databaseURL=psql://exp-pluto01/asset_prod:5432"    />
+    <arg value="-passwd=1openrpt1"    />
+    <arg value="-username=openrpt"    />
+    <arg value="-loadfromDB=CustomerOrders"    />
+</loadcmd>
+
+<loadcmd name="Logistics" title="Logistics"
+         privname="Logistics" module="CRM"
+         executable="!customuiform">
+         Returns Aging report used to determine late fees to be invoiced
+    <arg value="uiform=Logistics"    />
+</loadcmd>
+
+<loadcmd name="newReturndate" title="Set Return Date..."
+         privname="newReturndate" module="Sales"
+         executable="!customuiform">
+         window used to change return dates on sales orders
+    <arg value="uiform=newReturndate"    />
+</loadcmd>
+
+<loadcmd name="ReturnsByItem" title="Returns By Item"
+         privname="ReturnsByItem" module="Schedule"
+         executable="!customuiform">
+    <arg value="uiform=ReturnsByItem"    />
+</loadcmd>
+
+<loadcmd name="ReturnsList" title="Returns List"
+         privname="ReturnsList" module="Schedule"
+         executable="!customuiform">
+    <arg value="uiform=ReturnsList"    />
+</loadcmd>
+
+<finalscript 	file="triggerfunctions/CREATE_soheadaftertrigger_asset.sql" />
+<finalscript 	file="triggerfunctions/CREATE_soitemaftertrigger_asset.sql" />
+</package>

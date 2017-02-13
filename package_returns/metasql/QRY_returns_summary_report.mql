@@ -1,0 +1,16 @@
+-- Group: RETURN
+-- Name:  QRY_returns_summary_report
+-- Notes: Total returns for current date in ASSET1
+SELECT current_date AS "Date", warehous_code AS "Warehouse", item_number AS "Item", invhist_invuom AS "UOM", SUM(invhist_invqty) AS "Total RA QTY Recv'd"
+FROM invhist, whsinfo, itemsite, item
+WHERE 
+      invhist_itemsite_id = itemsite_id
+      AND item_id = itemsite_item_id
+      AND itemsite_warehous_id = warehous_id
+      AND itemsite_warehous_id = 35
+      AND invhist_transtype = 'RR'
+      AND CAST(invhist_transdate AS DATE) = current_date
+GROUP BY "Date","Warehouse", "Item", "UOM"
+UNION
+SELECT current_date,'NA','00000','NA',0
+ORDER BY "Item";

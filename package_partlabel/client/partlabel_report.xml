@@ -1,0 +1,129 @@
+<!DOCTYPE openRPTDef>
+<report>
+ <title>Part Label</title>
+ <name>PartLabel</name>
+ <description>Print label forms by item</description>
+ <parameter default="" name="itemid" type="string" active="false" listtype="dynamic">
+  <description></description>
+  <query>select item_id,item_number
+from item
+order by 2 
+limit 50</query>
+ </parameter>
+ <grid>
+  <snap/>
+  <show/>
+  <x>0.05</x>
+  <y>0.05</y>
+ </grid>
+ <size>Letter</size>
+ <portrait/>
+ <topmargin>10</topmargin>
+ <bottommargin>0</bottommargin>
+ <rightmargin>0</rightmargin>
+ <leftmargin>10</leftmargin>
+ <querysource>
+  <name>detail</name>
+  <sql>SELECT formatDate(current_date) AS date, 
+       item_number AS item_number, 
+       item_descrip1 AS item_descrip1,
+location_name,
+item_upccode as barcode
+FROM item 
+JOIN itemsite on itemsite_item_id = item_id
+LEFT JOIN location ON location_id = itemsite_recvlocation_id 
+WHERE (item_id = &lt;? value("itemid") ?>)
+
+</sql>
+ </querysource>
+ <section>
+  <name>detail</name>
+  <detail>
+   <key>
+    <query>detail</query>
+   </key>
+   <height>698</height>
+   <field>
+    <rect>
+     <x>35</x>
+     <y>5</y>
+     <width>190</width>
+     <height>15</height>
+    </rect>
+    <font>
+     <face>Open Sans,Helvetica,Verdana,sans-serif</face>
+     <size>12</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <vcenter/>
+    <data>
+     <query>detail</query>
+     <column>item_number</column>
+    </data>
+   </field>
+   <text>
+    <rect>
+     <x>35</x>
+     <y>20</y>
+     <width>205</width>
+     <height>10</height>
+    </rect>
+    <bottompad>0</bottompad>
+    <font>
+     <face>Arial</face>
+     <size>7</size>
+     <weight>normal</weight>
+    </font>
+    <left/>
+    <vcenter/>
+    <data>
+     <query>detail</query>
+     <column>item_descrip1</column>
+    </data>
+   </text>
+   <field>
+    <rect>
+     <x>160</x>
+     <y>5</y>
+     <width>80</width>
+     <height>15</height>
+    </rect>
+    <font>
+     <face>Open Sans,Helvetica,Verdana,sans-serif</face>
+     <size>10</size>
+     <weight>normal</weight>
+    </font>
+    <right/>
+    <vcenter/>
+    <data>
+     <query>detail</query>
+     <column>location_name</column>
+    </data>
+   </field>
+   <line>
+    <xstart>29</xstart>
+    <ystart>43.2222</ystart>
+    <xend>244</xend>
+    <yend>43.2222</yend>
+    <weight>0</weight>
+   </line>
+   <barcode>
+    <rect>
+     <x>30</x>
+     <y>50</y>
+     <width>215</width>
+     <height>40</height>
+    </rect>
+    <format>3of9</format>
+    <maxlength>21</maxlength>
+    <left/>
+    <narrowBarWidth>0.01</narrowBarWidth>
+    <data>
+     <query>detail</query>
+     <column>item_number</column>
+    </data>
+   </barcode>
+  </detail>
+ </section>
+</report>

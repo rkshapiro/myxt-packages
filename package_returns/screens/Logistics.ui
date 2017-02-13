@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Logistics</class>
+ <widget class="QWidget" name="Logistics">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>914</width>
+    <height>500</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Logistics</string>
+  </property>
+  <layout class="QVBoxLayout">
+   <item>
+    <widget class="DateCluster" name="_dates"/>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="_cbIncludeClosed">
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="text">
+      <string>Include closed sales orders</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QFormLayout" name="formLayout">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetDefaultConstraint</enum>
+     </property>
+     <item row="1" column="0">
+      <widget class="CustCluster" name="_cust"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QFormLayout" name="formLayout">
+     <item row="1" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Ship Via:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="XComboBox" name="_shipvia">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>255</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="allowNull">
+        <bool>true</bool>
+       </property>
+       <property name="type">
+        <enum>XComboBox::ShipVias</enum>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout">
+     <item>
+      <widget class="XTreeWidget" name="_list"/>
+     </item>
+     <item>
+      <layout class="QVBoxLayout">
+       <item>
+        <widget class="QPushButton" name="_close">
+         <property name="text">
+          <string>Close</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="_query">
+         <property name="text">
+          <string>Query</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="_print">
+         <property name="text">
+          <string>Print</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer>
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>CustCluster</class>
+   <extends>QWidget</extends>
+   <header>custcluster.h</header>
+  </customwidget>
+  <customwidget>
+   <class>DateCluster</class>
+   <extends>QWidget</extends>
+   <header>datecluster.h</header>
+  </customwidget>
+  <customwidget>
+   <class>XComboBox</class>
+   <extends>QComboBox</extends>
+   <header>xcombobox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>XTreeWidget</class>
+   <extends>QTreeWidget</extends>
+   <header>xtreewidget.h</header>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>_dates</tabstop>
+  <tabstop>_cust</tabstop>
+  <tabstop>_close</tabstop>
+  <tabstop>_query</tabstop>
+  <tabstop>_print</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

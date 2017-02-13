@@ -1,0 +1,33 @@
+-- Group: RETURN
+-- Name: Create RA for SO
+-- Notes: FY2013 version of create RA process. Has check for mod sale
+SELECT current_date, cohead_number, createraforso(cohead_id)
+FROM (
+  SELECT distinct cohead_id,cohead_number
+  FROM cohead
+  JOIN coitem on coitem_cohead_id = cohead_id
+  JOIN itemsite on coitem_itemsite_id = itemsite_id
+  JOIN item on itemsite_item_id = item_id
+  JOIN costcat on itemsite_costcat_id = costcat_id
+  LEFT OUTER JOIN rahead on cohead_number = rahead_number
+  WHERE coitem_qtyshipped = coitem_qtyord  -- order has not been shipped
+  AND isfinalsale(cohead_id) <> true  
+  AND item_type <> 'K'
+  AND (costcat_code = 'MODULES FOR LEASE'    -- Modules for Lease
+  AND coitem_scheddate >= '2012-07-01' -- start with FY2013 orders
+  AND (rahead_id is null 
+	OR cohead_id NOT IN 
+	( -- no RA Existing with the salesorder number
+	select rahead_orig_cohead_id
+	from rahead
+	order by rahead_orig_cohead_id
+	)  
+	)
+	)
+  GROUP BY cohead_id, cohead_number, coitem_qtyord
+  ORDER BY cohead_id DESC
+) AS DATA
+
+UNION
+
+SELECT current_date,'00000', 0;
