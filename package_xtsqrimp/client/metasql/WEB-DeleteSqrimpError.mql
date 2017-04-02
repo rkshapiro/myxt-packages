@@ -1,0 +1,6 @@
+-- Group: WEB
+-- Name:  DeleteSqrimpError
+-- Notes: From right click on the screen - only delete selected error row
+DELETE FROM xtsqrimp.sqrimp 
+WHERE sqrimp_id = <? VALUE("sqrimp_id") ?>::TEXT
+AND sqrimp_status <> 'new';

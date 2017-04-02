@@ -1,0 +1,59 @@
+<package name="xtvolimp"
+        version="1.0.0" 
+	id="package_xtvolimp_wc" 
+	descrip="Volusion Sales Order Import"
+	developer="rshapiro" 
+	updater="2.4.0" >
+<pkgnotes>
+	Custom Professional Services - Volusion Sales Order Import for Wooden Camera
+</pkgnotes>
+
+<prerequisite type="Query" name="Checking for ONLINE Reason Code" >
+  <query>
+    SELECT count(*) = 1 
+    FROM public.rsncode
+    WHERE rsncode_code = 'ONLINE';
+  </query>
+  <message>
+    The ONLINE Reason Code is not defined
+  </message>
+</prerequisite>
+
+<prerequisite type="Query" name="Checking for TAX Reference item" >
+  <query>
+    SELECT count(*) = 1 
+    FROM public.item
+    WHERE item_number = 'TAX';
+  </query>
+  <message>
+    The TAX reference Item is not defined
+  </message>
+</prerequisite>
+
+<prerequisite type="Query" name="Checking for TAX tax zone" >
+  <query>
+    SELECT count(*) = 1 
+    FROM public.taxzone
+    WHERE taxzone_code = 'TAX';
+  </query>
+  <message>
+    The TAX reference Item is not defined
+  </message>
+</prerequisite>
+
+<script 	file="dbscripts/INS_evnttype.sql"  onerror="ignore"/>
+
+<createfunction	file="dbscripts/functions/CREATE_xtvolimp_fn_soimperrorcheckverbose.sql"  name="soimperrorcheckverbose"  />
+
+<createtable 	file="dbscripts/tables/CREATE_xtvolimp_tbl_ordimp.sql"  name="ordimp"  />
+
+<createview 	file="dbscripts/views/CREATE_xtvolimp_vw_soimp.sql"  name="soimp"  />
+    
+<loadmetasql	file="client/metasql/WEB-DeleteSoimpOrder.mql"  />
+<loadmetasql	file="client/metasql/WEB-ImportSOsFromSoimp.mql"  />
+<loadmetasql	file="client/metasql/WEB-DisplaySummarizedSOIMP.mql"  />
+
+<loadappscript    file="client/scripts/initMenu.js"  name ="initMenu"  />
+<loadappscript    file="client/scripts/dspSoimpSum.js"  name ="dspSoimpSum"  />
+
+</package>

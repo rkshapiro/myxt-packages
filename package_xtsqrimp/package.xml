@@ -1,0 +1,54 @@
+<package name="xtsqrimp"
+        version="1.0.0" 
+	id="package_xtsqrimp" 
+	descrip="Square Item Report Import"
+	developer="rshapiro" 
+	updater="2.4.0" >
+<pkgnotes>
+	Custom Professional Services -Square Item Report Import for Wooden Camera
+</pkgnotes>
+
+<prerequisite type="Query" name="Checking for ONLINE Reason Code" >
+  <query>
+    SELECT count(*) = 1 
+    FROM public.rsncode
+    WHERE rsncode_code = 'ONLINE';
+  </query>
+  <message>
+    The ONLINE Reason Code is not defined
+  </message>
+</prerequisite>
+
+<prerequisite type="Query" name="Checking for TAX Reference item" >
+  <query>
+    SELECT count(*) = 1 
+    FROM public.item
+    WHERE item_number = 'TAX';
+  </query>
+  <message>
+    The TAX reference Item is not defined
+  </message>
+</prerequisite>
+
+<prerequisite type="Query" name="Checking for LA Square customer account" >
+  <query>
+    SELECT count(*) = 1 
+    FROM public.custinfo
+    WHERE cust_number = 'LASQUARE134';
+  </query>
+  <message>
+    The LASQUARE134 customer account is not defined
+  </message>
+</prerequisite>
+
+<script 	file="dbscripts/INS_evnttype.sql"  onerror="ignore"/>
+
+<createtable 	file="dbscripts/tables/CREATE_tbl_sqrimp.sql"  name="sqrimp"  />
+  
+<loadmetasql	file="client/metasql/WEB-DeleteSqrimpError.mql"  />
+<loadmetasql	file="client/metasql/WEB-DisplaySummarizedSqrIMP.mql"  />
+
+<loadappscript    file="client/scripts/initMenu.js"  name ="initMenu"  />
+<loadappscript    file="client/scripts/dspSqrimpSum.js"  name ="dspSqrimpSum"  />
+
+</package>

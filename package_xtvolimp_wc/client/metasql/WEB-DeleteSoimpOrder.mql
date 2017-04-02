@@ -1,0 +1,12 @@
+-- Group: WEB
+-- Name:  DeleteSoimpOrder
+-- Notes: From right click on the screen - only delete orders pending import
+DELETE FROM xtvolimp.ordetail WHERE ordetal_orderid IN
+(SELECT DISTINCT ordimp_orderid 
+FROM xtvolimp.ordimp
+WHERE ordimp_orderid = <? VALUE("soimp_id") ?>::TEXT  
+AND ordimp_inserted IS NULL);
+
+DELETE FROM xtvolimp.ordimp 
+WHERE ordimp_orderid = <? VALUE("soimp_id") ?>::TEXT  
+AND ordimp_inserted IS NULL;

@@ -1,0 +1,20 @@
+-- Group: WEB 
+-- Name: DisplaySummarizedSqrIMP
+-- Notes: Display rows with errors
+SELECT DISTINCT
+   sqrimp_id::INTEGER AS sqrimp_id,
+   sqrimp_invcnum,
+   sqrimp_pricepointname,
+   sqrimp_item,
+   sqrimp_status,
+   sqrimp_date,
+   sqrimp_qty,
+   sqrimp_grosssales,
+   sqrimp_discounts,
+   sqrimp_netsales,
+   sqrimp_tax
+FROM 
+    xtsqrimp.sqrimp
+WHERE
+    sqrimp_status <> 'new'
+ORDER BY sqrimp_invcnum,sqrimp_pricepointname;

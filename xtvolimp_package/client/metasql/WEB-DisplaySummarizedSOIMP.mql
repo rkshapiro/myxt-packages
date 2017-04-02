@@ -1,0 +1,38 @@
+-- Group: WEB 
+-- Name: DisplaySummarizedSOIMP
+-- Notes: Update 05/15 - verbose error checking
+--        Updated 01/15 with with more error checking Query for a custom display dspSoimpSum
+SELECT DISTINCT
+   soimp_order_number::INTEGER AS soimp_id,
+   soimp_order_number,
+   soimp_item_number,
+   error_msg,
+   soimp_customer_number,
+   soimp_billto_cntct_first_name,
+   soimp_billto_cntct_last_name,
+   soimp_billto_cntct_phone,
+   soimp_source,
+   soimp_payment_type,
+   soimp_delivery_note
+FROM 
+    xtvolimp.soimp
+WHERE
+soimp_status = 'Processing'
+<? IF EXISTS("cust_id") ?>
+   AND UPPER(soimp_customer_number) = (
+             SELECT UPPER(cust_number) FROM custinfo
+                    JOIN cohead ON (cust_id = cohead_cust_id)
+                    WHERE (cohead_number = soimp_order_number)
+                    AND cust_id = <? value("cust_id") ?>
+                                       )
+<? ENDIF ?>
+<? IF EXISTS("item_id") ?>
+   AND UPPER(soimp_item_number) = (
+             SELECT item_number FROM item
+                    JOIN coitem ON coitem_itemsite_id = getitemsiteid('DAL1',item_number)
+                    WHERE (item_number = soimp_item_number)
+                    AND item_id = <? value("item_id") ?>
+                                       )
+<? ENDIF ?>
+ORDER BY soimp_customer_number, soimp_order_number
+;
