@@ -43,7 +43,9 @@
 
 <script 	file="dbscripts/INS_evnttype.sql"  onerror="ignore"/>
 
-<createtable 	file="dbscripts/tables/CREATE_tbl_sqrimp.sql"  name="sqrimp"  />
+<createfunction	file="dbscripts/CREATE_fn_createinvoice.sql"  name="createinvoice"  />
+
+<createtable 	file="dbscripts/CREATE_tbl_sqrimp.sql"  name="sqrimp"  />
   
 <loadmetasql	file="client/metasql/WEB-DeleteSqrimpError.mql"  />
 <loadmetasql	file="client/metasql/WEB-DisplaySummarizedSqrIMP.mql"  />

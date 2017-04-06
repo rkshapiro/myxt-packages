@@ -1,3 +1,5 @@
+drop table if exists xtsqrimp.sqrimp;
+ 
 create table xtsqrimp.sqrimp
 (
 sqrimp_id serial not null,
