@@ -1,0 +1,183 @@
+<!DOCTYPE openCSVAtlasDef>
+<CSVAtlas>
+ <CSVMap>
+  <Name>sqrimp</Name>
+  <Table>xtsqrimp.sqrimp</Table>
+  <Action>Insert</Action>
+  <PreSQL>DELETE FROM xtsqrimp.sqrimp;</PreSQL>
+  <PostSQL>-- get invoice numbers
+WITH invcnum AS (
+SELECT sqrimp_date AS invoice_date, fetchinvcnumber() AS invoice_number 
+FROM xtsqrimp.sqrimp
+GROUP BY sqrimp_date
+)
+UPDATE xtsqrimp.sqrimp
+SET sqrimp_invcnum = invoice_number
+FROM invcnum
+WHERE sqrimp_invcnum is null
+AND sqrimp_date = invoice_date;
+
+-- check for unknown items and flag for report
+UPDATE xtsqrimp.sqrimp
+SET sqrimp_status = 'Unknown Item'
+WHERE sqrimp_pricepointname NOT IN (
+SELECT item_number FROM item WHERE item_active
+ORDER by 1)
+OR sqrimp_pricepointname IS NULL;
+
+-- check for missing LA1 item site and flag for report
+UPDATE xtsqrimp.sqrimp
+SET sqrimp_status = 'Missing LA1 Item Site'
+WHERE sqrimp_status = 'new'
+AND getitemid(sqrimp_pricepointname) NOT IN (
+SELECT itemsite_item_id FROM itemsite WHERE itemsite_warehous_id = getwarehousid('LA1','ALL')
+ORDER by 1);
+
+-- check for negative QOH
+UPDATE xtsqrimp.sqrimp
+SET sqrimp_status = 'Insufficient Inventory in LA1 for Order'
+WHERE sqrimp_status = 'new'
+AND getitemid(sqrimp_pricepointname) IN (
+SELECT itemsite_item_id
+FROM itemsite
+JOIN item ON itemsite_item_id = item_id
+JOIN xtsqrimp.sqrimp ON sqrimp_pricepointname = item_number
+WHERE itemsite_warehous_id = getwarehousid('LA1','ALL')
+GROUP BY itemsite_item_id, itemsite_qtyonhand
+HAVING itemsite_qtyonhand &lt; sum(sqrimp_qty::numeric)
+);
+
+SELECT xtsqrimp.createinvoice();</PostSQL>
+  <CSVMapField>
+   <Name>sqrimp_date</Name>
+   <Type>QString</Type>
+   <Column>1</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>sqrimp_time</Name>
+   <Type>QString</Type>
+   <Column>2</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>sqrimp_timezone</Name>
+   <Type>QString</Type>
+   <Column>3</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>sqrimp_category</Name>
+   <Type>QString</Type>
+   <Column>4</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>sqrimp_item</Name>
+   <Type>QString</Type>
+   <Column>5</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>sqrimp_qty</Name>
+   <Type>QString</Type>
+   <Column>6</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>sqrimp_sku</Name>
+   <Type>QString</Type>
+   <Column>8</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>sqrimp_modifiersapplied</Name>
+   <Type>QString</Type>
+   <Column>9</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>sqrimp_grosssales</Name>
+   <Type>QString</Type>
+   <Column>10</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>sqrimp_discounts</Name>
+   <Type>QString</Type>
+   <Column>11</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>sqrimp_netsales</Name>
+   <Type>QString</Type>
+   <Column>12</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>sqrimp_tax</Name>
+   <Type>QString</Type>
+   <Column>13</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>sqrimp_transactionid</Name>
+   <Type>QString</Type>
+   <Column>14</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>sqrimp_paymentid</Name>
+   <Type>QString</Type>
+   <Column>15</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>sqrimp_devicename</Name>
+   <Type>QString</Type>
+   <Column>16</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>sqrimp_notes</Name>
+   <Type>QString</Type>
+   <Column>17</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>sqrimp_details</Name>
+   <Type>QString</Type>
+   <Column>18</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>sqrimp_eventtype</Name>
+   <Type>QString</Type>
+   <Column>19</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>sqrimp_location</Name>
+   <Type>QString</Type>
+   <Column>20</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>sqrimp_diningoption</Name>
+   <Type>QString</Type>
+   <Column>21</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>sqrimp_customerid</Name>
+   <Type>QString</Type>
+   <Column>22</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>sqrimp_customername</Name>
+   <Type>QString</Type>
+   <Column>23</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>sqrimp_customerreferenceid</Name>
+   <Type>QString</Type>
+   <Column>24</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>sqrimp_status</Name>
+   <Type>QString</Type>
+   <Action>UseAlternateValue</Action>
+   <AltValue>new</AltValue>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>sqrimp_invcnum</Name>
+   <Type>QString</Type>
+   <Action>UseNull</Action>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>sqrimp_pricepointname</Name>
+   <Type>QString</Type>
+   <Column>7</Column>
+  </CSVMapField>
+ </CSVMap>
+</CSVAtlas>
