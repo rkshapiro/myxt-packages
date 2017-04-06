@@ -7,6 +7,7 @@ CREATE OR REPLACE FUNCTION xtsqrimp.createinvoice()
 $BODY$
 -- Copyright (c) 1999-2014 by OpenMFG LLC, d/b/a xTuple. 
 -- See www.xtuple.com/CPAL for the full text of the software license.
+-- 20170406 removed making discount values negative on returns
 DECLARE
 _errors INTEGER;
 BEGIN
@@ -76,7 +77,7 @@ notes, misc_charge_description,
 misc_charge_amount, misc_charge_credit_account)
 
 SELECT sqrimp_invcnum,sqrimp_date::date,'ONLINE','LASQUARE134',
-'Square Return','Discount',sum(translate(sqrimp_discounts,'$()','')::numeric)*-1,'2-4810'
+'Square Return','Discount',sum(translate(sqrimp_discounts,'$()','')::numeric),'2-4810'
 FROM xtsqrimp.sqrimp
 WHERE sqrimp_qty::numeric < 0
 GROUP BY sqrimp_invcnum,sqrimp_date;
