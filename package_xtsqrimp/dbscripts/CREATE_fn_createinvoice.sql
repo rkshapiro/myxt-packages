@@ -31,8 +31,8 @@ INSERT INTO api.invoice
 
 SELECT sqrimp_invcnum,max(sqrimp_date::date),max(sqrimp_date::date),max(sqrimp_date::date),
 'RET','LASQUARE134',
-'Discount',sum(translate(sqrimp_discounts,'$()','')::numeric)*-1,'2-4810',
-sum(translate(sqrimp_netsales,'$()','')::numeric),'Square Import'
+'Discount',sum(translate(sqrimp_discounts,'$(),','')::numeric)*-1,'2-4810',
+sum(translate(sqrimp_netsales,'$(),','')::numeric),'Square Import'
 FROM xtsqrimp.sqrimp
 WHERE sqrimp_status = 'new'
 AND sqrimp_qty::numeric > 0
@@ -45,7 +45,7 @@ INSERT INTO  api.invoiceline
 )
 
 SELECT sqrimp_invcnum,sqrimp_pricepointname,'LA1',
-sum(sqrimp_qty::numeric),sum(sqrimp_qty::numeric),true,(sum(translate(sqrimp_grosssales,'$()','')::numeric)/sum(sqrimp_qty::numeric)),
+sum(sqrimp_qty::numeric),sum(sqrimp_qty::numeric),true,(sum(translate(sqrimp_grosssales,'$(),','')::numeric)/sum(sqrimp_qty::numeric)),
 gettaxtypeid('Tax Exempt')
 FROM xtsqrimp.sqrimp
 JOIN item on item_number = sqrimp_pricepointname
@@ -61,7 +61,7 @@ INSERT INTO  api.invoiceline
 )
 
 SELECT sqrimp_invcnum,'TAX','LA1',
-1,1,true,(sum(translate(sqrimp_tax,'$()','')::numeric)),
+1,1,true,(sum(translate(sqrimp_tax,'$(),','')::numeric)),
 gettaxtypeid('Tax Exempt')
 FROM xtsqrimp.sqrimp
 JOIN item on item_number = sqrimp_pricepointname
@@ -77,7 +77,7 @@ notes, misc_charge_description,
 misc_charge_amount, misc_charge_credit_account)
 
 SELECT sqrimp_invcnum,sqrimp_date::date,'ONLINE','LASQUARE134',
-'Square Return','Discount',sum(translate(sqrimp_discounts,'$()','')::numeric),'2-4810'
+'Square Return','Discount',sum(translate(sqrimp_discounts,'$(),','')::numeric),'2-4810'
 FROM xtsqrimp.sqrimp
 WHERE sqrimp_qty::numeric < 0
 GROUP BY sqrimp_invcnum,sqrimp_date;
@@ -89,7 +89,7 @@ qty_returned, qty_to_credit, net_unit_price, notes)
 
 SELECT cmhead_number,sqrimp_pricepointname,'LA1','ONLINE',
 sum(sqrimp_qty::numeric),sum(sqrimp_qty::numeric),
-(sum(translate(sqrimp_grosssales,'$()','')::numeric)/sum(sqrimp_qty::numeric)),
+(sum(translate(sqrimp_grosssales,'$(),','')::numeric)/sum(sqrimp_qty::numeric)),
 'Square Return'
 FROM xtsqrimp.sqrimp
 JOIN cmhead ON cmhead_invcnumber = sqrimp_invcnum
@@ -103,7 +103,7 @@ qty_returned, qty_to_credit, net_unit_price, notes)
 
 SELECT cmhead_number,'TAX','LA1','ONLINE',
 -1,-1,
-sum(translate(sqrimp_tax,'$()','')::numeric)*-1,
+sum(translate(sqrimp_tax,'$(),','')::numeric)*-1,
 'Square Return'
 FROM xtsqrimp.sqrimp
 JOIN cmhead ON cmhead_invcnumber = sqrimp_invcnum
@@ -117,7 +117,7 @@ currency, amount_received, post_to,
 apply_balance_as, notes)
 
 SELECT 'LASQUARE134','R','Square Import','USD',
-SUM(translate(sqrimp_netsales,'$()','')::numeric)+sum(translate(sqrimp_tax,'$()','')::numeric),
+SUM(translate(sqrimp_netsales,'$(),','')::numeric)+sum(translate(sqrimp_tax,'$(),','')::numeric),
 'WCR Fifth Third Checking','Customer Deposit','Square Net Sales plus Taxes from Import on '||current_date
 FROM xtsqrimp.sqrimp
 WHERE sqrimp_qty::numeric > 0
