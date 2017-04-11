@@ -1,6 +1,6 @@
 --create table to receive data
 -- Table: xtvolimp.ordimp
-drop table if exists xtsqrimp.sqrimp cascade;
+drop table if exists xtvolimp.ordimp cascade;
 
 CREATE TABLE xtvolimp.ordimp
 (
