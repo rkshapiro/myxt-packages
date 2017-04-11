@@ -1,6 +1,6 @@
 -- View: xtvolimp.soimp
 
-DROP VIEW xtvolimp.soimp;
+DROP VIEW if exists xtvolimp.soimp;
 
 CREATE OR REPLACE VIEW xtvolimp.soimp AS 
  SELECT ordimp.ordimp_orderstatus AS soimp_status,
