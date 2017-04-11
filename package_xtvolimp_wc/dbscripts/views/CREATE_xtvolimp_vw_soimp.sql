@@ -1,6 +1,6 @@
 -- View: xtvolimp.soimp
 
--- DROP VIEW xtvolimp.soimp;
+DROP VIEW xtvolimp.soimp;
 
 CREATE OR REPLACE VIEW xtvolimp.soimp AS 
  SELECT ordimp.ordimp_orderstatus AS soimp_status,
@@ -62,6 +62,14 @@ CREATE OR REPLACE VIEW xtvolimp.soimp AS
     ordimp.ordimp_creditcardtransactionid,
     'INT'::text AS soimp_source,
     'TAX'::text AS soimp_taxzone, -- DEFAULT Exempt Tax will go on reference item
+    CASE 
+    WHEN ordimp_paymentmethodid = '5' THEN 'VISA'
+    WHEN ordimp_paymentmethodid = '6' THEN 'MC'
+    WHEN ordimp_paymentmethodid = '7' THEN 'AMEX'
+    WHEN ordimp_paymentmethodid = '25' THEN 'PAYPAL'
+    WHEN ordimp_paymentmethodid = '27' THEN 'AMAZON'
+    ELSE 'DUE ON ORDER'
+    END AS soimp_terms,
     ordimp.ordimp_tax2_title,
     ordimp.ordimp_tax3_title,
     ordimp.ordimp_salestax1,

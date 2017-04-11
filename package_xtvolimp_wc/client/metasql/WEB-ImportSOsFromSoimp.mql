@@ -4,8 +4,8 @@
 --        Inserts customer when one does not exist
 --        Inserts SO header
 --        Inserts SO lines
---        Creates CMs
---        Allocates CMs
+--        Creates CMs removed 20170411
+--        Allocates CMs removed 20170411
 --        Updates soimp_inserted with date/time orders inserted
 --        Only performs above where AND soimp_source = 'INT' so as not to process F4F and other order 
 --        sources
@@ -78,6 +78,7 @@ INSERT INTO api.salesorder
 order_number, cust_po_number, site, order_date,
 customer_number,
 sale_type,
+terms,
 -- bill to start
 billto_contact_name, -- honorific 
 billto_contact_first, billto_contact_middle, billto_contact_last,  
@@ -104,7 +105,8 @@ order_notes, shipping_notes,tax_zone
 )
 (SELECT DISTINCT soimp_order_number, soimp_po_number, soimp_sold_from_site, soimp_order_date,
 UPPER(soimp_customer_number), 
-'INT',  -- set sale type _id = 4
+'INT',  -- set sale type
+soimp_terms,
 -- billto start
 soimp_billto_cntct_honorific, 
 soimp_billto_cntct_first_name, soimp_billto_cntct_middle, soimp_billto_cntct_last_name,
@@ -197,7 +199,7 @@ WHERE soimp_inserted IS NULL
 );
 
 -- CREATE Credit Memo - assumes credit card payment
-SELECT DISTINCT
+/* SELECT DISTINCT
 cohead_number,
 createarcreditmemo
 ( NULL::integer,  -- new
@@ -255,7 +257,7 @@ INSERT INTO aropenalloc
                                  AND aropen_posted = 'f'
                                  AND aropen_open = 't'
                                  AND aropen_id NOT IN (SELECT aropenalloc_aropen_id FROM aropenalloc)
-                            );
+                            ); */
 -- set inserted date
 UPDATE xtvolimp.ordimp
 SET ordimp_inserted = current_date

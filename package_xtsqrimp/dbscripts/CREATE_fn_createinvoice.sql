@@ -7,7 +7,8 @@ CREATE OR REPLACE FUNCTION xtsqrimp.createinvoice()
 $BODY$
 -- Copyright (c) 1999-2014 by OpenMFG LLC, d/b/a xTuple. 
 -- See www.xtuple.com/CPAL for the full text of the software license.
--- 20170406 removed making discount values negative on returns
+-- 20170406 removed making discount values negative on returns and invoice
+-- 20170410 added comma to translate on dollar values
 DECLARE
 _errors INTEGER;
 BEGIN
@@ -31,7 +32,7 @@ INSERT INTO api.invoice
 
 SELECT sqrimp_invcnum,max(sqrimp_date::date),max(sqrimp_date::date),max(sqrimp_date::date),
 'RET','LASQUARE134',
-'Discount',sum(translate(sqrimp_discounts,'$(),','')::numeric)*-1,'2-4810',
+'Discount',sum(translate(sqrimp_discounts,'$(),','')::numeric),'2-4810',
 sum(translate(sqrimp_netsales,'$(),','')::numeric),'Square Import'
 FROM xtsqrimp.sqrimp
 WHERE sqrimp_status = 'new'
