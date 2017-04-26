@@ -1,6 +1,6 @@
 <package name="_return"
         version="1.0.0" 
-	id="package_returns" 
+	id="package_return" 
 	descrip="ASSET customizations for managing the return of leased product"
 	developer="rshapiro" 
 	updater="2.2.5" >
