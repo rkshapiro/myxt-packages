@@ -213,5 +213,5 @@
 
 <finalscript 	file="triggerfunctions/CREATE_soheadaftertrigger_asset.sql" />
 <finalscript 	file="triggerfunctions/CREATE_soitemaftertrigger_asset.sql" />
-<finalscript 	file="dbscripts/INS_matlistcomment.sql" />
+
 </package>
