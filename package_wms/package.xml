@@ -3,7 +3,7 @@
 	id="package_wms" 
 	descrip="wms integration"
 	developer="rshapiro" 
-	updater="2.2.5" >
+	updater="2.4.0" >
 <pkgnotes>
 	Custom - Integration with WMS used by Steplogic
 </pkgnotes>
@@ -36,7 +36,11 @@
 
 <loadmetasql	file="client/metasql/clear_wave_batch.mql"  grade="10"  />
 <loadmetasql	file="client/metasql/container_label.mql"  grade="10"  />
+<loadmetasql	file="client/metasql/inventoryAvailability_general.mql"  grade="10"  />
 
 <loadreport		file="client/reports/containerlabel.xml"  grade="10"  />
+<loadreport		file="client/reports/InventoryAvailability.xml"  grade="20"  />
+
+<loadappscript    file="client/dspInventoryAvailability.js"  name="dspInventoryAvailability"  />
 
 </package>
