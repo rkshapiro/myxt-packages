@@ -24,6 +24,6 @@ $BODY$
   COST 100;
 ALTER FUNCTION isfinalsale(integer)
   OWNER TO admin;
-GRANT EXECUTE ON FUNCTION _isfinalsale(integer) TO admin;
+GRANT EXECUTE ON FUNCTION isfinalsale(integer) TO admin;
 GRANT EXECUTE ON FUNCTION isfinalsale(integer) TO public;
 COMMENT ON FUNCTION isfinalsale(integer) IS 'rule to identify final sale sales orders';
