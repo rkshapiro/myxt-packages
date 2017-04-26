@@ -1,6 +1,6 @@
 -- Table:  priority_return_items_list
 
--- DROP TABLE  priority_return_items_list;
+DROP TABLE IF EXISTS priority_return_items_list CASCADE;
 
 CREATE TABLE  priority_return_items_list
 (

@@ -1,6 +1,6 @@
 -- Table: durable_planord_return_items_list
 
--- DROP TABLE durable_planord_return_items_list;
+DROP TABLE IF EXISTS durable_planord_return_items_list CASCADE;
 
 CREATE TABLE durable_planord_return_items_list
 (
