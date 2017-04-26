@@ -136,8 +136,8 @@
 
 <loadappscript file="scripts/Logistics.js"    name="Logistics"       />
 <loadappscript file="scripts/newReturndate.js"    name="newReturndate"       />
-<loadappscript file="scripts/Screen_ReturnsByItem.js"    name="Screen_ReturnsByItem"       />
-<loadappscript file="scripts/Screen_ReturnsList.js"    name="Screen_ReturnsList"       />
+<loadappscript file="scripts/Screen_ReturnsByItem.js"    name="ReturnsByItem"       />
+<loadappscript file="scripts/Screen_ReturnsList.js"    name="ReturnsList"       />
 <loadappscript file="scripts/dspPlannedOrders.js"    name="dspPlannedOrders"       />
 
 <loadcmd name="DeliveryReturnNotification" title="Delivery Return Notification"
