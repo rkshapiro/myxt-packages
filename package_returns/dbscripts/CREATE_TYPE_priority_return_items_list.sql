@@ -1,6 +1,6 @@
 -- Type: priority_return_items_list
 
-DROP TYPE IF EXISTS priority_return_items_list;
+DROP TYPE IF EXISTS priority_return_items_list CASCADE;
 
 CREATE TYPE priority_return_items_list AS
 (
