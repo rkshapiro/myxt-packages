@@ -1,6 +1,7 @@
 -- Type: durable_planord_return_items_list
 
--- DROP TYPE durable_planord_return_items_list;
+
+DROP TYPE IF EXISTS durable_planord_return_items_list;
 
 CREATE TYPE durable_planord_return_items_list AS
 (

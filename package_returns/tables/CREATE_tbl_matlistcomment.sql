@@ -1,6 +1,6 @@
 -- Table: matlistcomment
 
---DROP TABLE matlistcomment;
+DROP TABLE IF EXISTS matlistcomment;
 
 CREATE TABLE matlistcomment
 (

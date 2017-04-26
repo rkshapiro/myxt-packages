@@ -1,4 +1,5 @@
--- DROP TYPE returnaging CASCADE;
+DROP TYPE IF EXISTS returnaging CASCADE;
+
 CREATE TYPE returnaging AS (
 return_date date,
 delivery_date date,

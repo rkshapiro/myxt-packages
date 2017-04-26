@@ -1,6 +1,6 @@
 -- Type: return_items_list
 
--- DROP TYPE return_items_list;
+DROP TYPE IF EXISTS return_items_list;
 
 CREATE TYPE return_items_list AS
    (child_item_id integer,
