@@ -11,7 +11,7 @@ FROM (
   JOIN costcat on itemsite_costcat_id = costcat_id
   LEFT OUTER JOIN rahead on cohead_number = rahead_number
   WHERE coitem_qtyshipped = coitem_qtyord  -- order has not been shipped
-  AND isfinalsale(cohead_id) <> true  
+  AND _return.isfinalsale(cohead_id) <> true  
   AND item_type <> 'K'
   AND (costcat_code = 'MODULES FOR LEASE'    -- Modules for Lease
   AND coitem_scheddate >= '2012-07-01' -- start with FY2013 orders
