@@ -1,9 +1,9 @@
 -- View: _jobtrack.xt_item
 
--- DROP VIEW _jobtrack.xt_item;
+DROP VIEW IF EXISTING _jobtrack.xt_item;
 
 CREATE OR REPLACE VIEW _jobtrack.xt_item AS 
- SELECT 
+SELECT 
 	item.item_number::character varying(255) AS item_number, 
 	item.item_active AS active, 
 	item.item_descrip1::character varying(255) AS description1, 
@@ -41,7 +41,23 @@ CREATE OR REPLACE VIEW _jobtrack.xt_item AS
         item.item_comments::character varying(255) AS notes, 
         item.item_extdescrip::character varying(255) AS ext_description,
         itemsite.itemsite_qtyonhand AS qtyonhand,
-        (SELECT warehous_code from whsinfo where warehous_id = itemsite_warehous_id)::character varying(255) AS site
+        (SELECT warehous_code from whsinfo where warehous_id = itemsite_warehous_id)::character varying(255) AS site,
+        itemCharValue(item_id,'FINDTYPE')::character varying(255) AS findtype,
+        itemCharValue(item_id,'FINDSUBTYPE')::character varying(255) AS findsubtype,
+        itemCharValue(item_id,'METALTYPE')::character varying(255) AS metaltype,
+        itemCharValue(item_id,'METALCOLOR')::character varying(255) AS metalcolor,
+        itemCharValue(item_id,'KARAT')::character varying(255) AS karat,
+        itemCharValue(item_id,'FINDSHAPE')::character varying(255) AS findshape,
+        itemCharValue(item_id,'STONETYPE')::character varying(255) AS stonetype,
+        itemCharValue(item_id,'STONESAT')::character varying(255) AS stonesat,
+        itemCharValue(item_id,'STONECOLOR')::character varying(255) AS stonecolor,
+        itemCharValue(item_id,'STONESIZE')::character varying(255) AS stonesize,
+        itemCharValue(item_id,'STONESHAPE')::character varying(255) AS stoneshape,
+        itemCharValue(item_id,'FACETSTYLE')::character varying(255) AS facetstyle,
+        itemCharValue(item_id,'STONEQUALITY')::character varying(255) AS stonequality,
+        itemCharValue(item_id,'TRANSPARENCY')::character varying(255) AS transparency,
+        itemCharValue(item_id,'CLARITY')::character varying(255) AS clarity,
+        itemCharValue(item_id,'DIAMONDCOLOR')::character varying(255) AS diamondcolor
    FROM item
    JOIN itemsite ON itemsite_item_id = item_id
    JOIN classcode ON item.item_classcode_id = classcode.classcode_id
