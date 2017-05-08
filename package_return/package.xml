@@ -120,7 +120,7 @@
 <loadmetasql file="metasql/returns_list.mql" />
 <loadmetasql file="metasql/Run_durable_planned_order_returns.mql" />
 <loadmetasql file="metasql/run_priority_returns.mql" />
-<loadmetasql file="metasql/schedule-plannedorders.mql" />
+<loadmetasql file="metasql/schedule-plannedorders.mql" grade="30"/>
 
 <loadreport file="reports/DeliveryReturnNotification.xml"    />
 <loadreport file="reports/Logistics.xml"    />
