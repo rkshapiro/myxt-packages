@@ -1,4 +1,4 @@
-﻿-- Function: _custom.calcshipfreight(integer)
+-- Function: _custom.calcshipfreight(integer)
 
 -- DROP FUNCTION _custom.calcshipfreight(integer);
 

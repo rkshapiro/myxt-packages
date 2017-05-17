@@ -1,11 +1,11 @@
-﻿
--- View: _fedex.fedex_outbound
 
--- DROP VIEW _fedex.fedex_outbound;
+-- View: fedex_outbound
+
+-- DROP VIEW fedex_outbound;
 -- 20151203:rks changed the item description to be the item number and beginning of the description
 -- 20151216:rks changed numlabels for teacher guides to be 1 label for every 10 guides
 
-CREATE OR REPLACE VIEW _fedex.fedex_outbound AS 
+CREATE OR REPLACE VIEW fedex_outbound AS 
  
  SELECT cohead.cohead_id, coitem.coitem_id, item.item_id AS itemid, item.item_number, custinfo.cust_name AS customer, 
  cohead.cohead_shiptoname AS shipto, 
@@ -38,7 +38,7 @@ CREATE OR REPLACE VIEW _fedex.fedex_outbound AS
   AND classcode.classcode_code <> 'DROPSHIP'::text
   ORDER BY cohead.cohead_id, coitem.coitem_id, item.item_id;
 
-ALTER TABLE _fedex.fedex_outbound OWNER TO admin;
-GRANT ALL ON TABLE _fedex.fedex_outbound TO admin;
-GRANT SELECT ON TABLE _fedex.fedex_outbound TO public;
+ALTER TABLE fedex_outbound OWNER TO admin;
+GRANT ALL ON TABLE fedex_outbound TO admin;
+GRANT SELECT ON TABLE fedex_outbound TO public;
 

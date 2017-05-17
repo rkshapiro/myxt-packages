@@ -1,4 +1,4 @@
-﻿-- View: _custom.saleshistory
+-- View: _custom.saleshistory
 
 -- DROP VIEW _custom.saleshistory;
 

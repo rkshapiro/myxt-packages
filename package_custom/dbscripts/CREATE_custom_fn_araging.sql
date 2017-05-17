@@ -1,4 +1,4 @@
-﻿-- Function: _custom.araging(date, boolean, boolean)
+-- Function: _custom.araging(date, boolean, boolean)
 
 -- DROP FUNCTION _custom.araging(date, boolean, boolean);
 

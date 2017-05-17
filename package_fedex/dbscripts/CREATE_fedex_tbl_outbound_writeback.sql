@@ -1,10 +1,10 @@
-﻿-- Table: _fedex.outbound_writeback
+-- Table: outbound_writeback
 
--- DROP TABLE _fedex.outbound_writeback;
+-- DROP TABLE outbound_writeback;
 
-CREATE TABLE _fedex.outbound_writeback
+CREATE TABLE outbound_writeback
 (
-  outbound_writeback_id integer NOT NULL DEFAULT nextval('_fedex.outbound_writeback_id_seq'::regclass),
+  outbound_writeback_id integer NOT NULL DEFAULT nextval('outbound_writeback_id_seq'::regclass),
   track_number text, -- shipped item tracking number
   order_number text,
   ship_date date,
@@ -24,12 +24,12 @@ CREATE TABLE _fedex.outbound_writeback
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE _fedex.outbound_writeback
+ALTER TABLE outbound_writeback
   OWNER TO xtrole;
-GRANT ALL ON TABLE _fedex.outbound_writeback TO xtrole;
-COMMENT ON TABLE _fedex.outbound_writeback
+GRANT ALL ON TABLE outbound_writeback TO xtrole;
+COMMENT ON TABLE outbound_writeback
   IS 'outbound writeback CSV Import';
-COMMENT ON COLUMN _fedex.outbound_writeback.track_number IS 'shipped item tracking number';
-COMMENT ON COLUMN _fedex.outbound_writeback.master_track_number IS 'shipment tracking number';
-COMMENT ON COLUMN _fedex.outbound_writeback.shiphead_number IS 'shipment number';
+COMMENT ON COLUMN outbound_writeback.track_number IS 'shipped item tracking number';
+COMMENT ON COLUMN outbound_writeback.master_track_number IS 'shipment tracking number';
+COMMENT ON COLUMN outbound_writeback.shiphead_number IS 'shipment number';
 

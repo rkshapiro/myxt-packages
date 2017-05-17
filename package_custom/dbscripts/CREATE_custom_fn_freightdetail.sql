@@ -1,4 +1,4 @@
-﻿-- Function: _custom.freightdetail(text, integer, integer, integer, date, text, integer)
+-- Function: _custom.freightdetail(text, integer, integer, integer, date, text, integer)
 
 -- DROP FUNCTION _custom.freightdetail(text, integer, integer, integer, date, text, integer);
 
