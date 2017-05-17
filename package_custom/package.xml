@@ -1,0 +1,21 @@
+<package name="_custom"
+        version="1.0.0" 
+	id="package_custom" 
+	descrip="custom public object overloads"
+	developer="rshapiro" 
+	updater="2.4.0" >
+<pkgnotes>
+	Custom - Public schema objects that have been overloaded
+</pkgnotes>
+
+<script 	file="dbscripts/DROP_oldschema.sql"  onerror="ignore"/>
+
+<createfunction    file="dbscripts/CREATE_custom_fn_araging.sql"  name="araging"  />
+<createfunction    file="dbscripts/CREATE_custom_fn_calcshipfreight.sql"  name="calcshipfreight"  />
+<createfunction    file="dbscripts/CREATE_custom_fn_freightdetail.sql"  name="freightdetail"  />
+
+<createview 	file="dbscripts/CREATE_custom_vw_saleshistory.sql"  name="saleshistory"  />
+
+<finalscript 	file="dbscripts/INS_schemaord.sql" />
+
+</package>

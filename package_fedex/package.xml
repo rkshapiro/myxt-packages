@@ -1,0 +1,18 @@
+<package name="_fedex"
+        version="1.0.0" 
+	id="package_fedex" 
+	descrip="Fedex Integration"
+	developer="rshapiro" 
+	updater="2.4.0" >
+<pkgnotes>
+	Custom - Public schema objects that have been overloaded
+</pkgnotes>
+
+<script 	file="dbscripts/DROP_oldschema.sql"  onerror="ignore"/>
+<script 	file="dbscripts/CREATE_fedex_seq_outbound_writeback.sql"  onerror="ignore"/>
+
+<createtable    file="dbscripts/CREATE_fedex_tbl_outbound_writeback.sql" name="outbound_writeback"/>
+
+<createview 	file="dbscripts/CREATE_fedex_vw_fedex_outbound.sql"  name="fedex_outbound"  />
+
+</package>
