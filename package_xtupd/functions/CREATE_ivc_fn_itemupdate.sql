@@ -27,7 +27,7 @@ DECLARE
        WHEN upper(itemupdate_sold) = 'NO' OR upper(itemupdate_sold) = 'FALSE' THEN 'f'
        ELSE itemupdate_sold
        END AS _sold, 
-       itemupdate_prodweight, itemupdate_packweight, coalesce(itemupdate_prodcat_code,'-1'), 
+       itemupdate_prodweight, itemupdate_packweight, coalesce(itemupdate_prodcat_code,'-1') AS itemupdate_prodcat_code, 
        itemupdate_listprice, itemupdate_listcost, trim(both from itemupdate_extdescrip) AS itemupdate_extdescrip, itemupdate_maxcost, 
        itemupdate_lastupdated,item_id,
        item_descrip1, item_descrip2, 
