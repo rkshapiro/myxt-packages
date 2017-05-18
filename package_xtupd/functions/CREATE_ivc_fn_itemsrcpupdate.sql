@@ -31,11 +31,15 @@ SELECT itemsrcpupdate_id, itemsrcpupdate_item_number, itemsrcpupdate_vend_number
        ELSE getcurrid(itemsrcpupdate_curr)
        END AS _currid, 
        itemsrcpupdate_discntprcnt, itemsrcpupdate_fixedamtdiscount, 
-       itemsrcpupdate_updated,item_id,vend_id,warehous_id
+       itemsrcpupdate_updated,item_id,vend_id,
+       CASE
+            WHEN itemsrcpupdate_warehous_code = 'All' THEN (-1)
+            ELSE COALESCE(getwarehousid(itemsrcpupdate_warehous_code, 'ALL'), (-1))
+        END AS warehous_id, itemsrc_id
   FROM xtupd.itemsrcpupdate
   JOIN item ON itemsrcpupdate_item_number = item_number
   JOIN vendinfo ON itemsrcpupdate_vend_number = vend_number
-  JOIN whsinfo ON itemsrcpupdate_warehous_code = warehous_code
+  JOIN itemsrc ON itemsrc_item_id = item_id AND itemsrc_vend_id = vend_id
   )
   
 LOOP
@@ -46,10 +50,8 @@ LOOP
        itemsrc_item_id, itemsrc_vend_id, itemsrc_vend_item_number, 
        itemsrc_effective, itemsrc_expires INTO _x
     FROM itemsrcp
-    JOIN itemsrc ON itemsrcp_itemsrc_id = itemsrc_id
-    WHERE itemsrc_item_id = _r.item_id
-    AND itemsrc_vend_id = _r.vend_id
-    AND trim(both from itemsrc_vend_item_number) = trim(both from _r.itemsrcpupdate_vend_item_number)
+    JOIN itemsrc ON itemsrcp_itemsrc_id = _r.itemsrc_id
+    WHERE trim(both from itemsrc_vend_item_number) = trim(both from _r.itemsrcpupdate_vend_item_number)
     AND itemsrc_expires > now();
     -- is this a new item source record?
     IF (NOT FOUND) THEN
