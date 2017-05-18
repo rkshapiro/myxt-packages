@@ -1,6 +1,6 @@
 -- Table: itemcharupdate
 
-DROP TABLE itemcharupdate;
+DROP TABLE IF EXISTS itemcharupdate;
 
 CREATE TABLE itemcharupdate
 (

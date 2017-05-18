@@ -1,6 +1,6 @@
 -- Table: itemsrcpupdate
 
--- DROP TABLE itemsrcpupdate;
+DROP TABLE IF EXISTS itemsrcpupdate;
 
 CREATE TABLE itemsrcpupdate
 (
