@@ -80,7 +80,7 @@ LOOP
        _x.itemsrcp_qtybreak, _x.itemsrcp_type, _x.itemsrcp_warehous_id,
        _x.itemsrcp_dropship,_x.itemsrcp_price, _x.itemsrcp_curr_id,
        _x.itemsrcp_discntprcnt, _x.itemsrcp_fixedamtdiscount,
-       _x.itemsrc_item_id, _x.itemsrc_vend_id, );
+       _x.itemsrc_item_id, _x.itemsrc_vend_id);
     
     IF (_match_itemsrcsrcupdate <> _match_itemsrc) THEN
       -- update item row
