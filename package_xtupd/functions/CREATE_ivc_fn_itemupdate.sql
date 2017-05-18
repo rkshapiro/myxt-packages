@@ -49,7 +49,7 @@ LOOP
     -- check for the comments
     IF (_r.itemupdate_comments IS NOT NULL) THEN
       -- append this to the existing comment
-      IF (_r.itemupdate_comments <> _r.item_comments) THEN
+      IF (length(_r.item_comments) > 0 AND _r.itemupdate_comments <> _r.item_comments) THEN
         _comments := _r.item_comments||', '||_r.itemupdate_comments;
       ELSE
         _comments := _r.itemupdate_comments;

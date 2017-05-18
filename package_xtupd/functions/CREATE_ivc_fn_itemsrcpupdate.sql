@@ -82,7 +82,7 @@ LOOP
        _x.itemsrcp_discntprcnt, _x.itemsrcp_fixedamtdiscount,
        _x.itemsrc_item_id, _x.itemsrc_vend_id);
     
-    IF (_match_itemsrcpupdate <> _match_itemsrc) THEN
+    IF (_match_itemsrcpupdate <> _match_itemsrcp) THEN
       -- update item row
       UPDATE itemsrcp
        SET itemsrcp_qtybreak=coalesce(_r.itemsrcpupdate_qtybreak,_x.itemsrcp_qtybreak),
