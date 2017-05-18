@@ -27,7 +27,7 @@ DECLARE
        itemsrcupdate_manuf_item_number, itemsrcupdate_manuf_item_descrip, 
        itemsrcupdate_default, itemsrcupdate_upccode, itemsrcupdate_contrct_number, 
        itemsrcupdate_effective, itemsrcupdate_expires,item_id,vend_id
-  FROM itemsrcupdate
+  FROM xtupd.itemsrcupdate
   JOIN item ON itemsrcupdate_item_number = item_number
   JOIN vendinfo ON itemsrcupdate_vend_number = vend_number
   )

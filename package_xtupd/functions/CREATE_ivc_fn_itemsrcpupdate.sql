@@ -28,7 +28,7 @@ SELECT itemsrcpupdate_id, itemsrcpupdate_item_number, itemsrcpupdate_vend_number
        END AS _currid, 
        itemsrcpupdate_discntprcnt, itemsrcpupdate_fixedamtdiscount, 
        itemsrcpupdate_updated,item_id,vend_id,warehous_id
-  FROM itemsrcpupdate
+  FROM xtupd.itemsrcpupdate
   JOIN item ON itemsrcpupdate_item_number = item_number
   JOIN vendinfo ON itemsrcpupdate_vend_number = vend_number
   JOIN whsinfo ON itemsrcpupdate_warehous_code = warehous_code

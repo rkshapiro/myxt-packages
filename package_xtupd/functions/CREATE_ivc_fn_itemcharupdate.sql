@@ -1,8 +1,8 @@
--- Function: itemcharupdate()
+-- Function: xtupd.itemcharupdate()
 
--- DROP FUNCTION itemcharupdate();
+-- DROP FUNCTION xtupd.itemcharupdate();
 
-CREATE OR REPLACE FUNCTION itemcharupdate()
+CREATE OR REPLACE FUNCTION xtupd.itemcharupdate()
   RETURNS text AS
 $BODY$
 -- Copyright (c) 1999-2012 by OpenMFG LLC, d/b/a xTuple. 
@@ -30,7 +30,7 @@ DECLARE
  (
   SELECT itemcharupdate_id, itemnumber, description, classcode, uom, trim(both from eccn) AS eccn, 
        trim(both from exportban) AS exportban, trim(both from origin) AS origin, trim(both from stcode) AS stcode, trim(both from tariffcode) AS tariffcode, trim(both from xreviewed) AS xreviewed, item_id
-  FROM itemcharupdate
+  FROM xtupd.itemcharupdate
   JOIN item ON (itemnumber = item_number)
   )
   
@@ -205,5 +205,5 @@ END LOOP;
 $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100;
-ALTER FUNCTION itemcharupdate()
+ALTER FUNCTION xtupd.itemcharupdate()
   OWNER TO admin;

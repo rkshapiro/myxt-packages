@@ -34,7 +34,7 @@ DECLARE
        item_classcode_id, item_comments, item_sold, 
        item_prodweight, item_packweight, item_prodcat_id, 
        item_listprice, item_listcost,item_extdescrip, item_maxcost
-  FROM itemupdate
+  FROM xtupd.itemupdate
   JOIN item ON itemupdate_number = item_number
   )
   
