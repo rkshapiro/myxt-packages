@@ -13,7 +13,7 @@ CREATE TABLE itemupdate
   itemupdate_sold text,
   itemupdate_prodcat_code text,
   itemupdate_listprice numeric(16,4),
-  itemupdate_listcost numeric(16,4),
+  itemupdate_listcost numeric(16,6),
   itemupdate_prodweight numeric(16,2),
   itemupdate_packweight numeric(16,2),
   itemupdate_comments text,
