@@ -21,19 +21,19 @@ DECLARE
  FOR _r IN
  (
   SELECT itemupdate_number, itemupdate_descrip1, itemupdate_descrip2, 
-       itemupdate_classcode_code, trim(both from itemupdate_comments), 
+       itemupdate_classcode_code, trim(both from itemupdate_comments) AS itemupdate_comments, 
        CASE 
        WHEN upper(itemupdate_sold) = 'YES' OR upper(itemupdate_sold) = 'TRUE' THEN 't'
        WHEN upper(itemupdate_sold) = 'NO' OR upper(itemupdate_sold) = 'FALSE' THEN 'f'
        ELSE itemupdate_sold
        END AS _sold, 
        itemupdate_prodweight, itemupdate_packweight, coalesce(itemupdate_prodcat_code,'-1'), 
-       itemupdate_listprice, itemupdate_listcost, trim(both from itemupdate_extdescrip), itemupdate_maxcost, 
+       itemupdate_listprice, itemupdate_listcost, trim(both from itemupdate_extdescrip) AS itemupdate_extdescrip, itemupdate_maxcost, 
        itemupdate_lastupdated,item_id,
        item_descrip1, item_descrip2, 
-       item_classcode_id, trim(both from item_comments), item_sold, 
+       item_classcode_id, trim(both from item_comments) AS item_comments, item_sold, 
        item_prodweight, item_packweight, item_prodcat_id, 
-       item_listprice, item_listcost,trim(both from item_extdescrip), item_maxcost
+       item_listprice, item_listcost,trim(both from item_extdescrip) AS item_extdescrip, item_maxcost
   FROM xtupd.itemupdate
   JOIN item ON itemupdate_number = item_number
   )
