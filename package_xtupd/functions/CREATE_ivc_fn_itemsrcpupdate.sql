@@ -56,10 +56,10 @@ LOOP
     -- is this a new item source record?
     IF (NOT FOUND) THEN
     -- insert new record if all required fields are provided
-      IF (_r.itemsrcpupdate_qtybreak IS NOT NULL
+      IF (_r.itemsrcpupdate_qtybreak = _x.itemsrcp_qtybreak
           AND _r.itemsrcpupdate_type IS NOT NULL
-          AND _r.itemsrcpupdate_warehous_code IS NOT NULL
-          AND _r.itemsrcpupdate_dropship IS NOT NULL) THEN
+          AND _r.warehous_id = _x.itemsrcp_warehous_id
+          AND _r.itemsrcpupdate_dropship = _x.itemsrcp_dropship) THEN
             INSERT INTO api.itemsourceprice
                 (item_number, vendor, vendor_item_number, effective, expires, 
                 qty_break, pricing_type, pricing_site, dropship_only, price_per_unit, 
