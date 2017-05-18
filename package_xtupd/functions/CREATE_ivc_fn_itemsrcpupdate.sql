@@ -21,7 +21,11 @@ DECLARE
  (
 SELECT itemsrcpupdate_id, itemsrcpupdate_item_number, itemsrcpupdate_vend_number, 
        itemsrcpupdate_vend_item_number, itemsrcpupdate_effective, itemsrcpupdate_expires, 
-       itemsrcpupdate_qtybreak, itemsrcpupdate_type, itemsrcpupdate_warehous_code, 
+       itemsrcpupdate_qtybreak, 
+       CASE
+        WHEN itemsrcpupdate_type = 'Discount' THEN 'D'
+        ELSE 'N'::text
+        END AS itemsrcpupdate_type, itemsrcpupdate_warehous_code, 
        itemsrcpupdate_dropship, itemsrcpupdate_price, 
        CASE WHEN itemsrcpupdate_curr IS NULL THEN basecurrid()
        ELSE getcurrid(itemsrcpupdate_curr)
