@@ -58,10 +58,10 @@ LOOP
       _comments := _r.item_comments;
     END IF;
     -- check for the prodcat id
-    IF (_r.itemupdate_prodcat_code IS NOT NULL) THEN
-      SELECT coalesce(prodcat_id,_r.item_prodcat_id) INTO _prodcat_id FROM prodcat WHERE prodcat_code = _r.itemupdate_prodcat_code;
-    ELSE
+    IF (_r.itemupdate_prodcat_code = '-1') THEN
       _prodcat_id := _r.item_prodcat_id;
+    ELSE
+        SELECT coalesce(prodcat_id,_r.item_prodcat_id) INTO _prodcat_id FROM prodcat WHERE prodcat_code = _r.itemupdate_prodcat_code;
     END IF;
     
     -- check for a change before updating
