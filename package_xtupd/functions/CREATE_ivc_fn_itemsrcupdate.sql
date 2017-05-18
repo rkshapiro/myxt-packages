@@ -10,7 +10,7 @@ $BODY$
 DECLARE
   _r  RECORD; 
   _x  RECORD;
-  _match_itemsrcpdate TEXT;
+  _match_itemsrcupdate TEXT;
   _match_itemsrc TEXT;
   _upd INTEGER := 0;
   _new INTEGER := 0;
@@ -107,7 +107,7 @@ LOOP
         itemsrc_upccode=coalesce(_r.itemsrcupdate_upccode,_x.itemsrc_upccode),
         itemsrc_effective=coalesce(_r.itemsrcupdate_effective,_x.itemsrc_effective), 
         itemsrc_expires=coalesce(_r.itemsrcupdate_expires,_x.itemsrc_expires),
-        itemsrc_contrct_id=coalesce(getcontrctid(_r.itemsrcupdate_contrct_number)
+        itemsrc_contrct_id=coalesce(getcontrctid(_r.itemsrcupdate),getcontrctid(_x.contrct_number))
         WHERE itemsrc_id = _x.itemsrc_id;
       _upd := _upd + 1;
    END IF;
