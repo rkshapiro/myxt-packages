@@ -29,12 +29,12 @@ SELECT itemsrcpupdate_id, itemsrcpupdate_item_number, itemsrcpupdate_vend_number
        itemsrcpupdate_dropship, itemsrcpupdate_price, 
        CASE WHEN itemsrcpupdate_curr IS NULL THEN basecurrid()
        ELSE getcurrid(itemsrcpupdate_curr)
-       END AS _currid, 
+       END AS _currid, itemsrcpupdate_curr,
        itemsrcpupdate_discntprcnt, itemsrcpupdate_fixedamtdiscount, 
-       itemsrcpupdate_updated,item_id,vend_id,
+       itemsrcpupdate_updated,item_id,vend_id,itemsrcpupdate_warehous_code,
        CASE
-            WHEN itemsrcpupdate_warehous_code = 'All' THEN (-1)
-            ELSE COALESCE(getwarehousid(itemsrcpupdate_warehous_code, 'ALL'), (-1))
+        WHEN itemsrcpupdate_warehous_code = 'All' THEN (-1)
+        ELSE COALESCE(getwarehousid(itemsrcpupdate_warehous_code, 'ALL'), (-1))
         END AS warehous_id, itemsrc_id
   FROM xtupd.itemsrcpupdate
   JOIN item ON itemsrcpupdate_item_number = item_number
