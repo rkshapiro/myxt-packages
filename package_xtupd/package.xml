@@ -8,15 +8,15 @@
 	Custom Professional Services - These tables and functions are used in conjunction with CSVImp to update select data in bulk.
 </pkgnotes>
 
-<createfunction	file="functions/CREATE_ivc_fn_itemcharupdate.sql"  name="itemcharupdate"  />
-<createfunction	file="functions/CREATE_ivc_fn_itemsrcpupdate.sql"  name="itemsrcpupdate"  />
-<createfunction	file="functions/CREATE_ivc_fn_itemsrcupdate.sql"  name="itemsrcupdate"  />
-<createfunction	file="functions/CREATE_ivc_fn_itemupdate.sql"  name="itemupdate"  />
+<createfunction	file="functions/CREATE_fn_itemcharupdate.sql"  name="itemcharupdate"  />
+<createfunction	file="functions/CREATE_fn_itemsrcupdate.sql"  name="itemsrcupdate"  />
+<createfunction	file="functions/CREATE_fn_itemupdate.sql"  name="itemupdate"  />
 
 <createtable 	file="tables/CREATE_tbl_itemcharupdate.sql"  name="itemcharupdate"  />
-<createtable 	file="tables/CREATE_tbl_itemsrcpupdate.sql"  name="itemsrcpupdate"  />
 <createtable 	file="tables/CREATE_tbl_itemsrcupdate.sql"  name="itemsrcupdate"  />
 <createtable 	file="tables/CREATE_tbl_itemupdate.sql"  name="itemupdate"  />
+
+<createview     file="views/CREATE_vw_itemsrcupdate_export.sql"  name="itemsrcupdate_export"    />
 
 <loadappscript    file="scripts/items.js"  name="items"  />
 
