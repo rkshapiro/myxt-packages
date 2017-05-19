@@ -17,6 +17,7 @@
 <createtable 	file="tables/CREATE_tbl_itemupdate.sql"  name="itemupdate"  />
 
 <createview     file="views/CREATE_vw_itemsrcupdate_export.sql"  name="itemsrcupdate_export"    />
+<createview     file="views/CREATE_vw_itemupdate_export.sql"  name="itemupdate_export"    />
 
 <loadappscript    file="scripts/items.js"  name="items"  />
 
