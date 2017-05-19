@@ -31,7 +31,7 @@ DECLARE
        itemsrcupdate_effective, itemsrcupdate_expires,item_id,vend_id,
        itemsrcupdate_qtybreak, 
        CASE
-         WHEN itemsrcupdate_type = 'Discount' OR 'D' THEN 'D'
+         WHEN itemsrcupdate_type = 'Discount' OR itemsrcupdate_type = 'D' THEN 'D'
          ELSE 'N'::text
        END AS itemsrcupdate_type, 
        itemsrcupdate_pricing_site,
@@ -66,7 +66,7 @@ LOOP
        itemsrcupdate_manuf_item_descrip, itemsrcupdate_upccode, itemsrcupdate_contract_number, 
        itemsrcupdate_effective, itemsrcupdate_expires, itemsrcupdate_qtybreak, 
        CASE
-         WHEN itemsrcupdate_type = 'Discount' OR 'D' THEN 'D'
+         WHEN itemsrcupdate_type = 'Discount' OR itemsrcupdate_type = 'D' THEN 'D'
          ELSE 'N'::text
        END AS itemsrcupdate_type, 
        itemsrcupdate_pricing_site, 

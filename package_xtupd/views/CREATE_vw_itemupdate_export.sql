@@ -12,7 +12,6 @@ CREATE OR REPLACE VIEW itemupdate_export AS
     prodcat.prodcat_code AS product_category,
     item.item_listprice AS list_price,
     item.item_listcost AS list_cost,
-    item.item_upccode AS upc_code,
     item.item_prodweight AS product_weight,
     item.item_packweight AS packaging_weight,
     item.item_comments AS notes,
