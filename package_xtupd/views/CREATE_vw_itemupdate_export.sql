@@ -14,8 +14,8 @@ CREATE OR REPLACE VIEW itemupdate_export AS
     item.item_listcost AS list_cost,
     item.item_prodweight AS product_weight,
     item.item_packweight AS packaging_weight,
-    item.item_comments AS notes,
-    item.item_extdescrip AS ext_description
+    replace(item.item_comments,E'\n',' | ') AS notes,
+    replace(item.item_extdescrip,E'\n',' | ')  AS ext_description
    FROM item
      LEFT JOIN prodcat ON item.item_prodcat_id = prodcat.prodcat_id
      LEFT JOIN classcode ON item.item_classcode_id = classcode.classcode_id 
