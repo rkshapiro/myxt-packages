@@ -40,8 +40,8 @@ CREATE OR REPLACE VIEW itemsrcupdate_export AS
    JOIN itemsrcp ON itemsrcp_itemsrc_id = itemsrc_id
    JOIN item ON itemsrc_item_id = item_id
    JOIN vendinfo ON itemsrc_vend_id = vend_id
-   JOIN contrct ON itemsrc_contrct_id = contrct_id
    JOIN curr_symbol ON itemsrcp_curr_id = curr_id
+   LEFT JOIN contrct ON itemsrc_contrct_id = contrct_id
    LEFT JOIN whsinfo ON itemsrcp_warehous_id = warehous_id;
 
 ALTER TABLE itemsrcupdate_export

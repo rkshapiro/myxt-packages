@@ -57,6 +57,7 @@ DECLARE
   )
   
 LOOP
+  
     -- get the matching item source row if existing
     SELECT itemsrcupdate_item_number, itemsrcupdate_vend_number, itemsrcupdate_vend_item_number, 
        itemsrcupdate_active, itemsrcupdate_default, itemsrcupdate_vend_uom, 
@@ -72,9 +73,10 @@ LOOP
     FROM xtupd.itemsrcupdate_export
     JOIN item ON item_number = itemsrcupdate_item_number
     JOIN vendinfo ON vend_number = itemsrcupdate_vend_number
-    LEFT JOIN itemsrc ON itemsrc_item_id = item_id
-    LEFT JOIN itemsrc ON itemsrc_vend_id = vend_id
-    LEFT JOIN itemsrcp ON itemsrcp_itemsrc_id = itemsrc_id;
+    LEFT JOIN itemsrc ON temsrc_item_id = item_id AND itemsrc_vend_id = vend_id
+    LEFT JOIN itemsrcp ON itemsrcp_itemsrc_id = itemsrc_id
+    WHERE itemsrc_id = _r.itemsrc_id
+    AND itemsrcp_id = _r.itemsrcp_id;
     
     -- is this a new item source record?
     IF (itemsrc_id IS NULL) THEN
@@ -102,7 +104,9 @@ LOOP
      END IF; 
 
      -- check for a new pricing record
-     If (itemsrcp_id IS NULL) THEN
+     If (itemsrcp_id IS NULL OR
+        (concat(_r.itemsrcupdate_qtybreak,_r.itemsrcupdate_pricing_site,_r.itemsrcupdate_dropship) <>
+           concat(_x.itemsrcupdate_qtybreak,_x.itemsrcupdate_pricing_site,_x.itemsrcupdate_dropship))) THEN
      -- insert new record if all required fields are provided
        IF (_r.itemsrcpupdate_qtybreak IS NOT NULL
           AND _r.itemsrcupdate_pricing_site IS NOT NULL
@@ -163,7 +167,9 @@ LOOP
     END IF;
     
     -- check for a change before updating
-    IF (_x.itemsrcp_id IS NOT NULL) THEN
+    IF (_x.itemsrcp_id IS NOT NULL AND
+       (concat(_r.itemsrcupdate_qtybreak,_r.itemsrcupdate_pricing_site,_r.itemsrcupdate_dropship) =
+       concat(_x.itemsrcupdate_qtybreak,_x.itemsrcupdate_pricing_site,_x.itemsrcupdate_dropship)) ) THEN
        _match_itemsrcpupdate = concat( 
        _r.itemsrcpupdate_vend_item_number, _r.itemsrcpupdate_effective, _r.itemsrcpupdate_expires, 
        _r.itemsrcpupdate_qtybreak, _r.itemsrcpupdate_type, _r.warehous_id, 

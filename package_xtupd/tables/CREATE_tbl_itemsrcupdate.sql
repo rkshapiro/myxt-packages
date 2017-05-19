@@ -27,7 +27,7 @@ CREATE TABLE itemsrcupdate
   itemsrcupdate_expires date DEFAULT endoftime(), -- Expiration date for item source.  Constraint for overlap.
   itemsrcupdate_qtybreak numeric(18,6),
   itemsrcupdate_type text , -- Pricing type for item source price.  Valid values are N-nominal and D-discount.
-  itemsrcupdate_warehous_code text, -- Used to determine if item source price applies only to specific site on purchase orders.
+  itemsrcupdate_pricing_site text, -- Used to determine if item source price applies only to specific site on purchase orders.
   itemsrcupdate_dropship boolean , -- Used to determine if item source price applies only to drop ship purchase orders.
   itemsrcupdate_price numeric(16,6),
   itemsrcupdate_curr text,
