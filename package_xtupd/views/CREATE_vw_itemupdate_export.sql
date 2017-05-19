@@ -1,6 +1,6 @@
 -- View: itemupdate_export
 
--- DROP VIEW itemupdate_export;
+DROP VIEW IF EXISTS itemupdate_export;
 
 CREATE OR REPLACE VIEW itemupdate_export AS 
  SELECT item.item_number::character varying AS item_number,
