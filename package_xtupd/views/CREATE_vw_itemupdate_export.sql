@@ -19,7 +19,7 @@ CREATE OR REPLACE VIEW itemupdate_export AS
     item.item_comments AS notes,
     item.item_extdescrip AS ext_description
    FROM item
-     LEFT JOIN prodcat ON item.item_prodcat_id = prodcat.prodcat_id,
+     LEFT JOIN prodcat ON item.item_prodcat_id = prodcat.prodcat_id
      LEFT JOIN classcode ON item.item_classcode_id = classcode.classcode_id 
   ORDER BY item.item_number::character varying;
 
