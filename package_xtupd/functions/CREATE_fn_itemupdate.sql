@@ -72,7 +72,7 @@ LOOP
     END IF;
     
     -- check for a change before updating
-    _match_itemupdate := concat(trim(both from _r.itemupdate_descrip1),trim(both from _r.itemupdate_descrip2),_classcode_id,_comments,_r._sold,_r.itemupdate_prodweight,_r.itemupdate_packweight,_prodcat_id,_r.itemupdate_listprice,_r.itemupdate_listcost,trim(both from _r.itemupdate_extdescrip),_r.itemupdate_maxcost);
+    _match_itemupdate := concat(trim(both from _r.itemupdate_descrip1),trim(both from _r.itemupdate_descrip2),_classcode_id,_comments,_r._sold,_r.itemupdate_prodweight,_r.itemupdate_packweight,_prodcat_id,_r.itemupdate_listprice,_r.itemupdate_listcost,replace(trim(both from itemupdate_extdescrip),' | ',E'\n'),_r.itemupdate_maxcost);
     _match_item := concat(trim(both from _r.item_descrip1),trim(both from _r.item_descrip2),_r.item_classcode_id,_r.item_comments,_r.item_sold,_r.item_prodweight,_r.item_packweight,_r.item_prodcat_id,_r.item_listprice,_r.item_listcost,trim(both from _r.item_extdescrip),_r.item_maxcost);
     
     IF (_match_itemupdate <> _match_item) THEN
