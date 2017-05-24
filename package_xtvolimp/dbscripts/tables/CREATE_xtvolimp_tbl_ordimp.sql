@@ -1,7 +1,6 @@
 --create table to receive data
 -- Table: xtvolimp.ordimp
-
--- DROP TABLE xtvolimp.ordimp;
+drop table if exists xtvolimp.ordimp cascade;
 
 CREATE TABLE xtvolimp.ordimp
 (
@@ -113,6 +112,13 @@ ordimp_initiallyshippeddate text,
 ordimp_orderid_third_party_link text,
 ordimp_orderdateutc text,
 ordimp_inserted DATE DEFAULT NULL,
+ordetail_orderdetailid text,
+ordetail_productcode text,
+ordetail_productprice text,
+ordetail_quantity text,
+ordetail_shipdate text,
+ordetail_error text,
+ordetail_import boolean,
   CONSTRAINT ordimp_pkey PRIMARY KEY (ordimp_id)
 )
 WITH (

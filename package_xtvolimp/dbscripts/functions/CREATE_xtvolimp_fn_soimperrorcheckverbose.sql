@@ -23,7 +23,7 @@ SELECT fetchmetricvalue('DefaultSellingWarehouseId') INTO _soldsiteid;
 SELECT warehous_code INTO _soldsitecode FROM whsinfo WHERE warehous_id = _soldsiteid;
 
 -- clear any previous error message in case this is a rerun
-UPDATE xtvolimp.ordetail 
+UPDATE xtvolimp.ordimp 
 SET  ordetail_error = '',
      ordetail_import = true
 WHERE length(ordetail_error) > 0;
@@ -41,7 +41,7 @@ FOR _x IN SELECT * FROM xtvolimp.soimp ORDER BY soimp_order_number
         AND cohead_saletype_id = getsaletypeid('INT');
         
         IF (FOUND) THEN
-            UPDATE xtvolimp.ordetail 
+            UPDATE xtvolimp.ordimp 
             SET  ordetail_error = 'Order ' || _x.soimp_order_number || ' already exists',
                  ordetail_import = false
             WHERE ordetail_orderdetailid = _x.orderdetailid;
@@ -56,7 +56,7 @@ FOR _x IN SELECT * FROM xtvolimp.soimp ORDER BY soimp_order_number
             WHERE item_number = _x.soimp_item_number;
 
             IF (NOT FOUND) THEN
-                UPDATE xtvolimp.ordetail 
+                UPDATE xtvolimp.ordimp 
                 SET  ordetail_error = 'Item ' || _x.soimp_item_number || ' is not defined',
                      ordetail_import = false
                 WHERE ordetail_orderdetailid = _x.orderdetailid;
@@ -71,7 +71,7 @@ FOR _x IN SELECT * FROM xtvolimp.soimp ORDER BY soimp_order_number
             WHERE item_number = _x.soimp_item_number;
 
             IF (_error) THEN
-                UPDATE xtvolimp.ordetail 
+                UPDATE xtvolimp.ordimp 
                 SET  ordetail_error = 'Item ' || _x.soimp_item_number || ' is inactive',
                      ordetail_import = false
                 WHERE ordetail_orderdetailid = _x.orderdetailid;
@@ -86,7 +86,7 @@ FOR _x IN SELECT * FROM xtvolimp.soimp ORDER BY soimp_order_number
             WHERE item_number = _x.soimp_item_number;
 
             IF (_error) THEN
-                UPDATE xtvolimp.ordetail 
+                UPDATE xtvolimp.ordimp 
                 SET  ordetail_error = 'Item ' || _x.soimp_item_number || ' is not sold',
                      ordetail_import = false
                 WHERE ordetail_orderdetailid = _x.orderdetailid;
@@ -102,7 +102,7 @@ FOR _x IN SELECT * FROM xtvolimp.soimp ORDER BY soimp_order_number
             AND itemsite_warehous_id = _soldsiteid;
 
             IF (_error) THEN
-                UPDATE xtvolimp.ordetail 
+                UPDATE xtvolimp.ordimp 
                 SET  ordetail_error = 'Item ' || _x.soimp_item_number || ' is missing item site for ' || _soldsitecode,
                      ordetail_import = false
                 WHERE ordetail_orderdetailid = _x.orderdetailid;
@@ -118,7 +118,7 @@ FOR _x IN SELECT * FROM xtvolimp.soimp ORDER BY soimp_order_number
             AND itemsite_warehous_id = _soldsiteid;
 
             IF (_error) THEN
-                UPDATE xtvolimp.ordetail 
+                UPDATE xtvolimp.ordimp 
                 SET  ordetail_error = 'Item site for ' || _x.soimp_item_number || ' in '|| _soldsitecode || ' is inactive',
                      ordetail_import = false
                 WHERE ordetail_orderdetailid = _x.orderdetailid;
@@ -134,7 +134,7 @@ FOR _x IN SELECT * FROM xtvolimp.soimp ORDER BY soimp_order_number
             AND itemsite_warehous_id = _soldsiteid;
 
             IF (_error) THEN
-                UPDATE xtvolimp.ordetail 
+                UPDATE xtvolimp.ordimp 
                 SET  ordetail_error = 'Item site for ' || _x.soimp_item_number || ' in '|| _soldsitecode || ' is not sold',
                      ordetail_import = false
                 WHERE ordetail_orderdetailid = _x.orderdetailid;
@@ -163,13 +163,13 @@ FOR _x IN SELECT * FROM xtvolimp.soimp ORDER BY soimp_order_number
                 ORDER BY bomitem_seqnumber
                 LOOP
                     IF (NOT _item.active) THEN
-                        UPDATE xtvolimp.ordetail 
+                        UPDATE xtvolimp.ordimp 
                         SET  ordetail_error = 'One or more of the components for '||_x.soimp_item_number||' is inactive for the '||_soldsitecode|| ' site.',
                              ordetail_import = false
                         WHERE ordetail_orderdetailid = _x.orderdetailid;
                         EXIT;
                     ELSIF (NOT _item.sold) THEN
-                        UPDATE xtvolimp.ordetail 
+                        UPDATE xtvolimp.ordimp 
                         SET  ordetail_error = 'One or more of the components for '||_x.soimp_item_number||' is not sold for the '||_soldsitecode|| ' site.',
                              ordetail_import = false
                         WHERE ordetail_orderdetailid = _x.orderdetailid;
@@ -186,8 +186,8 @@ FOR _x IN SELECT * FROM xtvolimp.soimp ORDER BY soimp_order_number
     SET ordimp_orderstatus = 'Import'
     WHERE ordimp_orderstatus = 'Processing'
     AND ordimp_orderid NOT IN 
-    (SELECT DISTINCT ordetail_orderid 
-    FROM xtvolimp.ordetail 
+    (SELECT DISTINCT ordimp_orderid 
+    FROM xtvolimp.ordimp
     WHERE ordetail_import = false);
 
     RETURN (SELECT count(*) FROM xtvolimp.ordimp WHERE ordimp_orderstatus = 'Import' AND ordimp_inserted IS NULL);

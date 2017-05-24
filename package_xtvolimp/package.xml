@@ -44,17 +44,17 @@
 <script 	file="dbscripts/INS_evnttype.sql"  onerror="ignore"/>
 
 <createfunction	file="dbscripts/functions/CREATE_xtvolimp_fn_soimperrorcheckverbose.sql"  name="soimperrorcheckverbose"  />
+<createfunction	file="dbscripts/functions/CREATE_xtvolimp_fn_web_importsosformsoimp.sql"  name="web_importsosformsoimp"  />
 
-<createtable 	file="dbscripts/tables/CREATE_xtvolimp_tbl_ordetail.sql"  name="ordetail"  />
 <createtable 	file="dbscripts/tables/CREATE_xtvolimp_tbl_ordimp.sql"  name="ordimp"  />
 
 <createview 	file="dbscripts/views/CREATE_xtvolimp_vw_soimp.sql"  name="soimp"  />
     
 <loadmetasql	file="client/metasql/WEB-DeleteSoimpOrder.mql"  />
-<loadmetasql	file="client/metasql/WEB-ImportSOsFromSoimp.mql"  />
 <loadmetasql	file="client/metasql/WEB-DisplaySummarizedSOIMP.mql"  />
 
 <loadappscript    file="client/scripts/initMenu.js"  name ="initMenu"  />
+
 <loadappscript    file="client/scripts/dspSoimpSum.js"  name ="dspSoimpSum"  />
 
 </package>

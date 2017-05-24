@@ -4,12 +4,12 @@
 --        Inserts customer when one does not exist
 --        Inserts SO header
 --        Inserts SO lines
---        Creates CMs
---        Allocates CMs
+--        Creates CMs removed 20170411
+--        Allocates CMs removed 20170411
 --        Updates soimp_inserted with date/time orders inserted
 --        Only performs above where AND soimp_source = 'INT' so as not to process F4F and other order 
 --        sources
--- IMPORTANT: this code has been copied to the post-SQL in the csvimp.xml KEEP THEM IN SYNC
+--        IMPORTANT: this code has been copied to the post-SQL in the csvimp.xml KEEP THEM IN SYNC
 
 -- validate orders with Processing status
 SELECT xtvolimp.soimperrorcheckverbose();
@@ -54,7 +54,7 @@ null,
 (SELECT terms_code FROM terms WHERE terms_id = fetchmetricvalue('DefaultTerms'::text)),
 --
 'Balance Forward', 0, 'USD', 'USD', 
-999999, 30, 'Credit Card', 'In Good Standing', 'f',
+NULL, 0, 'Credit Card', 'In Good Standing', 'f',
 'f', 'f', 'f',
 -- billing contact
 '',  
@@ -78,6 +78,7 @@ INSERT INTO api.salesorder
 order_number, cust_po_number, site, order_date,
 customer_number,
 sale_type,
+terms,
 -- bill to start
 billto_contact_name, -- honorific 
 billto_contact_first, billto_contact_middle, billto_contact_last,  
@@ -104,7 +105,8 @@ order_notes, shipping_notes,tax_zone
 )
 (SELECT DISTINCT soimp_order_number, soimp_po_number, soimp_sold_from_site, soimp_order_date,
 UPPER(soimp_customer_number), 
-'INT',  -- set sale type _id = 4
+'INT',  -- set sale type
+soimp_terms,
 -- billto start
 soimp_billto_cntct_honorific, 
 soimp_billto_cntct_first_name, soimp_billto_cntct_middle, soimp_billto_cntct_last_name,
@@ -126,20 +128,19 @@ soimp_shipto_name,
 soimp_shiptoaddress1, soimp_shiptoaddress2, soimp_shiptoaddress3,
 soimp_shiptocity, soimp_shiptostate, soimp_shiptozipcode, soimp_shiptocountry,
 soimp_freight, 'f'::bool,
-dsc.ordetail_productname, 
-CASE WHEN dsc.ordetail_productname is not null THEN '1-4810' ELSE NULL END,
-COALESCE(dsc.ordetail_totalprice::numeric,0),
+dsc.ordetail_productcode, 
+CASE WHEN dsc.ordimp_orderid IS NOT NULL THEN'1-4810' ELSE NULL END AS misc_account,
+COALESCE(dsc.ordetail_productprice::numeric,0),
 soimp_delivery_note, soimp_delivery_note,
 UPPER(soimp_taxzone::TEXT)
 FROM xtvolimp.soimp 
 JOIN custinfo on cust_number = soimp_customer_number
-LEFT JOIN (SELECT ordetail_orderid,ordetail_productname,ordetail_totalprice
-           FROM xtvolimp.ordetail
-           WHERE ordetail_productcode ~ 'DSC-') dsc ON dsc.ordetail_orderid = soimp_order_number
+LEFT JOIN (SELECT ordimp_orderid,ordetail_productprice,ordetail_productcode -- grab the discount line item and make it a misc charge
+           FROM xtvolimp.ordimp
+           WHERE ordetail_productcode ~ 'DSC-') dsc ON dsc.ordimp_orderid = soimp_order_number
 WHERE soimp_inserted IS NULL
       AND soimp_status = 'Import'
       AND soimp_source = 'INT');
-
 
 --Lines
 INSERT INTO api.salesline
@@ -173,7 +174,7 @@ WHERE soimp_inserted IS NULL
       AND soimp_status = 'Import'
       AND soimp_source = 'INT'
 UNION
-SELECT DISTINCT 
+SELECT DISTINCT -- put the tax into a TAX reference item
 soimp_order_number, 
 -- soimp_line_number, 
 'TAX'::text AS soimp_item_number, 
@@ -224,7 +225,9 @@ createarcreditmemo
       0::numeric, -- commission due 
       NULL::integer, -- jrnl number 
       cohead_curr_id,
-      NULL::integer, -- accnt id
+-------------------------------------------
+      getglaccntid('1-1020'), -- accnt id
+--------------------------------------------
       NULL::integer, -- pcoccayid 
       NULL::integer --taxzoneid               
     )
@@ -256,7 +259,7 @@ INSERT INTO aropenalloc
                                  AND aropen_posted = 'f'
                                  AND aropen_open = 't'
                                  AND aropen_id NOT IN (SELECT aropenalloc_aropen_id FROM aropenalloc)
-                            );
+                            ); 
 -- set inserted date
 UPDATE xtvolimp.ordimp
 SET ordimp_inserted = current_date
