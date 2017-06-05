@@ -1,0 +1,4 @@
+﻿-- Group: xtupd
+-- Name:  itemupdate_export
+-- Notes: 
+select * from xtupd.itemupdate_export;

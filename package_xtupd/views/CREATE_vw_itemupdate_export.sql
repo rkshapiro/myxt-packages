@@ -3,7 +3,7 @@
 DROP VIEW IF EXISTS itemupdate_export;
 
 CREATE OR REPLACE VIEW itemupdate_export AS 
- SELECT item.item_number::character varying AS item_number,
+ SELECT item.item_number AS item_number,
     item.item_descrip1 AS description1,
     item.item_descrip2 AS description2,
     item.item_maxcost AS maximum_desired_cost,
@@ -19,7 +19,7 @@ CREATE OR REPLACE VIEW itemupdate_export AS
    FROM item
      LEFT JOIN prodcat ON item.item_prodcat_id = prodcat.prodcat_id
      LEFT JOIN classcode ON item.item_classcode_id = classcode.classcode_id 
-  ORDER BY item.item_number::character varying;
+  ORDER BY item.item_number;
 
 ALTER TABLE itemupdate_export
   OWNER TO admin;

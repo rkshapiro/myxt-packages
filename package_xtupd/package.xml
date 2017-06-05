@@ -20,5 +20,9 @@
 <createview     file="views/CREATE_vw_itemupdate_export.sql"  name="itemupdate_export"    />
 
 <loadappscript    file="scripts/items.js"  name="items"  />
+<loadappscript    file="scripts/initMenu.js"  name="initMenu"  />
+<loadappscript    file="scripts/dspitemupdateexport.js"  name="itemupdateexport"  />
+
+<loadmetasql	file="metasql/xtupd-itemupdateexport.mql"  />
 
 </package>
