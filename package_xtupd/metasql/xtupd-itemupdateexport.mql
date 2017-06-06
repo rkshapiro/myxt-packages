@@ -1,4 +1,4 @@
-﻿-- Group: xtupd
--- Name:  itemupdate_export
+-- Group: xtupd
+-- Name:  itemupdateexport
 -- Notes: 
 select * from xtupd.itemupdate_export;
