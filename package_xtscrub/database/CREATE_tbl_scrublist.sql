@@ -1,6 +1,6 @@
 -- Table: scrublist
 
--- DROP TABLE scrublist;
+DROP TABLE IF EXISTS scrublist;
 
 CREATE TABLE scrublist
 (

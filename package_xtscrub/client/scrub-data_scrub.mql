@@ -1,4 +1,4 @@
-﻿-- Group: scrub
+-- Group: scrub
 -- Name:  data_scrub
 -- Notes: Process to remove leading/trailing spaces, new lines, and tabs from select text fields.
 SELECT scrub(),current_date;
