@@ -1,0 +1,29 @@
+<!DOCTYPE openCSVAtlasDef>
+<CSVAtlas>
+ <CSVMap>
+  <Name>scrublist</Name>
+  <Table>ivc.scrublist</Table>
+  <Action>Insert</Action>
+  <PreSQL>DELETE FROM ivc.scrublist;</PreSQL>
+  <CSVMapField>
+   <Name>schema</Name>
+   <Type>QString</Type>
+   <Column>1</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>field</Name>
+   <Type>QString</Type>
+   <Column>4</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>tablename</Name>
+   <Type>QString</Type>
+   <Column>2</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>tablepkey</Name>
+   <Type>QString</Type>
+   <Column>3</Column>
+  </CSVMapField>
+ </CSVMap>
+</CSVAtlas>

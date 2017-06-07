@@ -1,0 +1,16 @@
+<package name="xtscrub"
+        version="1.0.0" 
+	id="package_xtscrub" 
+	descrip="Installs a process that will remove leading/trailing spaces, new lines, and tabs from text fields"
+	developer="rshapiro" 
+	updater="2.4.0" >
+<pkgnotes>
+	Professional Services - see the README file in the Setup folder for instructions.
+</pkgnotes>
+
+<createfunction	file="\database\CREATE_fn_scrub.sql"  name="scrub"  />
+<createtable 	file="\database\CREATE_tbl_scrublist.sql"  name="scrublist"  />
+    
+<loadmetasql	file="\client\scrub-data_scrub.mql"   />
+
+</package>
