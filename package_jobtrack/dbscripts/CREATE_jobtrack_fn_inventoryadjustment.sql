@@ -20,7 +20,7 @@ BEGIN
 -- TBD add location specifics
               
 -- get the itemsite_id
-SELECT itemsite_id,costcat_asset_accnt_id,costcat_liability_accnt_id,item_number,item_id INTO _r
+SELECT itemsite_id,costcat_asset_accnt_id,costcat_adjustment_accnt_id,item_number,item_id INTO _r
 FROM itemsite
 JOIN item ON itemsite_item_id = item_id
 JOIN whsinfo ON itemsite_warehous_id = warehous_id
