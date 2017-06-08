@@ -1,6 +1,6 @@
 -- View: _jobtrack.xt_item
 
-DROP VIEW IF EXISTING _jobtrack.xt_item;
+DROP VIEW IF EXISTS _jobtrack.xt_item;
 
 CREATE OR REPLACE VIEW _jobtrack.xt_item AS 
 SELECT 
