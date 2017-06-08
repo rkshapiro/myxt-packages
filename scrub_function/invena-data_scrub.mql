@@ -1,4 +1,0 @@
-﻿-- Group: invena
--- Name:  data_scrub
--- Notes: Process to remove leading/trailing spaces, new lines, and tabs from select text fields.
-SELECT ivc.scrub();
