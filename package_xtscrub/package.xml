@@ -8,9 +8,9 @@
 	Professional Services - see the README file in the Setup folder for instructions.
 </pkgnotes>
 
-<createfunction	file="\database\CREATE_fn_scrub.sql"  name="scrub"  />
-<createtable 	file="\database\CREATE_tbl_scrublist.sql"  name="scrublist"  />
+<createfunction	file="database/CREATE_fn_scrub.sql"  name="scrub"  />
+<createtable 	file="database/CREATE_tbl_scrublist.sql"  name="scrublist"  />
     
-<loadmetasql	file="\client\scrub-data_scrub.mql"   />
+<loadmetasql	file="client/scrub-data_scrub.mql"   />
 
 </package>
