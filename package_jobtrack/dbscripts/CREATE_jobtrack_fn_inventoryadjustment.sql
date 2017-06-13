@@ -2,7 +2,7 @@
 
 DROP FUNCTION IF EXISTS _jobtrack.inventoryadjustment(character varying, character varying, character varying, numeric, character varying, character varying, character varying, integer, integer);
 
-CREATE OR REPLACE FUNCTION _jobtrack.inventoryadjustment(pitemnumber character varying, pwarehouscode character varying, ptrxtype character varying, pqty numeric, pordernumber character varying, pjobnumber character varying, puser character varying,source character varying, pinvhistid integer, pitemlocseries integer DEFAULT NULL::integer)
+CREATE OR REPLACE FUNCTION _jobtrack.inventoryadjustment(pitemnumber character varying, pwarehouscode character varying, ptrxtype character varying, pqty numeric, pordernumber character varying, pjobnumber character varying, puser character varying,psource character varying, pinvhistid integer, pitemlocseries integer DEFAULT NULL::integer)
   RETURNS integer AS
 $BODY$
 DECLARE
@@ -45,14 +45,14 @@ END IF;
 -- construct the comment that will be used in postinvtrans
 IF (ptrxtype='SI') THEN
 	IF (pqty<0) THEN
-		_comment = trim(both from source)||' Reverse Material Scrap';
+		_comment = trim(both from psource)||' Reverse Material Scrap';
 	ELSE
-		_comment = trim(both from source)||' Material Scrap';
+		_comment = trim(both from psource)||' Material Scrap';
 	END IF;
 ELSIF (ptrxtype='CC') THEN
-        _comment = trim(both from source)||' Cycle Count';
+        _comment = trim(both from psource)||' Cycle Count';
 ELSE
-	_comment = trim(both from source)||' Adjustment';
+	_comment = trim(both from psource)||' Adjustment';
 END IF;
 
 IF (ptrxtype='CC') THEN
