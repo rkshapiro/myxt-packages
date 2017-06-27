@@ -1,8 +1,8 @@
--- Function: _jobtrack.inventoryadjustment(character varying, character varying, character varying, numeric, character varying, character varying, character varying, integer, integer)
+-- Function: _jobtrack.inventoryadjustment(character varying, character varying, character varying, numeric, character varying, character varying, character varying, integer, integer, numeric)
 
-DROP FUNCTION IF EXISTS _jobtrack.inventoryadjustment(character varying, character varying, character varying, numeric, character varying, character varying, character varying, integer, integer);
+DROP FUNCTION IF EXISTS _jobtrack.inventoryadjustment(character varying, character varying, character varying, numeric, character varying, character varying, character varying, integer, integer, numeric);
 
-CREATE OR REPLACE FUNCTION _jobtrack.inventoryadjustment(pitemnumber character varying, pwarehouscode character varying, ptrxtype character varying, pqty numeric, pordernumber character varying, pjobnumber character varying, puser character varying,psource character varying, pinvhistid integer, pitemlocseries integer DEFAULT NULL::integer)
+CREATE OR REPLACE FUNCTION _jobtrack.inventoryadjustment(pitemnumber character varying, pwarehouscode character varying, ptrxtype character varying, pqty numeric, pordernumber character varying, pjobnumber character varying, puser character varying,psource character varying, pinvhistid integer, pitemlocseries integer DEFAULT NULL::integer,pcostovrld numeric DEFAULT NULL::numeric)
   RETURNS integer AS
 $BODY$
 DECLARE
@@ -18,6 +18,7 @@ BEGIN
 -- ptrxtype	values [+AD | SI | CC | -AD | -AD]
 -- pordernumber	is order number-line number
 -- TBD add location specifics
+-- 20170627 added pcostovrld to support casting
               
 -- get the itemsite_id
 SELECT itemsite_id,costcat_asset_accnt_id,costcat_adjustment_accnt_id,item_number,item_id INTO _r
@@ -74,7 +75,8 @@ pordernumber::text, -- doc number
 _comment::text,
 _r.costcat_asset_accnt_id,
 _r.costcat_adjustment_accnt_id,
-_itemlocSeries) INTO _invhistidNew;	
+_itemlocSeries,
+pcostovrld) INTO _invhistidNew;	
 
 SELECT postitemlocseries(_itemlocSeries) INTO _result; -- calls postinvhist that updates itemsite_qtyonhand
 
@@ -84,7 +86,7 @@ END;
 $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100;
-ALTER FUNCTION _jobtrack.inventoryadjustment(character varying, character varying, character varying, numeric, character varying, character varying, character varying, character varying, integer, integer) OWNER TO "admin";
-GRANT EXECUTE ON FUNCTION _jobtrack.inventoryadjustment(character varying, character varying, character varying, numeric, character varying, character varying, character varying, character varying, integer, integer) TO public;
-GRANT EXECUTE ON FUNCTION _jobtrack.inventoryadjustment(character varying, character varying, character varying, numeric, character varying, character varying, character varying, character varying, integer, integer) TO "admin";
-GRANT EXECUTE ON FUNCTION _jobtrack.inventoryadjustment(character varying, character varying, character varying, numeric, character varying, character varying, character varying, character varying, integer, integer) TO xtrole;
+ALTER FUNCTION _jobtrack.inventoryadjustment(character varying, character varying, character varying, numeric, character varying, character varying, character varying, character varying, integer, integer, numeric) OWNER TO "admin";
+GRANT EXECUTE ON FUNCTION _jobtrack.inventoryadjustment(character varying, character varying, character varying, numeric, character varying, character varying, character varying, character varying, integer, integer, numeric) TO public;
+GRANT EXECUTE ON FUNCTION _jobtrack.inventoryadjustment(character varying, character varying, character varying, numeric, character varying, character varying, character varying, character varying, integer, integer, numeric) TO "admin";
+GRANT EXECUTE ON FUNCTION _jobtrack.inventoryadjustment(character varying, character varying, character varying, numeric, character varying, character varying, character varying, character varying, integer, integer, numeric) TO xtrole;
