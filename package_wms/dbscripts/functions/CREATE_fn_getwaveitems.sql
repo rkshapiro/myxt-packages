@@ -87,7 +87,7 @@ select distinct coitem_cohead_id,
 	i.item_number,i.item_descrip1,ci.coitem_memo,ci.coitem_scheddate,
 	ci.coitem_linenumber, -- 20141013:rek adding line number
 	CASE 
-		WHEN _asset.isfinalsale(cohead_id) THEN 'Final Sale'
+		WHEN _report.isfinalsale(cohead_id) THEN 'Final Sale'
 		WHEN coitem_raitem_itemsite_id IS NULL THEN cohead_number
 		ELSE rahead_number
 	END as rahead_number
@@ -98,7 +98,7 @@ join public.itemsite s
 	on ci.coitem_itemsite_id = s.itemsite_id
 join public.item i
 	on i.item_id = s.itemsite_item_id
- LEFT OUTER JOIN _asset.coitem_raitem 
+ LEFT OUTER JOIN _wms.coitem_raitem 
  	ON ci.coitem_id = coitem_raitem_coitem_id
  LEFT OUTER JOIN itemalias 
  	ON (itemalias_item_id=item_id AND itemalias_number=coitem_custpn)

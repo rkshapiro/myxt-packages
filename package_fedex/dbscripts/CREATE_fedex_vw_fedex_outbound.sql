@@ -19,7 +19,7 @@ CREATE OR REPLACE VIEW fedex_outbound AS
  END AS numlabels, 
  item.item_freightclass_id AS freightclass_id, 
  shiphead.shiphead_number AS shipment_number,
- _asset.isfinalsale(cohead.cohead_id)::boolean as sale_flag,
+ _return.isfinalsale(cohead.cohead_id)::boolean as sale_flag,
  shipitem.shipitem_id
    FROM shipitem
    join coitem on shipitem_orderitem_id = coitem_id

@@ -17,7 +17,7 @@ $BODY$
 
 	BEGIN
 	-- check for a final sale where a return date is not needed
-	IF (SELECT _asset.isfinalsale(coitem_cohead_id) from coitem where coitem_id = pcoitem_id) THEN 
+	IF (SELECT _return.isfinalsale(coitem_cohead_id) from coitem where coitem_id = pcoitem_id) THEN 
 		RETURN null;
 	END IF;
 	
