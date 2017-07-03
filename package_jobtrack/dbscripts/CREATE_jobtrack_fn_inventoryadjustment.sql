@@ -76,6 +76,7 @@ _comment::text,
 _r.costcat_asset_accnt_id,
 _r.costcat_adjustment_accnt_id,
 _itemlocSeries,
+now(),
 pcostovrld) INTO _invhistidNew;	
 
 SELECT postitemlocseries(_itemlocSeries) INTO _result; -- calls postinvhist that updates itemsite_qtyonhand
