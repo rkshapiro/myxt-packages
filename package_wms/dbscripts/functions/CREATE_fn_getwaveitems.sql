@@ -87,7 +87,7 @@ select distinct coitem_cohead_id,
 	i.item_number,i.item_descrip1,ci.coitem_memo,ci.coitem_scheddate,
 	ci.coitem_linenumber, -- 20141013:rek adding line number
 	CASE 
-		WHEN _report.isfinalsale(cohead_id) THEN 'Final Sale'
+		WHEN _return.isfinalsale(cohead_id) THEN 'Final Sale'
 		WHEN coitem_raitem_itemsite_id IS NULL THEN cohead_number
 		ELSE rahead_number
 	END as rahead_number
