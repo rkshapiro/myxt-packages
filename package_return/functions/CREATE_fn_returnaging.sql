@@ -51,7 +51,7 @@ BEGIN
 		raitem_qtyreceived,
 		item_descrip1
 
-        FROM coitem_raitem
+        FROM _return.coitem_raitem
 		join cohead on coitem_raitem_cohead_id = cohead_id
 		join custinfo on cohead_cust_id = cust_id
 		join custtype on cust_custtype_id = custtype_id

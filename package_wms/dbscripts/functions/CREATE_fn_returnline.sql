@@ -66,7 +66,7 @@ BEGIN
 			FROM cohead
 
 				JOIN coitem c ON coitem_cohead_id = cohead_id
-				LEFT OUTER JOIN  coitem_raitem ON coitem_id = coitem_raitem_coitem_id
+				LEFT OUTER JOIN _wms.coitem_raitem ON coitem_id = coitem_raitem_coitem_id
 					AND  coitem_raitem.rahead_number=(SELECT _y.__ra_number)	
 				JOIN itemsite sis ON c.coitem_itemsite_id=sis.itemsite_id
 				JOIN item si ON sis.itemsite_item_id=si.item_id

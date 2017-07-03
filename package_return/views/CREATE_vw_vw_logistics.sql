@@ -59,7 +59,7 @@ UNION
                                 AND (coitem_cohead_id=cohead_id))) > 0) ) THEN 'Open'
          ELSE 'Partial'
        END AS order_status
-           FROM coitem_raitem
+           FROM _return.coitem_raitem
       JOIN cohead ON coitem_raitem.rahead_number = cohead.cohead_number
    JOIN coitem ON coitem_raitem.coitem_raitem_coitem_id = coitem.coitem_id
    JOIN itemsite ON coitem.coitem_itemsite_id = itemsite.itemsite_id
