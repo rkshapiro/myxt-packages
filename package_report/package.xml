@@ -9,11 +9,6 @@
 </pkgnotes>
 
 <script 	file="dbscripts/DROP_oldschema.sql"  onerror="ignore"/>
-<script 	file="dbscripts/mics/CREATE_seq_impact_comment_id_seq.sql"  onerror="ignore" />
-<script 	file="dbscripts/mics/CREATE_seq_impact_impact_id_seq.sql"  onerror="ignore" />
-<script 	file="dbscripts/mics/CREATE_seq_impact_teacher_comment_id_seq.sql"  onerror="ignore" />
-<script 	file="dbscripts/mics/CREATE_seq_impact_teacher_impactteacher_id_seq.sql"  onerror="ignore" />
-<script 	file="dbscripts/mics/CREATE_seq_impactteacher_impactteacher_id_seq.sql"  onerror="ignore" />
 <script 	file="dbscripts/mics/CREATE_TYPE_deferred_revenue_detail_type.sql"  onerror="ignore" />
 <script 	file="dbscripts/mics/CREATE_TYPE_deferred_revenue_summary_type.sql"  onerror="ignore" />
 <script 	file="dbscripts/mics/CREATE_TYPE_prepay_pd_statement_type.sql"  onerror="ignore" />
