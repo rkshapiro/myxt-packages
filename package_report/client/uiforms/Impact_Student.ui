@@ -1,0 +1,580 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Impact_Student</class>
+ <widget class="QDialog" name="Impact_Student">
+  <property name="windowModality">
+   <enum>Qt::WindowModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>500</width>
+    <height>650</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>500</width>
+    <height>650</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>500</width>
+    <height>650</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Add/Edit Student Impact Numbers</string>
+  </property>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>610</y>
+     <width>361</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <spacer name="horizontalSpacer">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item>
+     <widget class="QPushButton" name="_btnOK">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="text">
+       <string>OK</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="_btnCancel">
+      <property name="text">
+       <string>Cancel</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="gridLayoutWidget_3">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>0</y>
+     <width>361</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout_3">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>Customer:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="2">
+     <widget class="QLabel" name="_lblCustomer">
+      <property name="text">
+       <string>TextLabel</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="formLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>40</y>
+     <width>381</width>
+     <height>561</height>
+    </rect>
+   </property>
+   <layout class="QFormLayout" name="formLayout">
+    <property name="fieldGrowthPolicy">
+     <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+    </property>
+    <item row="0" column="0">
+     <widget class="QLabel" name="preKStudentsLabel">
+      <property name="text">
+       <string>Pre K Students</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="preKStudentsLineEdit">
+      <property name="inputMethodHints">
+       <set>Qt::ImhDigitsOnly|Qt::ImhPreferNumbers</set>
+      </property>
+      <property name="inputMask">
+       <string>00009; </string>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="cursorPosition">
+       <number>1</number>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="kindergartenStudentsLabel">
+      <property name="text">
+       <string>Kindergarten Students</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QLineEdit" name="kindergartenStudentsLineEdit">
+      <property name="inputMethodHints">
+       <set>Qt::ImhDigitsOnly|Qt::ImhPreferNumbers</set>
+      </property>
+      <property name="inputMask">
+       <string>00009; </string>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="cursorPosition">
+       <number>1</number>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="1stGradeStudentsLabel">
+      <property name="text">
+       <string>1st Grade Students</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QLineEdit" name="s1stGradeStudentsLineEdit">
+      <property name="inputMethodHints">
+       <set>Qt::ImhDigitsOnly|Qt::ImhPreferNumbers</set>
+      </property>
+      <property name="inputMask">
+       <string>00009; </string>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="cursorPosition">
+       <number>1</number>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QLabel" name="2ndGradeStudentsLabel">
+      <property name="text">
+       <string>2nd Grade Students</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QLineEdit" name="s2ndGradeStudentsLineEdit">
+      <property name="inputMethodHints">
+       <set>Qt::ImhDigitsOnly|Qt::ImhPreferNumbers</set>
+      </property>
+      <property name="inputMask">
+       <string>00009; </string>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="cursorPosition">
+       <number>1</number>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="0">
+     <widget class="QLabel" name="3rdGradeStudentsLabel">
+      <property name="text">
+       <string>3rd Grade Students</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="1">
+     <widget class="QLineEdit" name="s3rdGradeStudentsLineEdit">
+      <property name="inputMethodHints">
+       <set>Qt::ImhDigitsOnly|Qt::ImhPreferNumbers</set>
+      </property>
+      <property name="inputMask">
+       <string>00009; </string>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="cursorPosition">
+       <number>1</number>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="0">
+     <widget class="QLabel" name="4thGradeStudentsLabel">
+      <property name="text">
+       <string>4th Grade Students</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="1">
+     <widget class="QLineEdit" name="s4thGradeStudentsLineEdit">
+      <property name="inputMethodHints">
+       <set>Qt::ImhDigitsOnly|Qt::ImhPreferNumbers</set>
+      </property>
+      <property name="inputMask">
+       <string>00009; </string>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="cursorPosition">
+       <number>1</number>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="0">
+     <widget class="QLabel" name="5thGradeStudentsLabel">
+      <property name="text">
+       <string>5th Grade Students</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="1">
+     <widget class="QLineEdit" name="s5thGradeStudentsLineEdit">
+      <property name="inputMethodHints">
+       <set>Qt::ImhDigitsOnly|Qt::ImhPreferNumbers</set>
+      </property>
+      <property name="inputMask">
+       <string>00009; </string>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="cursorPosition">
+       <number>1</number>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="0">
+     <widget class="QLabel" name="6thGradeStudentsLabel">
+      <property name="text">
+       <string>6th Grade Students</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="1">
+     <widget class="QLineEdit" name="s6thGradeStudentsLineEdit">
+      <property name="inputMethodHints">
+       <set>Qt::ImhDigitsOnly|Qt::ImhPreferNumbers</set>
+      </property>
+      <property name="inputMask">
+       <string>00009; </string>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="cursorPosition">
+       <number>1</number>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="0">
+     <widget class="QLabel" name="7thGradeStudentsLabel">
+      <property name="text">
+       <string>7th Grade Students</string>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="1">
+     <widget class="QLineEdit" name="s7thGradeStudentsLineEdit">
+      <property name="inputMethodHints">
+       <set>Qt::ImhDigitsOnly|Qt::ImhPreferNumbers</set>
+      </property>
+      <property name="inputMask">
+       <string>00009; </string>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="cursorPosition">
+       <number>1</number>
+      </property>
+     </widget>
+    </item>
+    <item row="9" column="0">
+     <widget class="QLabel" name="8thGradeStudentsLabel">
+      <property name="text">
+       <string>8th Grade Students</string>
+      </property>
+     </widget>
+    </item>
+    <item row="9" column="1">
+     <widget class="QLineEdit" name="s8thGradeStudentsLineEdit">
+      <property name="inputMethodHints">
+       <set>Qt::ImhDigitsOnly|Qt::ImhPreferNumbers</set>
+      </property>
+      <property name="inputMask">
+       <string>00009; </string>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="cursorPosition">
+       <number>1</number>
+      </property>
+     </widget>
+    </item>
+    <item row="10" column="0">
+     <widget class="QLabel" name="9thGradeStudentsLabel">
+      <property name="text">
+       <string>9th Grade Students</string>
+      </property>
+     </widget>
+    </item>
+    <item row="10" column="1">
+     <widget class="QLineEdit" name="s9thGradeStudentsLineEdit">
+      <property name="inputMethodHints">
+       <set>Qt::ImhDigitsOnly|Qt::ImhPreferNumbers</set>
+      </property>
+      <property name="inputMask">
+       <string>00009; </string>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="cursorPosition">
+       <number>1</number>
+      </property>
+     </widget>
+    </item>
+    <item row="11" column="0">
+     <widget class="QLabel" name="10thGradeStudentsLabel">
+      <property name="text">
+       <string>10th Grade Students</string>
+      </property>
+     </widget>
+    </item>
+    <item row="11" column="1">
+     <widget class="QLineEdit" name="s10thGradeStudentsLineEdit">
+      <property name="inputMethodHints">
+       <set>Qt::ImhDigitsOnly|Qt::ImhPreferNumbers</set>
+      </property>
+      <property name="inputMask">
+       <string>00009; </string>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="cursorPosition">
+       <number>1</number>
+      </property>
+     </widget>
+    </item>
+    <item row="12" column="0">
+     <widget class="QLabel" name="11thGradeStudentsLabel">
+      <property name="text">
+       <string>11th Grade Students</string>
+      </property>
+     </widget>
+    </item>
+    <item row="12" column="1">
+     <widget class="QLineEdit" name="s11thGradeStudentsLineEdit">
+      <property name="inputMethodHints">
+       <set>Qt::ImhDigitsOnly|Qt::ImhPreferNumbers</set>
+      </property>
+      <property name="inputMask">
+       <string>00009; </string>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="cursorPosition">
+       <number>1</number>
+      </property>
+     </widget>
+    </item>
+    <item row="13" column="0">
+     <widget class="QLabel" name="12thGradeStudentsLabel">
+      <property name="text">
+       <string>12th Grade Students</string>
+      </property>
+     </widget>
+    </item>
+    <item row="13" column="1">
+     <widget class="QLineEdit" name="s12thGradeStudentsLineEdit">
+      <property name="inputMethodHints">
+       <set>Qt::ImhDigitsOnly|Qt::ImhPreferNumbers</set>
+      </property>
+      <property name="inputMask">
+       <string>00009; </string>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="cursorPosition">
+       <number>1</number>
+      </property>
+     </widget>
+    </item>
+    <item row="14" column="0">
+     <widget class="QLabel" name="undergraduateStudentsLabel">
+      <property name="text">
+       <string>Undergraduate Students</string>
+      </property>
+     </widget>
+    </item>
+    <item row="14" column="1">
+     <widget class="QLineEdit" name="undergraduateStudentsLineEdit">
+      <property name="inputMethodHints">
+       <set>Qt::ImhDigitsOnly|Qt::ImhPreferNumbers</set>
+      </property>
+      <property name="inputMask">
+       <string>00009; </string>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="cursorPosition">
+       <number>1</number>
+      </property>
+     </widget>
+    </item>
+    <item row="15" column="0">
+     <widget class="QLabel" name="graduateStudentsLabel">
+      <property name="text">
+       <string>Graduate Students</string>
+      </property>
+     </widget>
+    </item>
+    <item row="15" column="1">
+     <widget class="QLineEdit" name="graduateStudentsLineEdit">
+      <property name="inputMethodHints">
+       <set>Qt::ImhDigitsOnly|Qt::ImhPreferNumbers</set>
+      </property>
+      <property name="inputMask">
+       <string>00009; </string>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="cursorPosition">
+       <number>1</number>
+      </property>
+     </widget>
+    </item>
+    <item row="16" column="0">
+     <widget class="QLabel" name="outOfSchoolStudentsLabel">
+      <property name="text">
+       <string>Out of School Students</string>
+      </property>
+     </widget>
+    </item>
+    <item row="16" column="1">
+     <widget class="QLineEdit" name="outOfSchoolStudentsLineEdit">
+      <property name="inputMethodHints">
+       <set>Qt::ImhDigitsOnly|Qt::ImhPreferNumbers</set>
+      </property>
+      <property name="inputMask">
+       <string>00009; </string>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="cursorPosition">
+       <number>1</number>
+      </property>
+     </widget>
+    </item>
+    <item row="17" column="0">
+     <widget class="QLabel" name="reducedLunchStudentsLabel">
+      <property name="text">
+       <string>Reduced Lunch Students</string>
+      </property>
+     </widget>
+    </item>
+    <item row="17" column="1">
+     <widget class="QLineEdit" name="reducedLunchStudentsLineEdit">
+      <property name="inputMethodHints">
+       <set>Qt::ImhDigitsOnly|Qt::ImhPreferNumbers</set>
+      </property>
+      <property name="inputMask">
+       <string>00009; </string>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="cursorPosition">
+       <number>1</number>
+      </property>
+     </widget>
+    </item>
+    <item row="18" column="0">
+     <widget class="QLabel" name="impactTotalStudentsLabel">
+      <property name="text">
+       <string>Impact Total Students</string>
+      </property>
+     </widget>
+    </item>
+    <item row="18" column="1">
+     <widget class="QLineEdit" name="impactTotalStudentsLineEdit">
+      <property name="inputMask">
+       <string>00009; </string>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="maxLength">
+       <number>5</number>
+      </property>
+     </widget>
+    </item>
+    <item row="19" column="0">
+     <widget class="QLabel" name="commentLabel">
+      <property name="text">
+       <string>Comment</string>
+      </property>
+     </widget>
+    </item>
+    <item row="19" column="1">
+     <widget class="QLineEdit" name="commentLineEdit">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>60</height>
+       </size>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

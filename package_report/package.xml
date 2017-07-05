@@ -1,0 +1,89 @@
+<package name="_report"
+        version="1.0.0" 
+	id="package_report" 
+	descrip="Used for custom reporting"
+	developer="rshapiro" 
+	updater="2.4.0" >
+<pkgnotes>
+	Report - used for custom reporting from SSRS and xTuple
+</pkgnotes>
+
+<script 	file="dbscripts/DROP_oldschema.sql"  onerror="ignore"/>
+
+<createfunction    file="dbscripts/functions/CREATE_report_fn_getfiscalMonth.sql"  name="getfiscalmonth"  />
+<createfunction    file="dbscripts/functions/CREATE_report_fn_getfiscalQuarter.sql"  name="getfiscalquarter"  />
+<createfunction    file="dbscripts/functions/CREATE_report_fn_getfiscalYear.sql"  name="getfiscalyear"  />
+<createfunction    file="dbscripts/functions/CREATE_report_fn_monthly_deferred_revenue.sql"  name="monthly_deferred_revenue"  />
+<createfunction    file="dbscripts/functions/CREATE_report_fn_monthly_deferred_revenue_detail.sql"  name="monthly_deferred_revenue_detail"  />
+<createfunction    file="dbscripts/functions/CREATE_report_fn_pd_statement_balance.sql"  name="pd_statement_balance"  />
+<createfunction    file="dbscripts/functions/CREATE_report_fn_getschoolyear.sql"  name="getschoolyear"  />
+
+<createtable 	file="dbscripts/tables/CREATE_tbl_impact.sql"  name="impact"  />
+<createtable 	file="dbscripts/tables/CREATE_tbl_impact_comment.sql"  name="impact_comment"  />
+<createtable 	file="dbscripts/tables/CREATE_tbl_impact_teacher.sql"  name="impact_teacher"  />
+<createtable 	file="dbscripts/tables/CREATE_tbl_impact_teacher_comment.sql"  name="impact_teacher_comment"  />
+<createtable 	file="dbscripts/tables/CREATE_tbl_impactteacher.sql"  name="impactteacher"  />
+
+<createview 	file="dbscripts/views/CREATE_vw_all_sales_revenue.sql"  name="all_sales_revenue"  />
+<createview 	file="dbscripts/views/CREATE_vw_customer_start.sql"  name="customer_start"  />
+<createview 	file="dbscripts/views/CREATE_vw_contact_list.sql"  name="contact_list"  />
+<createview 	file="dbscripts/views/CREATE_vw_impact_student_count.sql"  name="impact_student_count"  />
+<createview 	file="dbscripts/views/CREATE_vw_impact_teacher_count.sql"  name="impact_teacher_count"  />
+<createview 	file="dbscripts/views/CREATE_vw_new_customer_sales.sql"  name="new_customer_sales"  />
+<createview 	file="dbscripts/views/CREATE_vw_new_member_membership_date.sql"  name="new_member_membership_date"  />
+<createview 	file="dbscripts/views/CREATE_vw_open_pd_items.sql"  name="open_pd_items"  />
+<createview 	file="dbscripts/views/CREATE_vw_prepay_revenue_detail.sql"  name="prepay_revenue_detail"  />
+<createview 	file="dbscripts/views/CREATE_vw_quote_order_comparison.sql"  name="quote_order_comparison"  />
+<createview 	file="dbscripts/views/CREATE_vw_quote_revenue.sql"  name="quote_revenue"  />
+<createview 	file="dbscripts/views/CREATE_vw_quote_summary.sql"  name="quote_summary"  />
+<createview 	file="dbscripts/views/CREATE_vw_return_analysis.sql"  name="return_analysis"  />
+<createview 	file="dbscripts/views/CREATE_vw_sales_revenue.sql"  name="sales_revenue"  />
+<createview 	file="dbscripts/views/CREATE_vw_sales_summary.sql"  name="sales_summary"  />
+<createview 	file="dbscripts/views/CREATE_vw_sales_trend.sql"  name="sales_trend"  />
+<createview 	file="dbscripts/views/CREATE_vw_student_count.sql"  name="student_count"  />
+
+<loadmetasql	file="client/metasql/report-deferredRevenueDetail.mql"  />
+<loadmetasql	file="client/metasql/report-deferredRevenueSummary.mql"  />
+<loadmetasql	file="client/metasql/report-PDStatement.mql"  />
+<loadmetasql	file="client/metasql/report-QRY_SOMissingFreight.mql"  />
+<loadmetasql	file="client/metasql/report-run_returns_analysis_list.mql"  />
+<loadmetasql	file="client/metasql/report-SO Events.mql"  />
+
+<loadreport		file="client/reports/PDStatement.xml"  />
+
+<loadappui		file="client/uiforms/DisplayDeferredRevenueDetail.ui"  />
+<loadappui		file="client/uiforms/DisplayDeferredRevenueSummary.ui"  />
+<loadappui		file="client/uiforms/DisplayPrepaidPDStatement.ui"  />
+<loadappui		file="client/uiforms/Impact.ui"  />
+<loadappui		file="client/uiforms/Impact_Student.ui"  />
+<loadappui		file="client/uiforms/Impact_Student_Comment.ui"  />
+<loadappui		file="client/uiforms/Impact_Teacher.ui"  />
+<loadappui		file="client/uiforms/Impact_Teacher_Comment.ui"  />
+
+<loadappscript    file="client/scripts/DeferredRevenueDetail.js"  name="DeferredRevenueDetail"  />
+<loadappscript    file="client/scripts/DeferredRevenueSummary.js"  name="DeferredRevenueSummary"  />
+<loadappscript    file="client/scripts/Impact.js"  name="Impact"  />
+<loadappscript    file="client/scripts/Impact_Student.js"  name="Impact_Student"  />
+<loadappscript    file="client/scripts/Impact_Student_Comment.js"  name="Impact_Student_Comment"  />
+<loadappscript    file="client/scripts/Impact_Teacher.js"  name="Impact_Teacher"  />
+<loadappscript    file="client/scripts/Impact_Teacher_Comment.js"  name="Impact_Teacher_Comment"  />
+<loadappscript    file="client/scripts/PrepaidPDStatement.js"  name="PrepaidPDStatement"  />
+
+<loadcmd name="Impact_Data" title="Impact Data..."
+         privname="Impact_Data" module="CRM"
+         executable="!customuiform">
+        Impact Data Entry Screen
+        <arg value="uiform=Impact" />
+</loadcmd>
+
+<finalscript 	file="dbscripts/mics/CREATE_seq_impact_comment_id_seq.sql" />
+<finalscript 	file="dbscripts/mics/CREATE_seq_impact_impact_id_seq.sql" />
+<finalscript 	file="dbscripts/mics/CREATE_seq_impact_teacher_comment_id_seq.sql" />
+<finalscript 	file="dbscripts/mics/CREATE_seq_impact_teacher_impactteacher_id_seq.sql" />
+<finalscript 	file="dbscripts/mics/CREATE_seq_impactteacher_impactteacher_id_seq.sql" />
+<finalscript 	file="dbscripts/mics/CREATE_TYPE_deferred_revenue_detail_type.sql" />
+<finalscript 	file="dbscripts/mics/CREATE_TYPE_deferred_revenue_summary_type.sql" />
+<finalscript 	file="dbscripts/mics/CREATE_TYPE_prepay_pd_statement_type.sql" />
+<finalscript 	file="dbscripts/mics/INSERT_cpo_evnttype.sql" />
+
+</package>

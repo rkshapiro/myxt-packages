@@ -1,0 +1,8 @@
+﻿-- Group: report
+-- Name:  PDStatement
+-- Notes: 20150828:cm Orbit 1025
+--        20151015: cm Added totals
+SELECT 0 AS pd_statement_amount_xttotalrole, * FROM _report.pd_statement_balance(
+    <? value("cust_id") ?>,
+    <? value("statement_date") ?>::DATE
+);

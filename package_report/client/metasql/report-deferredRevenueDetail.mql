@@ -1,0 +1,13 @@
+﻿-- Group: report
+-- Name:  deferredRevenueDetail
+-- Notes: 10/14/15 cm: added customer filter
+--        09/28/15 cm: initial version
+SELECT * FROM _report.monthly_deferred_revenue_detail(
+    <? value("startDate") ?>,
+    <? value("endDate") ?> 
+
+)
+WHERE true
+<? if exists("cust_id") ?>
+AND def_revenue_detail_cust_id = <? value("cust_id") ?>
+<? endif ?>

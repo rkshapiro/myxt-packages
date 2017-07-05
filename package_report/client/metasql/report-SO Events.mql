@@ -1,0 +1,92 @@
+-- Group: report
+-- Name:  SO Events
+-- Notes: daily report on internet S/O events and comments; filtering on Changlog comments excluding Created, Closed, Hold Type, and Return Date; includes comments made by Customer Profile Online; does not show 'Added to Packing List Batch' messages
+
+-- 20140131:jjb Removed comments that have 'Added to Packing List Batch' per ORBIT 409
+
+SELECT 'Event' as source,cust_number,evntlog_number as order_number,
+       evntlog_evnttime as date_time,
+       evnttype_descrip as action
+  FROM evntlog
+join evnttype on (evntlog_evnttype_id=evnttype_id)
+JOIN warehous ON (evntlog_warehous_id=warehous_id)
+join coitem on evntlog_ord_id = coitem_id
+join cohead on coitem_cohead_id = cohead_id
+join custinfo on cohead_cust_id = cust_id
+WHERE evnttype_module = 'S/O'
+and evnttype_name ~ 'item'
+and cohead_origin = 'I'
+AND evntlog_evnttime between clock_timestamp()-interval '48 hours' and clock_timestamp() 
+
+union
+
+SELECT 'Event' as source,cust_number,evntlog_number as order_number,
+       evntlog_evnttime as date_time,
+       evnttype_descrip as action
+  FROM evntlog
+join evnttype on (evntlog_evnttype_id=evnttype_id)
+JOIN warehous ON (evntlog_warehous_id=warehous_id)
+join crmacct on evntlog_ord_id = crmacct_id
+join custinfo on crmacct_cust_id = cust_id
+WHERE evntlog_evnttype_id = (SELECT evnttype_id FROM evnttype WHERE evnttype_name='CPOCustProfileSubmitted')
+AND evntlog_evnttime between clock_timestamp()-interval '48 hours' and clock_timestamp() 
+
+union
+
+SELECT 'Comment' as source,cust_number,cohead_number as order_number,comment_date as date_time,comment_text as action
+from comment
+join cmnttype on comment_cmnttype_id = cmnttype_id
+join cohead on comment_source_id = cohead_id
+join custinfo on cohead_cust_id = cust_id
+where comment_source = 'S'
+AND cohead_origin = 'I'
+and cmnttype_name = 'ChangeLog'
+and NOT comment_text ~ 'Return Date'
+and NOT comment_text ~ 'Hold Type'
+and NOT comment_text = 'Created'
+and NOT comment_text = 'Closed'
+and NOT comment_text = 'Added to Packing List Batch'
+and comment_date between clock_timestamp()-interval '48 hours' and clock_timestamp() 
+
+union
+
+SELECT 'Comment' as source,cust_number,cohead_number||'-'||coitem_linenumber as order_number,comment_date as date_time,comment_text as action
+from comment
+join cmnttype on comment_cmnttype_id = cmnttype_id
+join coitem on comment_source_id = coitem_id
+join cohead on coitem_cohead_id = cohead_id
+join custinfo on cohead_cust_id = cust_id
+where comment_source = 'SI'
+AND cohead_origin = 'I'
+and cmnttype_name = 'ChangeLog'
+and NOT comment_text ~ 'Return Date'
+and NOT comment_text ~ 'Hold Type'
+and NOT comment_text = 'Created'
+and NOT comment_text = 'Closed'
+and comment_date between clock_timestamp()-interval '48 hours' and clock_timestamp() 
+
+union 
+
+SELECT 'Comment' as source,cust_number,null as order_number,comment_date as date_time,comment_text as action
+from comment
+join cmnttype on comment_cmnttype_id = cmnttype_id
+join custinfo on comment_source_id = cust_id
+where comment_source = 'C'  
+and cmnttype_name = 'ChangeLog'
+and comment_text LIKE 'CPO user %'
+and comment_date between clock_timestamp()-interval '48 hours' and clock_timestamp() 
+
+union 
+
+SELECT 'Comment' as source,cust_number,null as order_number,comment_date as date_time,comment_text as action
+from comment
+join cmnttype on comment_cmnttype_id = cmnttype_id
+join cntct on comment_source_id=cntct_id
+join crmacct on cntct_crmacct_id=crmacct_id
+join custinfo on crmacct_cust_id = cust_id
+where comment_source = 'T'  
+and cmnttype_name = 'ChangeLog'
+and comment_text LIKE 'CPO user %'
+and comment_date between clock_timestamp()-interval '48 hours' and clock_timestamp() 
+
+order by 1,2,3,4

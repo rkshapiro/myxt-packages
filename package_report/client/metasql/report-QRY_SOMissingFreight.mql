@@ -1,0 +1,21 @@
+-- Group: report
+-- Name:  QRY_SOMissingFreight
+-- Notes: scheduled msql that lists the sales orders that are missing freight and are not Cust PU; filteres out orders with MSC site items or related to incidents
+select distinct current_date as run_date,cust_number,cust_name,cohead_number as salesorder_number, cohead_orderdate as salesorder_date
+from cohead
+join coitem on cohead_id = coitem_cohead_id
+join custinfo on cohead_cust_id = cust_id
+join itemsite on coitem_itemsite_id = itemsite_id
+join whsinfo on itemsite_warehous_id = warehous_id
+join item on itemsite_item_id = item_id
+join freightclass on item_freightclass_id = freightclass_id
+left join docass on docass_source_id = cohead_id
+where cohead_freight = 0
+and _report.getschoolyear(coitem_scheddate) = _report.getschoolyear(current_date)
+and not cohead_shipvia~'Cust PU'
+and cust_number <> 'USDED-I3'
+and warehous_code <> 'MSC'
+and docass_id IS NULL
+union
+select current_date as run_date,'no results' as cust_number,'' as cust_name,'' as salesorder_number, NULL as salesorder_date
+order by 5 desc

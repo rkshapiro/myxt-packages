@@ -1,0 +1,14 @@
+﻿-- Group: report
+-- Name:  deferredRevenueSummary
+-- Notes: 09/28/15 cm: initial version
+--        10/15/15 cm: added totals to all columns
+SELECT 	0 AS startbalance_xttotalrole,
+	0 AS periodcash_xttotalrole,
+	0 AS periodregistrations_xttotalrole,
+	0 AS endbalance_xttotalrole, 
+	* FROM _report.monthly_deferred_revenue(
+    	<? value("startDate") ?>,  
+    	<? value("endDate") ?> 
+);
+
+

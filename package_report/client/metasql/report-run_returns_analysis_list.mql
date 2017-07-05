@@ -1,0 +1,14 @@
+-- Group: report
+-- Name:  run_returns_analysis_list
+-- Notes: 20150220:rek Orbit 659. Rebuild the table _reports.return_analysis_list from the view _reports.returns_analysis
+truncate table _report.return_analysis_list;
+
+Insert into  _report.return_analysis_list
+SELECT cohead_number, item_number, item_descrip1, leaseextension, rdo, 
+       cust_number, cust_name, deliverydate, coitem_qtyord, shipdate, 
+       coitem_qtyshipped, recv_date, recv_qty, charass_returndate, rental_period, 
+       returndiffdays, returndiffweeks, rahead_warehous_id, cohead_custponumber, 
+       rahead_number, schoolyear, prj_number
+  FROM _report.return_analysis;
+
+SELECT count(*), current_date from _report.return_analysis_list;
