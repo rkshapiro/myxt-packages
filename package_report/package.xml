@@ -9,6 +9,14 @@
 </pkgnotes>
 
 <script 	file="dbscripts/DROP_oldschema.sql"  onerror="ignore"/>
+<script 	file="dbscripts/mics/CREATE_seq_impact_comment_id_seq.sql"  onerror="ignore" />
+<script 	file="dbscripts/mics/CREATE_seq_impact_impact_id_seq.sql"  onerror="ignore" />
+<script 	file="dbscripts/mics/CREATE_seq_impact_teacher_comment_id_seq.sql"  onerror="ignore" />
+<script 	file="dbscripts/mics/CREATE_seq_impact_teacher_impactteacher_id_seq.sql"  onerror="ignore" />
+<script 	file="dbscripts/mics/CREATE_seq_impactteacher_impactteacher_id_seq.sql"  onerror="ignore" />
+<script 	file="dbscripts/mics/CREATE_TYPE_deferred_revenue_detail_type.sql"  onerror="ignore" />
+<script 	file="dbscripts/mics/CREATE_TYPE_deferred_revenue_summary_type.sql"  onerror="ignore" />
+<script 	file="dbscripts/mics/CREATE_TYPE_prepay_pd_statement_type.sql"  onerror="ignore" />
 
 <createfunction    file="dbscripts/functions/CREATE_report_fn_getfiscalMonth.sql"  name="getfiscalmonth"  />
 <createfunction    file="dbscripts/functions/CREATE_report_fn_getfiscalQuarter.sql"  name="getfiscalquarter"  />
@@ -76,14 +84,6 @@
         <arg value="uiform=Impact" />
 </loadcmd>
 
-<finalscript 	file="dbscripts/mics/CREATE_seq_impact_comment_id_seq.sql" />
-<finalscript 	file="dbscripts/mics/CREATE_seq_impact_impact_id_seq.sql" />
-<finalscript 	file="dbscripts/mics/CREATE_seq_impact_teacher_comment_id_seq.sql" />
-<finalscript 	file="dbscripts/mics/CREATE_seq_impact_teacher_impactteacher_id_seq.sql" />
-<finalscript 	file="dbscripts/mics/CREATE_seq_impactteacher_impactteacher_id_seq.sql" />
-<finalscript 	file="dbscripts/mics/CREATE_TYPE_deferred_revenue_detail_type.sql" />
-<finalscript 	file="dbscripts/mics/CREATE_TYPE_deferred_revenue_summary_type.sql" />
-<finalscript 	file="dbscripts/mics/CREATE_TYPE_prepay_pd_statement_type.sql" />
 <finalscript 	file="dbscripts/mics/INSERT_cpo_evnttype.sql" />
 
 </package>
