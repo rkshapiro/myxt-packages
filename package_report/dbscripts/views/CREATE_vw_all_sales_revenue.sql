@@ -12,7 +12,7 @@ CREATE OR REPLACE VIEW _report.all_sales_revenue AS
     sum(round(coitem.coitem_qtyord * coitem.coitem_price, 2)) AS extprice,
     COALESCE(prj.prj_number, 'blank'::text) AS prj_number,
         CASE
-            WHEN _asset.isfinalsale(cohead.cohead_id) = true THEN 'MOD SALE'::text
+            WHEN _return.isfinalsale(cohead.cohead_id) = true THEN 'MOD SALE'::text
             ELSE prodcat.prodcat_code
         END AS productcode,
     cohead.cohead_orderdate AS orderdate,
