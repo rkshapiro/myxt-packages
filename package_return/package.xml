@@ -102,6 +102,7 @@
 <createfunction	file="functions/CREATE_fn_priority_returns.sql"  name="priority_returns"  />
 <createfunction	file="functions/CREATE_fn_durable_planned_order_returns.sql"  name="durable_planned_order_returns"  />
 <createfunction	file="functions/CREATE_fn_isfinalsale.sql"  name="isfinalsale"  />
+<createfunction	file="functions/CREATE_fn_isfinalsalequote.sql"  name="isfinalsalequote"  />
 
 <createview 	file="views/CREATE_vw_salesline_rental_period.sql"  name="salesline_rental_period"  />
 <createview 	file="views/CREATE_vw_salesline_return_date.sql"  name="salesline_return_date"  />
