@@ -1,8 +1,8 @@
--- Function: _report.getfiscalmonth(date)
+-- Function: getfiscalmonth(date)
 
--- DROP FUNCTION _report.getfiscalmonth(date);
+-- DROP FUNCTION getfiscalmonth(date);
 
-CREATE OR REPLACE FUNCTION _report.getfiscalmonth(date)
+CREATE OR REPLACE FUNCTION getfiscalmonth(date)
   RETURNS integer AS
 $BODY$
 DECLARE _result TEXT;
@@ -17,7 +17,7 @@ BEGIN
 END;$BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100;
-ALTER FUNCTION _report.getfiscalmonth(date) OWNER TO admin;
-GRANT EXECUTE ON FUNCTION _report.getfiscalmonth(date) TO admin;
-GRANT EXECUTE ON FUNCTION _report.getfiscalmonth(date) TO public;
-COMMENT ON FUNCTION _report.getfiscalmonth(date) IS 'Used to convert a date to fiscal month';
+ALTER FUNCTION getfiscalmonth(date) OWNER TO admin;
+GRANT EXECUTE ON FUNCTION getfiscalmonth(date) TO admin;
+GRANT EXECUTE ON FUNCTION getfiscalmonth(date) TO public;
+COMMENT ON FUNCTION getfiscalmonth(date) IS 'Used to convert a date to fiscal month';

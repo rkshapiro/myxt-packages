@@ -1,4 +1,4 @@
-﻿-- Function: isfinalsalequote(integer)
+-- Function: isfinalsalequote(integer)
 
 -- DROP FUNCTION isfinalsalequote(integer);
 

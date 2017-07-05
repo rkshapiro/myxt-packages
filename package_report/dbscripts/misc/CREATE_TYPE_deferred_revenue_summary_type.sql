@@ -1,8 +1,8 @@
--- Type: _report.deferred_revenue_summary_type
+-- Type: deferred_revenue_summary_type
 
-DROP TYPE _report.deferred_revenue_summary_type CASCADE;
+DROP TYPE IF EXISTS deferred_revenue_summary_type CASCADE;
 
-CREATE TYPE _report.deferred_revenue_summary_type AS
+CREATE TYPE deferred_revenue_summary_type AS
    (cust_id integer,
     cust_number text,
     cust_name text,
@@ -11,7 +11,7 @@ CREATE TYPE _report.deferred_revenue_summary_type AS
     periodcashppd numeric,
     periodregistrations numeric,
     endbalance numeric);
-ALTER TYPE _report.deferred_revenue_summary_type
+ALTER TYPE deferred_revenue_summary_type
   OWNER TO admin;
-COMMENT ON TYPE _report.deferred_revenue_summary_type
+COMMENT ON TYPE deferred_revenue_summary_type
   IS 'Orbit 1025 type for deferred revenue summary';

@@ -1,6 +1,6 @@
 -- Sequence: _report.impactteacher_impactteacher_id_seq
 
--- DROP SEQUENCE _report.impactteacher_impactteacher_id_seq;
+DROP SEQUENCE IF EXISTS _report.impactteacher_impactteacher_id_seq CASCADE;
 
 CREATE SEQUENCE _report.impactteacher_impactteacher_id_seq
   INCREMENT 1
@@ -15,7 +15,7 @@ GRANT ALL ON TABLE _report.impactteacher_impactteacher_id_seq TO xtrole;
 
 -- Table: _report.impactteacher
 
--- DROP TABLE _report.impactteacher;
+DROP TABLE IF EXISTS _report.impactteacher CASCADE;
 
 CREATE TABLE _report.impactteacher
 (

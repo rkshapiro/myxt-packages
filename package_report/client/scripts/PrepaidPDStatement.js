@@ -25,7 +25,7 @@ function query()
 {
 	var params = getParams();
 	
-	var qry = toolbox.executeDbQuery("AAA_ASSET","PDStatement",params);
+	var qry = toolbox.executeDbQuery("report","PDStatement",params);
 	
 	mywindow.findChild("_list").populate(qry);
 }

@@ -1,8 +1,8 @@
--- Type: _report.prepay_pd_statement_type
+-- Type: prepay_pd_statement_type
 
--- DROP TYPE _report.prepay_pd_statement_type;
+DROP TYPE IF EXISTS prepay_pd_statement_type CASCADE;
 
-CREATE TYPE _report.prepay_pd_statement_type AS
+CREATE TYPE prepay_pd_statement_type AS
    (pd_statement_doc_id integer,
     pd_statement_doc_number text,
     pd_statement_cust_id integer,
@@ -16,7 +16,7 @@ CREATE TYPE _report.prepay_pd_statement_type AS
     pd_statement_description text,
     pd_statement_prj_id integer,
     pd_statement_prj_number text);
-ALTER TYPE _report.prepay_pd_statement_type
+ALTER TYPE prepay_pd_statement_type
   OWNER TO admin;
-COMMENT ON TYPE _report.prepay_pd_statement_type
+COMMENT ON TYPE prepay_pd_statement_type
   IS 'Orbit 1025 type for prepaid pd statement function';

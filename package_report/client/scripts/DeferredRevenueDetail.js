@@ -33,7 +33,7 @@ function query()
 {
 	var params = getParams();
 	
-	var qry = toolbox.executeDbQuery("AAA_ASSET","deferredRevenueDetail",params);
+	var qry = toolbox.executeDbQuery("report","deferredRevenueDetail",params);
 	
 	mywindow.findChild("_list").populate(qry);
 }

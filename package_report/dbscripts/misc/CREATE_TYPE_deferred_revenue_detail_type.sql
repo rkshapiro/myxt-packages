@@ -1,8 +1,8 @@
--- Type: _report.deferred_revenue_detail_type
+-- Type: deferred_revenue_detail_type
 
-DROP TYPE _report.deferred_revenue_detail_type CASCADE;
+DROP TYPE IF EXISTS deferred_revenue_detail_type CASCADE;
 
-CREATE TYPE _report.deferred_revenue_detail_type AS
+CREATE TYPE deferred_revenue_detail_type AS
    (def_revenue_detail_source text,
     def_revenue_detail_doc_id integer,
     def_revenue_detail_doc_number text,
@@ -18,7 +18,7 @@ CREATE TYPE _report.deferred_revenue_detail_type AS
     def_revenue_detail_prj_id integer,
     def_revenue_detail_prj_number text,
     def_revenue_detail_item_number text);
-ALTER TYPE _report.deferred_revenue_detail_type
+ALTER TYPE deferred_revenue_detail_type
   OWNER TO admin;
-COMMENT ON TYPE _report.deferred_revenue_detail_type
+COMMENT ON TYPE deferred_revenue_detail_type
   IS 'Orbit 1025 type for deferred revenue detail';

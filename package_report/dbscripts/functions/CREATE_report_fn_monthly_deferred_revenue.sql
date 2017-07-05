@@ -1,11 +1,11 @@
--- Function: _report.monthly_deferred_revenue(date, date)
+-- Function: monthly_deferred_revenue(date, date)
 
--- DROP FUNCTION _report.monthly_deferred_revenue(date, date);
+-- DROP FUNCTION monthly_deferred_revenue(date, date);
 
-CREATE OR REPLACE FUNCTION _report.monthly_deferred_revenue(
+CREATE OR REPLACE FUNCTION monthly_deferred_revenue(
     _bopd date,
     _eopd date)
-  RETURNS SETOF _report.deferred_revenue_summary_type AS
+  RETURNS SETOF deferred_revenue_summary_type AS
 $BODY$
 
 DECLARE _bopd ALIAS FOR $1;
@@ -32,19 +32,19 @@ COALESCE(PeriodCashPPD.TotalAmount, 0) AS PeriodCashPPD,
 COALESCE(PeriodPD.TotalAmount, 0) AS PeriodRegistrations,
 COALESCE(EndCash.TotalAmount,0) + COALESCE(EndPD.TotalAmount,0) AS EndBalance
 FROM
-_report.prepay_revenue_detail LEFT OUTER JOIN 
+prepay_revenue_detail LEFT OUTER JOIN 
 
 (SELECT cust_id,SUM(COALESCE(amount, 0))AS TotalAmount
-FROM _report.prepay_revenue_detail
+FROM prepay_revenue_detail
 WHERE doc_date >= _bofy AND 
 doc_date < _bopd AND
 registered = 0  
-GROUP BY cust_id) AS StartCash ON _report.prepay_revenue_detail.cust_id = StartCash.cust_id LEFT OUTER JOIN
+GROUP BY cust_id) AS StartCash ON prepay_revenue_detail.cust_id = StartCash.cust_id LEFT OUTER JOIN
 
 
 
 (SELECT cust_id,SUM(COALESCE(amount, 0)) AS TotalAmount
-FROM _report.prepay_revenue_detail
+FROM prepay_revenue_detail
 WHERE doc_date >= _bofy AND 
 doc_date < _bopd AND 
 registered NOT IN (0) 
@@ -54,13 +54,13 @@ GROUP BY cust_id) AS PriorPD ON prepay_revenue_detail.cust_id = PriorPD.cust_id 
 
 
 (SELECT cust_id,SUM(COALESCE(amount, 0)) AS TotalAmount
-FROM _report.prepay_revenue_detail
+FROM prepay_revenue_detail
 WHERE doc_date >= _bopd AND  doc_date <= _eopd AND item_number = 'MEM-PPD' AND
 registered = 0 
 GROUP BY cust_id,cust_number) AS PeriodCashMEMPPD ON  prepay_revenue_detail.cust_id = PeriodCashMEMPPD.cust_id  LEFT OUTER JOIN
 
 (SELECT cust_id,SUM(COALESCE(amount, 0)) AS TotalAmount
-FROM _report.prepay_revenue_detail
+FROM prepay_revenue_detail
 WHERE doc_date >= _bopd AND  doc_date <= _eopd AND item_number = 'PPD' AND
 registered = 0 
 GROUP BY cust_id,cust_number) AS PeriodCashPPD ON  prepay_revenue_detail.cust_id = PeriodCashPPD.cust_id  LEFT OUTER JOIN
@@ -68,7 +68,7 @@ GROUP BY cust_id,cust_number) AS PeriodCashPPD ON  prepay_revenue_detail.cust_id
 
 
 (SELECT cust_id,SUM(COALESCE(amount, 0))AS TotalAmount
-FROM _report.prepay_revenue_detail
+FROM prepay_revenue_detail
 WHERE doc_date >= _bopd AND  doc_date <= _eopd AND
 registered NOT IN (0) 
 AND (prj_id =26 OR prj_id IS NULL)
@@ -80,7 +80,7 @@ GROUP BY cust_id,cust_number) AS PeriodPD ON prepay_revenue_detail.cust_id = Per
 
 
 (SELECT cust_id,SUM(COALESCE(amount, 0)) AS TotalAmount
-FROM _report.prepay_revenue_detail
+FROM prepay_revenue_detail
 WHERE doc_date >= _bofy AND  doc_date <= _eopd AND  
 registered = 0 
 GROUP BY cust_id,cust_number) AS EndCash ON prepay_revenue_detail.cust_id = EndCash.cust_id LEFT OUTER JOIN
@@ -89,7 +89,7 @@ GROUP BY cust_id,cust_number) AS EndCash ON prepay_revenue_detail.cust_id = EndC
 
 
 (SELECT cust_id,SUM(COALESCE(amount, 0)) AS TotalAmount
-FROM _report.prepay_revenue_detail
+FROM prepay_revenue_detail
 WHERE doc_date >= _bofy AND  doc_date <= _eopd AND  
 registered NOT IN (0) 
 AND (prj_id =26 OR prj_id IS NULL)
@@ -106,8 +106,8 @@ END;$BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100
   ROWS 1000;
-ALTER FUNCTION _report.monthly_deferred_revenue(date, date)
+ALTER FUNCTION monthly_deferred_revenue(date, date)
   OWNER TO admin;
-GRANT EXECUTE ON FUNCTION _report.monthly_deferred_revenue(date, date) TO admin;
-GRANT EXECUTE ON FUNCTION _report.monthly_deferred_revenue(date, date) TO public;
-GRANT EXECUTE ON FUNCTION _report.monthly_deferred_revenue(date, date) TO xtrole;
+GRANT EXECUTE ON FUNCTION monthly_deferred_revenue(date, date) TO admin;
+GRANT EXECUTE ON FUNCTION monthly_deferred_revenue(date, date) TO public;
+GRANT EXECUTE ON FUNCTION monthly_deferred_revenue(date, date) TO xtrole;

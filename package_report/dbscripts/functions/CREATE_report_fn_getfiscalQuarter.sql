@@ -1,8 +1,8 @@
--- Function: _report.getfiscalquarter(date)
+-- Function: getfiscalquarter(date)
 
--- DROP FUNCTION _report.getfiscalquarter(date);
+-- DROP FUNCTION getfiscalquarter(date);
 
-CREATE OR REPLACE FUNCTION _report.getfiscalquarter(date)
+CREATE OR REPLACE FUNCTION getfiscalquarter(date)
   RETURNS integer AS
 $BODY$
 DECLARE _result TEXT;
@@ -17,8 +17,8 @@ BEGIN
 END;$BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100;
-ALTER FUNCTION _report.getfiscalquarter(date) OWNER TO "admin";
-GRANT EXECUTE ON FUNCTION _report.getfiscalquarter(date) TO "admin";
-GRANT EXECUTE ON FUNCTION _report.getfiscalquarter(date) TO public;
-GRANT EXECUTE ON FUNCTION _report.getfiscalquarter(date) TO xtrole;
-COMMENT ON FUNCTION _report.getfiscalquarter(date) IS 'used to convert a date to fiscal quarter';
+ALTER FUNCTION getfiscalquarter(date) OWNER TO "admin";
+GRANT EXECUTE ON FUNCTION getfiscalquarter(date) TO "admin";
+GRANT EXECUTE ON FUNCTION getfiscalquarter(date) TO public;
+GRANT EXECUTE ON FUNCTION getfiscalquarter(date) TO xtrole;
+COMMENT ON FUNCTION getfiscalquarter(date) IS 'used to convert a date to fiscal quarter';

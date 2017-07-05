@@ -1,8 +1,8 @@
--- Function: _report.getfiscalyear(date)
+-- Function: getfiscalyear(date)
 
--- DROP FUNCTION _report.getfiscalyear(date);
+-- DROP FUNCTION getfiscalyear(date);
 
-CREATE OR REPLACE FUNCTION _report.getfiscalyear(date)
+CREATE OR REPLACE FUNCTION getfiscalyear(date)
   RETURNS integer AS
 $BODY$
 DECLARE _result TEXT;
@@ -17,9 +17,9 @@ BEGIN
 END $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100;
-ALTER FUNCTION _report.getfiscalyear(date)
+ALTER FUNCTION getfiscalyear(date)
   OWNER TO admin;
-GRANT EXECUTE ON FUNCTION _report.getfiscalyear(date) TO public;
-GRANT EXECUTE ON FUNCTION _report.getfiscalyear(date) TO admin;
-GRANT EXECUTE ON FUNCTION _report.getfiscalyear(date) TO xtrole;
-COMMENT ON FUNCTION _report.getfiscalyear(date) IS 'used for returning fiscal year Jul 2014 is FY 2015 and School Year 2014-15';
+GRANT EXECUTE ON FUNCTION getfiscalyear(date) TO public;
+GRANT EXECUTE ON FUNCTION getfiscalyear(date) TO admin;
+GRANT EXECUTE ON FUNCTION getfiscalyear(date) TO xtrole;
+COMMENT ON FUNCTION getfiscalyear(date) IS 'used for returning fiscal year Jul 2014 is FY 2015 and School Year 2014-15';

@@ -26,7 +26,7 @@ function getParams()
 function query()
 {
 	var params = getParams();
-	var qry = toolbox.executeDbQuery("AAA_ASSET","deferredRevenueSummary",params);
+	var qry = toolbox.executeDbQuery("report","deferredRevenueSummary",params);
 	mywindow.findChild("_list").populate(qry);
 }
 

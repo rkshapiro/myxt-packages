@@ -1,8 +1,8 @@
--- Function: _report.getschoolyear(date)
+-- Function: getschoolyear(date)
 
--- DROP FUNCTION _report.getschoolyear(date);
+-- DROP FUNCTION getschoolyear(date);
 
-CREATE OR REPLACE FUNCTION _report.getschoolyear(date)
+CREATE OR REPLACE FUNCTION getschoolyear(date)
   RETURNS char(9) AS
 $BODY$
 	DECLARE
@@ -25,4 +25,4 @@ $BODY$
 $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100;
-ALTER FUNCTION _report.getschoolyear(date) OWNER TO mfgadmin;
+ALTER FUNCTION getschoolyear(date) OWNER TO mfgadmin;

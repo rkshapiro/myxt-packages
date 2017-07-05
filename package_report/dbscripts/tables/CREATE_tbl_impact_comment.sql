@@ -1,6 +1,6 @@
 -- Sequence: _report.impact_comment_id_seq
 
--- DROP SEQUENCE _report.impact_comment_id_seq;
+DROP SEQUENCE IF EXISTS _report.impact_comment_id_seq CASCADE;
 
 CREATE SEQUENCE _report.impact_comment_id_seq
   INCREMENT 1
@@ -15,7 +15,7 @@ GRANT ALL ON TABLE _report.impact_comment_id_seq TO xtrole;
 
 -- Table: _report.impact_comment
 
--- DROP TABLE _report.impact_comment;
+DROP TABLE IF EXISTS _report.impact_comment CASCADE;
 
 CREATE TABLE _report.impact_comment
 (

@@ -8,14 +8,14 @@
 	Report - used for custom reporting from SSRS and xTuple
 </pkgnotes>
 
-<script 	file="dbscripts/DROP_oldschema.sql"  onerror="ignore"/>
-<script 	file="dbscripts/mics/CREATE_TYPE_deferred_revenue_detail_type.sql"  onerror="ignore" />
-<script 	file="dbscripts/mics/CREATE_TYPE_deferred_revenue_summary_type.sql"  onerror="ignore" />
-<script 	file="dbscripts/mics/CREATE_TYPE_prepay_pd_statement_type.sql"  onerror="ignore" />
+<script 	file="dbscripts/misc/DROP_oldschema.sql"  onerror="ignore"/>
+<script 	file="dbscripts/misc/CREATE_TYPE_deferred_revenue_detail_type.sql"  onerror="ignore" />
+<script 	file="dbscripts/misc/CREATE_TYPE_deferred_revenue_summary_type.sql"  onerror="ignore" />
+<script 	file="dbscripts/misc/CREATE_TYPE_prepay_pd_statement_type.sql"  onerror="ignore" />
 
-<createfunction    file="dbscripts/functions/CREATE_report_fn_getfiscalMonth.sql"  name="getfiscalmonth"  />
-<createfunction    file="dbscripts/functions/CREATE_report_fn_getfiscalQuarter.sql"  name="getfiscalquarter"  />
-<createfunction    file="dbscripts/functions/CREATE_report_fn_getfiscalYear.sql"  name="getfiscalyear"  />
+<createfunction    file="dbscripts/functions/CREATE_report_fn_getfiscalmonth.sql"  name="getfiscalmonth"  />
+<createfunction    file="dbscripts/functions/CREATE_report_fn_getfiscalquarter.sql"  name="getfiscalquarter"  />
+<createfunction    file="dbscripts/functions/CREATE_report_fn_getfiscalyear.sql"  name="getfiscalyear"  />
 <createfunction    file="dbscripts/functions/CREATE_report_fn_monthly_deferred_revenue.sql"  name="monthly_deferred_revenue"  />
 <createfunction    file="dbscripts/functions/CREATE_report_fn_monthly_deferred_revenue_detail.sql"  name="monthly_deferred_revenue_detail"  />
 <createfunction    file="dbscripts/functions/CREATE_report_fn_pd_statement_balance.sql"  name="pd_statement_balance"  />
@@ -79,6 +79,6 @@
         <arg value="uiform=Impact" />
 </loadcmd>
 
-<finalscript 	file="dbscripts/mics/INSERT_cpo_evnttype.sql" />
+<finalscript 	file="dbscripts/misc/INSERT_cpo_evnttype.sql" />
 
 </package>

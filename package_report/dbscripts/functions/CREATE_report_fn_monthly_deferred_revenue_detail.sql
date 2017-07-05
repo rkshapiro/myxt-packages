@@ -1,11 +1,11 @@
--- Function: _report.monthly_deferred_revenue_detail(date, date)
+-- Function: monthly_deferred_revenue_detail(date, date)
 
--- DROP FUNCTION _report.monthly_deferred_revenue_detail(date, date);
+-- DROP FUNCTION monthly_deferred_revenue_detail(date, date);
 
-CREATE OR REPLACE FUNCTION _report.monthly_deferred_revenue_detail(
+CREATE OR REPLACE FUNCTION monthly_deferred_revenue_detail(
     _bopd date,
     _eopd date)
-  RETURNS SETOF _report.deferred_revenue_detail_type AS
+  RETURNS SETOF deferred_revenue_detail_type AS
 $BODY$
 
 DECLARE _bopd ALIAS FOR $1;
@@ -27,7 +27,7 @@ SELECT detail.*
 FROM
 
 (SELECT '1 StartCash' AS Source, prepay_revenue_detail.*  
-FROM _report.prepay_revenue_detail
+FROM prepay_revenue_detail
 WHERE doc_date >= _bofy AND 
 doc_date < _bopd AND
 registered = 0  
@@ -37,7 +37,7 @@ registered = 0
 
 
 SELECT '2 PriorPD' ,prepay_revenue_detail.*  
-FROM _report.prepay_revenue_detail
+FROM prepay_revenue_detail
 WHERE doc_date >= _bofy AND 
 doc_date < _bopd AND 
 registered NOT IN (0) 
@@ -47,7 +47,7 @@ UNION
 
 
 SELECT '3 PeriodCash',prepay_revenue_detail.*  
-FROM _report.prepay_revenue_detail
+FROM prepay_revenue_detail
 WHERE doc_date >= _bopd AND  doc_date <= _eopd AND
 registered = 0 
   UNION
@@ -55,7 +55,7 @@ registered = 0
 
 
 SELECT '4 PeriodPD',prepay_revenue_detail.*  
-FROM _report.prepay_revenue_detail
+FROM prepay_revenue_detail
 WHERE doc_date >= _bopd AND  doc_date <= _eopd AND
 registered NOT IN (0) 
   UNION
@@ -66,7 +66,7 @@ registered NOT IN (0)
 
 
 SELECT '5 EndCash', prepay_revenue_detail.*  
-FROM _report.prepay_revenue_detail
+FROM prepay_revenue_detail
 WHERE doc_date >= _bofy AND  doc_date <= _eopd AND  
 registered = 0 
  UNION
@@ -75,7 +75,7 @@ registered = 0
 
 
 SELECT '6 EndPD',prepay_revenue_detail.*  
-FROM _report.prepay_revenue_detail
+FROM prepay_revenue_detail
 WHERE doc_date >= _bofy AND  doc_date <= _eopd AND  
 registered NOT IN (0) 
 
@@ -93,8 +93,8 @@ END;$BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100
   ROWS 1000;
-ALTER FUNCTION _report.monthly_deferred_revenue_detail(date, date)
+ALTER FUNCTION monthly_deferred_revenue_detail(date, date)
   OWNER TO admin;
-GRANT EXECUTE ON FUNCTION _report.monthly_deferred_revenue_detail(date, date) TO admin;
-GRANT EXECUTE ON FUNCTION _report.monthly_deferred_revenue_detail(date, date) TO public;
-GRANT EXECUTE ON FUNCTION _report.monthly_deferred_revenue_detail(date, date) TO xtrole;
+GRANT EXECUTE ON FUNCTION monthly_deferred_revenue_detail(date, date) TO admin;
+GRANT EXECUTE ON FUNCTION monthly_deferred_revenue_detail(date, date) TO public;
+GRANT EXECUTE ON FUNCTION monthly_deferred_revenue_detail(date, date) TO xtrole;

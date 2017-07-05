@@ -1,11 +1,11 @@
--- Function: _report.pd_statement_balance(integer, date)
+-- Function: pd_statement_balance(integer, date)
 
--- DROP FUNCTION _report.pd_statement_balance(integer, date);
+-- DROP FUNCTION pd_statement_balance(integer, date);
 
-CREATE OR REPLACE FUNCTION _report.pd_statement_balance(
+CREATE OR REPLACE FUNCTION pd_statement_balance(
     integer,
     date)
-  RETURNS SETOF _report.prepay_pd_statement_type AS
+  RETURNS SETOF prepay_pd_statement_type AS
 $BODY$
 
 DECLARE _cust ALIAS FOR $1;
@@ -51,8 +51,8 @@ END;$BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100
   ROWS 1000;
-ALTER FUNCTION _report.pd_statement_balance(integer, date)
+ALTER FUNCTION pd_statement_balance(integer, date)
   OWNER TO admin;
-GRANT EXECUTE ON FUNCTION _report.pd_statement_balance(integer, date) TO public;
-GRANT EXECUTE ON FUNCTION _report.pd_statement_balance(integer, date) TO admin;
-GRANT EXECUTE ON FUNCTION _report.pd_statement_balance(integer, date) TO xtrole;
+GRANT EXECUTE ON FUNCTION pd_statement_balance(integer, date) TO public;
+GRANT EXECUTE ON FUNCTION pd_statement_balance(integer, date) TO admin;
+GRANT EXECUTE ON FUNCTION pd_statement_balance(integer, date) TO xtrole;

@@ -1,6 +1,6 @@
 -- Sequence: _report.impact_teacher_comment_id_seq
 
--- DROP SEQUENCE _report.impact_teacher_comment_id_seq;
+DROP SEQUENCE IF EXISTS _report.impact_teacher_comment_id_seq CASCADE;
 
 CREATE SEQUENCE _report.impact_teacher_comment_id_seq
   INCREMENT 1
@@ -15,9 +15,9 @@ COMMENT ON SEQUENCE _report.impact_teacher_comment_id_seq
 
 -- Table: _report.impact_teacher_comment
 
--- DROP TABLE _report.impact_teacher_comment;
+DROP TABLE IF EXISTS _report.impact_teacher_comment CASCADE;
 
-CREATE TABLE _report.impact_teacher_comment
+CREATE TABLE _report.impact_teacher_comment 
 (
   impact_teacher_comment_id integer NOT NULL DEFAULT nextval('_report.impact_teacher_comment_id_seq'::regclass),
   impact_teacher_comment_impact_teacher_id integer NOT NULL,

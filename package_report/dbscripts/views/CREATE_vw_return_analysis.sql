@@ -28,7 +28,7 @@ SELECT
 	rahead.rahead_warehous_id,
 	cohead.cohead_custponumber,
 	rahead.rahead_number,
-	_asset._report.getschoolyear(charass.charass_value::Date) AS schoolYear,
+	_report.getschoolyear(charass.charass_value::Date) AS schoolYear,
 	prj.prj_number
 	
 FROM 

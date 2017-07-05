@@ -89,6 +89,8 @@
 <script 	file="dbscripts/DELETE_asset_old.sql" />
 <script 	file="dbscripts/CREATE_TYPE_return_items_list.sql"  onerror="ignore"/>
 <script 	file="dbscripts/CREATE_TYPE_returnaging.sql"  onerror="ignore"/>
+<script 	file="dbscripts/CREATE_TYPE_durable_planord_return_items_list.sql"  onerror="ignore"/>
+<script 	file="dbscripts/CREATE_TYPE_priority_return_items_list.sql"  onerror="ignore"/>
 <script     file="dbscripts/CREATE_privilege.sql" />
 
 <createtable 	file="tables/CREATE_tbl_matlistcomment.sql"  name="matlistcomment"  />
