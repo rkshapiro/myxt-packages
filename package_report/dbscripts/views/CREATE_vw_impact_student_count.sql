@@ -99,14 +99,14 @@ FROM
 			) as studentCount,
 		impact_created,
 		impact_students_in_district
-	from _cpo.impact impact
+	from _report.impact impact
  ) unp
  INNER JOIN
 	(SELECT        
 		impact.impact_cust_id, 
 		max(impact.impact_created) AS maxcreationdate
 	 FROM            
-		_cpo.impact
+		_report.impact
 	 GROUP BY 
 		impact.impact_cust_id
 	) AS maxdate ON unp.impact_cust_id = maxdate.impact_cust_id 

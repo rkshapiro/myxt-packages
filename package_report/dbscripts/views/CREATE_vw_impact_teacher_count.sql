@@ -66,10 +66,10 @@ CREATE OR REPLACE VIEW _report.impact_teacher_count AS
             unnest(ARRAY[impact.impact_teacher_teacher_pre_k, impact.impact_teacher_teacher_kindergarten, impact.impact_teacher_teacher_1, impact.impact_teacher_teacher_2, impact.impact_teacher_teacher_3, impact.impact_teacher_teacher_4, impact.impact_teacher_teacher_5, impact.impact_teacher_teacher_6, impact.impact_teacher_teacher_7, impact.impact_teacher_teacher_8, impact.impact_teacher_teacher_9, impact.impact_teacher_teacher_10, impact.impact_teacher_teacher_11, impact.impact_teacher_teacher_12]) AS teachercount,
             impact.impact_teacher_created,
             impact.impact_teacher_total
-           FROM _cpo.impact_teacher impact) unp
+           FROM _report.impact_teacher impact) unp
      JOIN ( SELECT impact_teacher.impact_teacher_cust_id,
             max(impact_teacher.impact_teacher_created) AS maxcreationdate
-           FROM _cpo.impact_teacher
+           FROM _report.impact_teacher
           GROUP BY impact_teacher.impact_teacher_cust_id) maxdate ON unp.impact_teacher_cust_id = maxdate.impact_teacher_cust_id AND unp.impact_teacher_created = maxdate.maxcreationdate
      JOIN custinfo custinfo ON unp.impact_teacher_cust_id = custinfo.cust_id
      JOIN cntct cntct ON custinfo.cust_corrcntct_id = cntct.cntct_id

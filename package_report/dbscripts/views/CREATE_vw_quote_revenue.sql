@@ -22,7 +22,7 @@ CREATE OR REPLACE VIEW _report.quote_revenue AS
 	sum(quitem.quitem_qtyord * quitem.quitem_price) AS extprice, 
 	to_char(min(quitem.quitem_scheddate)::timestamp with time zone, 'Mon'::text) AS deliverymonth, 
 	CASE
-		WHEN _asset.isfinalsalequote(quhead.quhead_id) = true THEN 'MOD SALE'::text
+		WHEN _return.isfinalsalequote(quhead.quhead_id) = true THEN 'MOD SALE'::text
 		ELSE prodcat.prodcat_code
 	END AS productcode, 
 	CASE
