@@ -1,4 +1,4 @@
-﻿-- Type: _report.deferred_revenue_detail_type
+-- Type: _report.deferred_revenue_detail_type
 
 DROP TYPE _report.deferred_revenue_detail_type CASCADE;
 

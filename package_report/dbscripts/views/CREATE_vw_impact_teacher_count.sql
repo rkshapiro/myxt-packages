@@ -1,4 +1,4 @@
-﻿-- View: _report.impact_teacher_count
+-- View: _report.impact_teacher_count
 
 -- DROP VIEW _report.impact_teacher_count;
 

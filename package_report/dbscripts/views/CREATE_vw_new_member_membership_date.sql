@@ -1,4 +1,4 @@
-﻿-- View: _report.new_member_membership_date
+-- View: _report.new_member_membership_date
 
 -- DROP VIEW _report.new_member_membership_date;
 

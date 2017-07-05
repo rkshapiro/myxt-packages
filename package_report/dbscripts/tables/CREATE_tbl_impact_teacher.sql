@@ -1,4 +1,4 @@
-﻿-- Table: _report.impact_teacher
+-- Table: _report.impact_teacher
 
 -- DROP TABLE _report.impact_teacher;
 

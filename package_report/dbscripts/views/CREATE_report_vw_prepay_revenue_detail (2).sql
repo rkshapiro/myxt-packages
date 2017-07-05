@@ -1,4 +1,4 @@
-﻿-- View: _report.prepay_revenue_detail
+-- View: _report.prepay_revenue_detail
 
 -- DROP VIEW _report.prepay_revenue_detail;
 

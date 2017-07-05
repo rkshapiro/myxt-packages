@@ -1,4 +1,4 @@
-﻿-- View: _report.sales_summary
+-- View: _report.sales_summary
 
 -- DROP VIEW _report.sales_summary;
 

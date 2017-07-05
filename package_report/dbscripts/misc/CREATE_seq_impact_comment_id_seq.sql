@@ -1,4 +1,4 @@
-﻿-- Sequence: impact_comment_id_seq
+-- Sequence: impact_comment_id_seq
 
 -- DROP SEQUENCE impact_comment_id_seq;
 

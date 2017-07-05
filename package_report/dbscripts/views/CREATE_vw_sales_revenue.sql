@@ -1,4 +1,4 @@
-﻿-- View: _report.sales_revenue
+-- View: _report.sales_revenue
 
 -- DROP VIEW _report.sales_revenue;
 -- 20150727:rek orbit 1001 -- corrected view to return MISC items in sales orders

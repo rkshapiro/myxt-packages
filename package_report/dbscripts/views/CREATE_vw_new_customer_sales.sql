@@ -1,4 +1,4 @@
-﻿-- View: _report.new_customer_sales
+-- View: _report.new_customer_sales
 
 -- DROP VIEW _report.new_customer_sales;
 

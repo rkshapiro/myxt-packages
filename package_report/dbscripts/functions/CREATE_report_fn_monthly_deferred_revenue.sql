@@ -1,4 +1,4 @@
-﻿-- Function: _report.monthly_deferred_revenue(date, date)
+-- Function: _report.monthly_deferred_revenue(date, date)
 
 -- DROP FUNCTION _report.monthly_deferred_revenue(date, date);
 

@@ -1,4 +1,4 @@
-﻿-- View: _report.customer_start
+-- View: _report.customer_start
 
 -- DROP VIEW _report.customer_start;
 

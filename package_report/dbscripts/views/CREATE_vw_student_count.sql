@@ -1,4 +1,4 @@
-﻿-- View: _report.student_count
+-- View: _report.student_count
 
 -- DROP VIEW _report.student_count;
 

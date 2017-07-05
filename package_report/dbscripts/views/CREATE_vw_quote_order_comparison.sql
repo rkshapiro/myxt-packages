@@ -1,4 +1,4 @@
-﻿-- View: _report.quote_order_comparison
+-- View: _report.quote_order_comparison
 
 -- DROP VIEW _report.quote_order_comparison;
 

@@ -1,4 +1,4 @@
-﻿-- View: _report.quote_summary
+-- View: _report.quote_summary
 
 -- DROP VIEW _report.quote_summary;
 

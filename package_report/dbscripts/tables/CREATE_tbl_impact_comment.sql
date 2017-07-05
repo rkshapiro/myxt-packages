@@ -1,4 +1,4 @@
-﻿-- Table: _report.impact_comment
+-- Table: _report.impact_comment
 
 -- DROP TABLE _report.impact_comment;
 

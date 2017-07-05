@@ -1,4 +1,4 @@
-﻿-- Type: _report.prepay_pd_statement_type
+-- Type: _report.prepay_pd_statement_type
 
 -- DROP TYPE _report.prepay_pd_statement_type;
 

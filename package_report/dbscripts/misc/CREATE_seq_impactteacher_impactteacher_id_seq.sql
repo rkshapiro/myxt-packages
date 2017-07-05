@@ -1,4 +1,4 @@
-﻿-- Sequence: impactteacher_impactteacher_id_seq
+-- Sequence: impactteacher_impactteacher_id_seq
 
 -- DROP SEQUENCE impactteacher_impactteacher_id_seq;
 

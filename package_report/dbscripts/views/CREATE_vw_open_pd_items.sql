@@ -1,4 +1,4 @@
-﻿-- View: _report.open_pd_items
+-- View: _report.open_pd_items
 
 -- DROP VIEW _report.open_pd_items;
 

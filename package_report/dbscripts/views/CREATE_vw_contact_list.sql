@@ -1,4 +1,4 @@
-﻿-- View: _report.contact_list
+-- View: _report.contact_list
 
 -- DROP VIEW _report.contact_list;
 

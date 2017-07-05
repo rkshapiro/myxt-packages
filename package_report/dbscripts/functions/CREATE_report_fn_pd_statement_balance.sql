@@ -1,4 +1,4 @@
-﻿-- Function: _report.pd_statement_balance(integer, date)
+-- Function: _report.pd_statement_balance(integer, date)
 
 -- DROP FUNCTION _report.pd_statement_balance(integer, date);
 

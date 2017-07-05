@@ -1,4 +1,4 @@
-﻿-- Function: _report.getfiscalquarter(date)
+-- Function: _report.getfiscalquarter(date)
 
 -- DROP FUNCTION _report.getfiscalquarter(date);
 

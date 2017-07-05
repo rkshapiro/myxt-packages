@@ -1,4 +1,4 @@
-﻿-- View: _report.all_sales_revenue
+-- View: _report.all_sales_revenue
 
 -- DROP VIEW _report.all_sales_revenue;
 

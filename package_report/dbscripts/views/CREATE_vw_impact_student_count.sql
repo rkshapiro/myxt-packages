@@ -1,4 +1,4 @@
-﻿-- View: _report.impact_student_count
+-- View: _report.impact_student_count
 
 -- DROP VIEW _report.impact_student_count;
 

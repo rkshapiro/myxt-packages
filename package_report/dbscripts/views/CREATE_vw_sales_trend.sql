@@ -1,4 +1,4 @@
-﻿-- View: _report.sales_trend
+-- View: _report.sales_trend
 
 -- DROP VIEW _report.sales_trend;
 

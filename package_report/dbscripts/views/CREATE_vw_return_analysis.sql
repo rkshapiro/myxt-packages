@@ -1,4 +1,4 @@
-﻿-- View: _report.return_analysis
+-- View: _report.return_analysis
 
 -- DROP VIEW _report.return_analysis;
 

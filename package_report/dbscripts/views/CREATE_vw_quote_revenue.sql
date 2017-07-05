@@ -1,4 +1,4 @@
-﻿-- View: _report.quote_revenue
+-- View: _report.quote_revenue
 
 -- DROP VIEW _report.quote_revenue;
 --20150114:rek change where statement to convert nulls in crmacct_cust_id to zero so that prospects can be returned.
