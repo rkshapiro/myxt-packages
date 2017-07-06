@@ -20,6 +20,8 @@
 <createfunction    file="dbscripts/functions/CREATE_report_fn_monthly_deferred_revenue_detail.sql"  name="monthly_deferred_revenue_detail"  />
 <createfunction    file="dbscripts/functions/CREATE_report_fn_pd_statement_balance.sql"  name="pd_statement_balance"  />
 <createfunction    file="dbscripts/functions/CREATE_report_fn_getschoolyear.sql"  name="getschoolyear"  />
+<createfunction    file="dbscripts/functions/CREATE_report_fn_getpriorrevid.sql"  name="getpriorrevid"  />
+<createfunction    file="dbscripts/functions/CREATE_report_fn_monthly_cogs.sql"  name="monthly_cogs"  />
 
 <createtable 	file="dbscripts/tables/CREATE_tbl_impact.sql"  name="impact"  />
 <createtable 	file="dbscripts/tables/CREATE_tbl_impact_comment.sql"  name="impact_comment"  />
@@ -51,17 +53,26 @@
 <loadmetasql	file="client/metasql/report-QRY_SOMissingFreight.mql"  />
 <loadmetasql	file="client/metasql/report-run_returns_analysis_list.mql"  />
 <loadmetasql	file="client/metasql/report-SO Events.mql"  />
+<loadmetasql	file="client/metasql/report-ProductItemGroupPricing.mql"  />
+<loadmetasql	file="client/metasql/report-product_family_price.mql"  />
+<loadmetasql	file="client/metasql/report-ProductItemPricing.mql"  />
 
 <loadreport		file="client/reports/PDStatement.xml"  />
+<loadreport		file="client/reports/ProductFamilyPrices.xml"  />
+<loadreport		file="client/reports/ProductItemFamilyPricingReport.xml"  />
+<loadreport		file="client/reports/ProductItemPricingReport.xml"  />
+<loadreport		file="client/reports/PDF_Customer_Profile.xml"  />
 
-<loadappui		file="client/uiforms/DisplayDeferredRevenueDetail.ui"  />
-<loadappui		file="client/uiforms/DisplayDeferredRevenueSummary.ui"  />
-<loadappui		file="client/uiforms/DisplayPrepaidPDStatement.ui"  />
+<loadappui		file="client/uiforms/DeferredRevenueDetail.ui"  />
+<loadappui		file="client/uiforms/DeferredRevenueSummary.ui"  />
+<loadappui		file="client/uiforms/PrepaidPDStatement.ui"  />
 <loadappui		file="client/uiforms/Impact.ui"  />
 <loadappui		file="client/uiforms/Impact_Student.ui"  />
 <loadappui		file="client/uiforms/Impact_Student_Comment.ui"  />
 <loadappui		file="client/uiforms/Impact_Teacher.ui"  />
 <loadappui		file="client/uiforms/Impact_Teacher_Comment.ui"  />
+<loadappui		file="client/uiforms/ProductFamily_Price.ui"  />
+<loadappui		file="client/uiforms/ProductItemPricing.ui"  />
 
 <loadappscript    file="client/scripts/DeferredRevenueDetail.js"  name="DeferredRevenueDetail"  />
 <loadappscript    file="client/scripts/DeferredRevenueSummary.js"  name="DeferredRevenueSummary"  />
@@ -71,12 +82,69 @@
 <loadappscript    file="client/scripts/Impact_Teacher.js"  name="Impact_Teacher"  />
 <loadappscript    file="client/scripts/Impact_Teacher_Comment.js"  name="Impact_Teacher_Comment"  />
 <loadappscript    file="client/scripts/PrepaidPDStatement.js"  name="PrepaidPDStatement"  />
+<loadappscript    file="client/scripts/ProductFamily_Price.js"  name="ProductFamily_Price"  />
+<loadappscript    file="client/scripts/ProductItemPricing.js"  name="ProductItemPricing"  />
 
 <loadcmd name="Impact_Data" title="Impact Data..."
          privname="Impact_Data" module="CRM"
          executable="!customuiform">
         Impact Data Entry Screen
         <arg value="uiform=Impact" />
+</loadcmd>
+
+<loadcmd name="PDF_Customer_Profile" title="PDF Customer Profile"
+         privname="AAA_PDF_Customer_Profile" module="CRM"
+         executable="\\ai-mars01\company\TECHNOLOGY\xTuple\openrpt\rptrender">
+        Print PDF of the Customer Profile report
+        <arg value="-databaseURL=psql://exp-pluto01/asset_prod:5432" />
+        <arg value="-passwd=1openrpt1" />
+        <arg value="-username=openrpt" />
+        <arg value="-loadfromDB=PDF_Customer_Profile" />
+</loadcmd>
+
+<loadcmd name="ProductFamily_Price" title="Product Family Pricing"
+         privname="ProductFamilyPricing" module="Sales"
+         executable="!customuiform">
+        Product Family Pricing screen
+        <arg value="uiform=ProductFamily_Price" />
+</loadcmd>
+
+<loadcmd name="CustomerPrepaidBalance" title="Customer Prepaid Balance"
+         privname="CustomerPrepaidBalance" module="Sales"
+         executable="!customuiform">
+        Product Family Pricing screen
+        <arg value="uiform=PrepaidPDStatement" />
+</loadcmd>
+
+<loadcmd name="DeferredRevenueSummary" title="Deferred Revenue - Summary"
+         privname="DeferredRevenueSummary" module="Accounting"
+         executable="!customuiform">
+        Product Family Pricing screen
+        <arg value="uiform=DeferredRevenueSummary" />
+</loadcmd>
+
+<loadcmd name="DeferredRevenueDetail" title="Deferred Revenue - Detail"
+         privname="DeferredRevenueDetail" module="Accounting"
+         executable="!customuiform">
+        Deferred Revenue Detail screen
+        <arg value="uiform=DeferredRevenueDetail" />
+</loadcmd>
+
+<loadcmd name="ProductFamilyPricingSheet" title="Product Family Pricing Report"
+         privname="ProductFamilyPricingSheet" module="Products"
+         executable="\\ai-mars01\company\TECHNOLOGY\xTuple\openrpt\rptrender">
+        Product Family Pricing report
+        <arg value="-databaseURL=psql://exp-pluto01/asset_prod:5432" />
+        <arg value="-passwd=1openrpt1" />
+        <arg value="-username=openrpt" />
+        <arg value="-loadfromDB=ProductItemFamilyPricingReport" />
+</loadcmd>
+
+<loadcmd name="ProductItemPricingForm" title="Product Item Pricing Form"
+         privname="ProductItemPricingForm" module="Products"
+         executable="!customuiform">
+        Item Pricing screen
+        <arg value="uiform=ProductItemPricing" />
 </loadcmd>
 
 <finalscript 	file="dbscripts/misc/INSERT_cpo_evnttype.sql" />

@@ -1,0 +1,31 @@
+-- Group: report
+-- Name:  product_family_price
+-- Notes: 20150810:rks Orbit 964
+SELECT
+itemgrp_id,
+itemgrp_name,
+item_id,
+item_number,
+item_descrip1,
+classcode_code,
+charass_value as rental_period,	
+itemprice(item_id,getcustid('GUEST'),getshiptoid('GUEST','1'),1,uom_id,uom_id,1,current_date,current_date,35) as current_nonmember_price,
+itemprice(item_id,getcustid('GUESTMEM'),getshiptoid('GUESTMEM','1'),1,uom_id,uom_id,1,current_date,current_date,35) as current_member_price,
+itemprice(item_id,getcustid('GUEST'),getshiptoid('GUEST','1'),1,uom_id,uom_id,1,current_date+365,current_date+365,35) as future_nonmember_price,
+itemprice(item_id,getcustid('GUESTMEM'),getshiptoid('GUESTMEM','1'),1,uom_id,uom_id,1,current_date+365,current_date+365,35) as future_member_price
+FROM item
+join uom on item_price_uom_id = uom_id
+join classcode on item_classcode_id = classcode_id
+JOIN itemgrpitem ON item.item_id = itemgrpitem.itemgrpitem_item_id
+JOIN itemgrp ON itemgrpitem.itemgrpitem_itemgrp_id = itemgrp.itemgrp_id
+LEFT JOIN
+  (
+	SELECT charass_target_id,charass_value 
+	FROM public.charass
+	JOIN public.char ON char_id = charass_char_id
+	WHERE	char_name = 'RENTAL PERIOD' AND 
+		charass_target_type = 'I'
+		
+  ) charass ON item.item_id = charass.charass_target_id
+WHERE itemgrp_id = <? value("itemgrp_id") ?>
+ORDER BY item_number

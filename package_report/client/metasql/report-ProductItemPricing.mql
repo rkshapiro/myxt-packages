@@ -1,0 +1,53 @@
+-- Group: report
+-- Name:  ProductItemPricing
+-- Notes: 20150410:rek Orbit 793.
+<? if exists("indentedBOM") ?>
+SELECT 
+	child_item_id as id,
+	child_item_id as altid,
+	child_item_number as bomdata_item_number,
+	child_item_descrip1 as bomdata_itemdescription,
+	uom.uom_descrip  AS bomdata_uom_name,
+	0 AS bomdata_batchsize,
+	0 AS bomdata_qtyfxd,
+	bomitem_qtyper AS bomdata_qtyper,
+	0 AS bomdata_scrap,
+	'2011-01-01' AS bomdata_effective,
+	'2099-01-01' AS bomdata_expires,
+	existing_unitcost AS unitcost,
+	existing_extcost AS extendedcost,
+	item_listprice AS currentlistprice,
+	calc_list_price AS calculatedlistprice,
+	child_classcode_code AS classcode_code,
+	'qty' AS bomdata_batchsize_xtnumericrole,
+       'qty' AS bomdata_qtyfxd_xtnumericrole,
+       'qtyper' AS bomdata_qtyper_xtnumericrole,
+       'percent' AS bomdata_scrap_xtnumericrole,
+       'qtyper' AS bomdata_qtyreq_xtnumericrole,
+       'cost' AS unitcost_xtnumericrole,
+       'cost' AS extendedcost_xtnumericrole,
+       '' AS bomdata_effective_qtdisplayrole,
+        '' AS bomdata_expires_qtdisplayrole,
+       '' AS qtforegroundrole,
+	xtindentrole,
+	index as bomdata_bomwork_seqnumber,
+	itemcost_updated
+FROM _asset.getkitbomcost(<? value("item_id") ?>::integer,
+	<? if exists("markup") ?><? value("markup") ?>::numeric
+	<? else ?> 0.15
+	<? endif ?>,
+	<? if exists("years") ?><? value("years") ?>::numeric
+	<? else ?> 3
+	<? endif ?>,
+	<? if exists("useStandardCosts") ?> 0
+	<? else ?> 1
+	<? endif ?>
+) xxx
+LEFT JOIN public.item ON xxx.child_item_id = item.item_id
+LEFT JOIN public.itemcost ON xxx.child_item_id = itemcost.itemcost_item_id
+JOIN public.uom ON item.item_price_uom_id = uom.uom_id
+ORDER BY index,child_item_number
+
+
+<? endif ?>
+     
