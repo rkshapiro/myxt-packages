@@ -1,0 +1,39 @@
+<package name="xtcrm"
+        version="1.0.0" 
+	id="crm_enhancements" 
+	descrip="crm customizations for Insignia"
+	developer="rshapiro" 
+	updater="2.4.0" >
+<pkgnotes>
+	Custom Professional Services - custom comment entry screen for Insignia
+	Designed to be a custom command that is activated using a hot key. 
+	Also, adds last contacted column to Opportunity List.
+</pkgnotes>
+
+<prerequisite type="Query" name="Checking for Message comment type" >
+  <query>
+    SELECT count(*) = 1 
+    FROM public.cmnttype
+    WHERE cmnttype_name = 'Message';
+  </query>
+  <message>
+    The Message comment type is not defined
+  </message>
+</prerequisite>
+  
+<loadmetasql		file="resources/opportunities-detail.mql"  grade="10"  />
+
+<loadappui			file="resources/crmacct_message.ui"  name="crmacct_message"  />
+
+<loadappscript    	file="resources/crmacct_message.js"  name="crmacct_message"  />
+<loadappscript    	file="resources/opportunityList.js"  name="opportunityList"  />
+
+<loadcmd name="crmAcctmessage" title="CRM Message"
+         privname="crmAcctmessage" module="CRM"
+         executable="!customuiform">
+        Custom Command to open CRM account comment screen
+        <arg value="uiform=crmacct_message" />
+        <arg value="mode=view"           />
+</loadcmd>
+
+</package>
