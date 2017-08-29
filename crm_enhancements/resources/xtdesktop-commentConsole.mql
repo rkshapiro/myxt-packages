@@ -1,0 +1,467 @@
+-- Group: desktop
+-- Name:  commentConsole
+-- Notes: Insignia - exclude changelog Comment type
+--        Comment Console Query - update for OPP in 3.8
+--        Copyright (c) 1999-2017 by OpenMFG LLC, d/b/a xTuple.
+--        See www.xtuple.com/CPAL for the full text of the software license.
+
+SELECT
+    comment_source_id,
+    comment_date,
+    cmnttype_name,
+    firstLine(comment_text) AS comment_text,
+    comment_text AS comment_text_qttooltiprole,
+    comment_user,
+    CASE WHEN comment_source = 'OPP' THEN 'OPP-Opportunity'
+         WHEN comment_source = 'T' THEN 'T-Contact'
+         ELSE comment_source END AS comment_source,
+    CASE WHEN cmnttype_name = 'Email Received'              THEN 6.5
+         WHEN cmnttype_name = 'Email Sent'                  THEN 3.5
+         WHEN cmnttype_name = 'Internal Information'        THEN 1
+         WHEN cmnttype_name = 'Left Message'                THEN 1
+         WHEN cmnttype_name = 'Meeting'                     THEN 25
+         WHEN cmnttype_name = 'Outside Meeting'             THEN 35
+         WHEN cmnttype_name = 'Phone Call'                  THEN 7
+         WHEN cmnttype_name = 'Sample Confirmation'         THEN 1
+         WHEN cmnttype_name = 'Sample Request'              THEN 10
+         WHEN cmnttype_name = 'Sent Postcard'               THEN 1
+         WHEN cmnttype_name = 'Trade Show'                  THEN 15
+         ELSE 0 END AS points,
+    'qty' AS points_xttotalrole,
+    CASE
+-- Address
+        WHEN comment_source = 'ADDR' THEN
+              (SELECT addr_line1 || addr_line2 || addr_line3
+               FROM addr
+               WHERE ((addr_id = comment_source_id)
+                  AND (comment_source = 'ADDR')))
+
+-- BBOMHead
+ <? if exists("xtmfg_exist") ?>
+        WHEN (comment_source = 'BBH')THEN
+                 (SELECT item_descrip1 || ' - ' || item_number
+                  FROM xtmfg.bbomitem, item
+                  WHERE ((comment_source_id = bbomitem_id)
+                     AND (item_id = bbomitem_parent_item_id)
+                     AND (comment_source = 'BBH')))
+ <? endif ?>
+
+-- BBOMItem
+ <? if exists("xtmfg_exist") ?>
+        WHEN (comment_source = 'BBI') THEN
+              (
+               (SELECT 'Parent - ' || item.item_descrip1 || ' - ' || item.item_number
+                FROM xtmfg.bbomitem, item
+                WHERE ((comment_source_id = bbomitem_id)
+                   AND (item_id = bbomitem_parent_item_id)
+                   AND (comment_source = 'BBI')))
+                || ' - ' ||
+               (SELECT 'BBOM Item - ' || item.item_descrip1 || ' - ' || item.item_number
+                FROM xtmfg.bbomitem, item
+                WHERE ((comment_source_id = bbomitem_id)
+                   AND (item_id = bbomitem_item_id)
+                   AND (comment_source = 'BBI')))
+              )
+ <? endif ?>
+
+-- BOMHead
+          WHEN comment_source = 'BMH' THEN
+              (SELECT item_descrip1 || ' - ' || item_number
+               FROM item
+               JOIN bomhead ON (bomhead_item_id = item_id)
+<? if exists('hasRev') ?>
+               LEFT JOIN rev ON (rev_id = bomhead_rev_id)
+<? endif ?>
+               WHERE (comment_source_id = bomhead_item_id)
+                  AND (comment_source = 'BMH')
+<? if exists('hasRev') ?>
+                  AND (rev_status = 'A' OR coalesce(bomhead_rev_id, -1) < 0)
+<? endif ?>
+               )
+
+-- BOM Item
+        WHEN comment_source = 'BMI' THEN
+              (
+               (SELECT 'Parent - ' || item.item_descrip1 || ' - ' || item.item_number FROM
+                                     public.bomitem,
+                                     public.item
+                                     WHERE bomitem.bomitem_parent_item_id = item.item_id AND
+                                           bomitem_id = comment_source_id
+                                           AND comment_source = 'BMI')
+               || ' - ' ||
+               (SELECT 'BOM Item - ' || item.item_descrip1 || ' - ' || item.item_number FROM
+                                     public.bomitem,
+                                     public.item
+                                     WHERE bomitem.bomitem_item_id = item.item_id AND
+                                           bomitem_id = comment_source_id
+                                           AND comment_source = 'BMI')
+                                           )
+
+-- BOOHead
+ <? if exists("xtmfg_exist") ?>
+          WHEN (comment_source = 'BOH') THEN
+              (SELECT item_descrip1 || ' - ' || item_number
+               FROM xtmfg.boohead, item
+               WHERE ((comment_source_id = boohead_item_id)
+                  AND (item_id = boohead_item_id)
+                  AND (comment_source = 'BOH')))
+ <? endif ?>
+
+-- BOOItem
+ <? if exists("xtmfg_exist") ?>
+          WHEN (comment_source = 'BOI') THEN
+               (SELECT 'Item - ' || item.item_descrip1 || ' - ' ||item.item_number
+               || ' - ' ||
+                      'Operation - ' || booitem_descrip1
+               FROM xtmfg.booitem, item
+               WHERE ((xtmfg.booitem.booitem_item_id = item_id)
+                  AND (booitem_id = comment_source_id)
+                  AND (comment_source = 'BOI')))
+ <? endif ?>
+
+-- T  Contact
+        WHEN comment_source = 'T' THEN
+             (SELECT cntct_first_name || ' ' || cntct_last_name FROM cntct
+                     WHERE cntct_id = comment_source_id
+                           AND comment_source = 'T'
+              )
+-- Opportunity
+-- Put this back in after 3.8.0
+
+	WHEN comment_source = 'OPP'  THEN
+              (
+               SELECT ophead_name || ' Account: ' || crmacct_number || ' - ' || crmacct_name || ' Priority: ' || incdtpriority_name || ' - ' || ' Assigned To: ' || ophead_username
+               FROM ophead
+                    LEFT OUTER JOIN crmacct ON (ophead_crmacct_id = crmacct_id)
+                    LEFT OUTER JOIN incdtpriority ON (ophead_priority_id = incdtpriority_id)
+               WHERE
+                    comment_source = 'OPP'
+                    AND comment_source_id = ophead_id
+	      )
+
+-- Customer
+        WHEN comment_source = 'C' THEN
+              (SELECT cust_number || ' - ' || cust_name FROM custinfo WHERE (cust_id = comment_source_id) AND (comment_source = 'C'))
+
+-- Credit Memo - Return Auth
+  <? if exists("xtmfg_exist") ?>
+        WHEN comment_source = 'CRMA' THEN
+              (SELECT 'Credit Memo:  ' || cmhead_number || '  Return Auth: ' || rahead_number || '  Customer  ' || cust_number || ' - ' || cust_name
+                       FROM rahead, cmhead, custinfo
+                       WHERE
+                            ((cmhead_rahead_id = rahead_id)
+                         AND (cmhead_cust_id = cust_id)
+                         AND (cmhead_id = comment_source_id)
+                         AND (comment_source = 'CRMA')))
+ <? endif ?>
+
+-- Employee
+        WHEN comment_source = 'EMP' THEN
+              (SELECT emp_code || '-' || emp_name
+               FROM emp
+               WHERE((comment_source_id = emp_id)
+                 AND (comment_source = 'EMP')))
+
+-- Exchange Rate
+        WHEN comment_source = 'FX' THEN
+              (SELECT curr_abbr || ' - ' || curr_name
+               FROM curr_symbol
+               WHERE((comment_source_id = curr_id)
+                 AND (comment_source = 'FX')))
+-- Fixed Asset
+ <? if exists("asset_exist") ?>
+        WHEN comment_source = 'FADOC' THEN
+              (SELECT asset_code || ' - ' || asset_name
+               FROM asset.asset
+               WHERE comment_source_id = asset.id
+                 AND comment_source = 'FADOC')
+ <? endif ?>
+-- Fixed Asset Maintenance Order
+ <? if exists("maint_exist") ?>
+        WHEN comment_source = 'FAMAINT' THEN
+              (SELECT maintorder_number || ' - ' || maintorder_descr
+               FROM assetmaint.maint_order
+               WHERE comment_source_id = maintorder_id
+                 AND comment_source = 'FAMAINT')
+ <? endif ?>
+-- Incident
+        WHEN comment_source = 'INCDT' THEN
+              (
+               SELECT incdt_number || ' - ' ||
+                      crmacct_number || ' - ' ||
+                      crmacct_name || ' - ' ||
+                      incdt_summary
+                FROM incdt, crmacct
+                WHERE
+                incdt_id = comment_source_id
+                AND crmacct_id = incdt_crmacct_id
+                AND (comment_source = 'INCDT')
+              )
+
+-- Item
+        WHEN comment_source = 'I' THEN
+              (SELECT item_number || ' - ' || item_descrip1
+                      FROM item WHERE item_id = comment_source_id
+                                 AND (comment_source = 'I'))
+
+-- Item Site
+        WHEN comment_source = 'IS' THEN
+              (
+               SELECT item_number || ' - ' || item_descrip1
+               FROM item, itemsite
+               WHERE itemsite_item_id = item_id
+                     AND itemsite_id = comment_source_id
+                     AND (comment_source = 'IS')
+              )
+
+-- ItemSource
+        WHEN comment_source = 'IR' THEN
+              (
+               SELECT item_number || ' - ' || item_descrip1
+               FROM item, itemsrc
+               WHERE itemsrc_item_id = item_id
+                     AND itemsrc_id = comment_source_id
+                     AND (comment_source = 'IR')
+              )
+
+-- Location
+        WHEN comment_source = 'L' THEN
+              (SELECT location_name || ' - ' || location_descrip
+               FROM location
+               WHERE location_id = comment_source_id
+                AND (comment_source = 'L'))
+
+-- LotSerial
+  <? if exists("xtmfg_exist") ?>
+        WHEN comment_source = 'LS' THEN
+              (SELECT ls_number || '-' || item_number || '-' || item_descrip1 || item_descrip2
+               FROM ls, item
+               WHERE(ls_id = comment_source_id)
+                 AND(ls_item_id = item_id)
+                AND (comment_source = 'LS'))
+ <? endif ?>
+-- Project
+        WHEN comment_source = 'J' THEN
+        (
+              SELECT  'Project#: ' || prj_number || ' - Descrip: ' || prj_descrip ||
+                      ' - Status: ' || prj_status || ' - Owner: ' || prj_owner_username || '- Due: ' || prj_due_date
+              FROM prj
+              WHERE
+                   prj_id = comment_source_id
+              AND (comment_source = 'J')
+        )
+-- PO Head
+        WHEN comment_source = 'P' THEN
+              (
+               SELECT pohead_number || ' - ' || vend_number || ' - ' || vend_name
+               FROM pohead, vendinfo
+               WHERE pohead_vend_id = vend_id
+                     AND comment_source_id = pohead_id
+                     AND (comment_source = 'P')
+              )
+-- PO Item
+        WHEN comment_source = 'PI' THEN
+              (
+               SELECT pohead_number || ' - ' || vend_number || ' - ' || vend_name || ' - ' ||
+                      (
+                       SELECT item_number || ' - ' || item_descrip1
+                       FROM poitem, itemsite, item
+                       WHERE poitem_itemsite_id = itemsite_id
+                             AND itemsite_item_id = item_id
+                             AND comment_source_id = poitem_id
+                             AND comment_source = 'PI'
+                      )
+                      || ' - ' || poitem_vend_item_number
+                      || ' - ' || poitem_vend_item_descrip
+               FROM pohead, vendinfo, poitem
+               WHERE pohead_vend_id = vend_id
+                     AND poitem_pohead_id = pohead_id
+                     AND comment_source_id = poitem_id
+                     AND comment_source = 'PI'
+              )
+-- Quote Head
+        WHEN comment_source = 'Q' THEN
+        (
+               SELECT 'Quote#: ' || quhead_number || ' - Customer: ' ||  cust_number || ' - ' || cust_name
+               FROM quhead, custinfo
+               WHERE quhead_cust_id = cust_id
+                     AND quhead_id = comment_source_id
+                     AND comment_source = 'Q'
+        )
+-- Quote Item
+        WHEN comment_source = 'QI' THEN
+        (
+                SELECT 'Quote#:  ' || quhead_number || '  Customer  ' || cust_number || ' - ' ||
+                        cust_name || '  Line #: ' || quitem_linenumber || ' - ' || ' Item#: ' || item_number || ' - ' || item_descrip1 || ' - Order Qty: '                        || formatQty(quitem_qtyord)
+                     FROM quhead, quitem, item, itemsite, custinfo
+
+                 WHERE
+                      quitem_quhead_id = quhead_id
+                      AND quhead_cust_id = cust_id
+                      AND quitem_itemsite_id = itemsite_id
+                      AND itemsite_item_id = item_id
+                      AND quitem_id = comment_source_id
+                      AND comment_source = 'QI'
+        )
+-- Return Auth Head
+  <? if exists("xtmfg_exist") ?>
+        WHEN comment_source = 'RA' THEN
+              (
+               SELECT rahead_number || ' - ' || cust_number || ' - ' || cust_name
+               FROM rahead, custinfo
+               WHERE rahead_cust_id = cust_id
+                     AND rahead_id = comment_source_id
+                     AND comment_source = 'RA'
+              )
+ <? endif ?>
+-- SO Head
+        WHEN comment_source = 'S' THEN
+              (
+               SELECT cohead_number || ' - ' ||  cust_number || ' - ' || cust_name
+               FROM cohead, custinfo
+               WHERE cohead_cust_id = cust_id
+                     AND cohead_id = comment_source_id
+                     AND comment_source = 'S'
+              )
+-- SO Item
+        WHEN comment_source = 'SI' THEN
+              (
+                SELECT 'Sales Order:  ' || cohead_number || '  Customer  ' || cust_number || ' - ' ||
+                        cust_name || '  Line #: ' || coitem_linenumber || ' - ' || ' Item#: ' || item_number || ' - ' || item_descrip1 || ' - Order Qty: '                        || formatQty(coitem_qtyord)
+                     FROM cohead, coitem, item, itemsite, custinfo
+
+                 WHERE
+                      coitem_cohead_id = cohead_id
+                      AND cohead_cust_id = cust_id
+                      AND coitem_itemsite_id = itemsite_id
+                      AND itemsite_item_id = item_id
+                      AND coitem_id = comment_source_id
+                      AND comment_source = 'SI'
+                )
+
+-- Task
+        WHEN comment_source = 'TA' THEN
+               (
+                 SELECT prj_number || '-' || prjtask_number || '-' || prjtask_name || '-' || prjtask_descrip
+                 FROM prjtask, prj
+                 WHERE((prjtask_prj_id = prj_id)
+                    AND(prjtask_id = comment_source_id)
+                    AND(comment_source = 'TA'))
+               )
+
+--TodoItem
+        WHEN comment_source = 'TD' THEN
+               (
+                 SELECT todoitem_name || '-' || todoitem_description
+                 FROM todoitem
+                 WHERE((todoitem_id = comment_source_id)
+                    AND(comment_source = 'TD'))
+               )
+
+--Transfer Order Header
+  <? if exists("xtmfg_exist") ?>
+        WHEN comment_source = 'TO' THEN
+              (
+               SELECT 'Transfer#: ' || tohead_number || ' - Status: ' || tohead_status || ' - Source / Dest: ' ||
+                      (SELECT warehous_code FROM whsinfo WHERE warehous_id = tohead_src_warehous_id) || ' / ' ||
+                      (SELECT warehous_code FROM whsinfo WHERE warehous_id = tohead_dest_warehous_id)
+               FROM tohead
+               WHERE tohead_id = comment_source_id
+                 AND comment_source = 'TO'
+              )
+ <? endif ?>
+--Transfer Order item
+  <? if exists("xtmfg_exist") ?>
+        WHEN comment_source = 'TI' THEN
+              (
+               SELECT 'Transfer#: ' || tohead_number || ' - Status: ' || tohead_status || ' - Source / Dest: ' ||
+                      (SELECT warehous_code FROM whsinfo WHERE warehous_id = tohead_src_warehous_id) || ' / ' ||
+                      (SELECT warehous_code FROM whsinfo WHERE warehous_id = tohead_dest_warehous_id) ||
+                      ' - Item: ' || item_number || ' - ' || item_descrip1 || ' - Qty: ' || formatQty(toitem_qty_ordered)
+               FROM   tohead, toitem, item
+               WHERE
+                    toitem_item_id = item_id
+                    AND toitem_tohead_id = tohead_id
+                    AND toitem_id = comment_source_id
+                    AND comment_source = 'TI'
+              )
+ <? endif ?>
+-- Vendor
+        WHEN comment_source = 'V' THEN
+               (
+                 SELECT 'Vendor Name:  ' || vend_name || ' - Vendor Number: ' || vend_number
+                        FROM vendinfo
+                        WHERE vend_id = comment_source_id
+                          AND comment_source = 'V'
+               )
+
+-- Warehouse
+        WHEN comment_source = 'WH' THEN
+              (SELECT warehous_code || ' - ' || warehous_descrip
+                      FROM whsinfo WHERE warehous_id = comment_source_id
+                                     AND comment_source = 'WH')
+
+-- Work Order
+        WHEN comment_source = 'W' THEN
+              (
+              SELECT
+                         'WO#: ' || wo_number || ' - ' ||
+                         wo_subnumber || ' - ' ||
+                         'Status: ' || wo_status || ' - ' ||
+                         'Ordered: ' || formatQty(wo_qtyord) || ' - ' ||
+                         'Received: ' || formatQty(wo_qtyrcv) || ' - ' ||
+                         'Item: ' || item_number || ' - ' ||
+                         item_descrip1
+             FROM  wo, itemsite, item
+             WHERE wo_itemsite_id = itemsite_id
+                   AND itemsite_item_id = item_id
+                   AND wo_id = comment_source_id
+                   AND comment_source = 'W'
+               )
+-- Unknown
+    ELSE 'Unknown Comment Type'
+    END AS info
+FROM
+    comment, cmnttype
+WHERE
+    comment_cmnttype_id = cmnttype_id
+AND cmnttype_name <> 'ChangeLog'
+    <? if exists("commenttype_id") ?>
+         AND cmnttype_id IN (<? literal("commenttype_id") ?>)
+    <? endif ?>
+    --Example: these are the names given to the various comment types like 'General' or "ChangeLog' or those defined by the user.
+    --This query will give you a list of them:
+    --SELECT DISTINCT cmnttype_name, cmnttype_name  FROM cmnttype ORDER BY cmnttype_name;
+-- AND comment_text LIKE '%'
+    --Example: 'Created%' for all comments that start with the work 'Created'
+    --Example: '%question% for all comments that contain the word 'question' anywhere in the comment
+
+     <? if exists("usr_id") ?>
+         AND comment_user IN (SELECT usr_username FROM usr WHERE usr_id IN (<? literal("usr_id") ?>))
+    --  <? elseif exists("usrname") ?>
+     <? endif ?>
+     <? if not exists("show_all") ?>
+         <? if not exists("usr_id") ?>
+            AND comment_user = current_user
+            -- <? value("usrname") ?>
+          <? endif ?>
+     <? endif ?>
+    --This list will show you users who have at least one comment
+    --SELECT DISTINCT comment_user FROM comment ORDER BY comment_user;
+    <? if exists("source") ?>
+      AND comment_source IN (
+      <? foreach("source") ?>
+         <? value("source") ?>
+         <? if isLast("source") ?>
+         <? else ?>
+         ,
+         <? endif ?>
+      <? endforeach ?>
+                            )
+    <? endif ?>
+    --This query will show all comment sources for which there is a comment
+    --SELECT DISTINCT comment_source FROM comment ORDER BY comment_source;
+    --Example: Incidents = 'INCDT'
+   AND CAST(comment_date AS DATE) BETWEEN <? value("startDate") ?> AND <? value("endDate") ?>
+ORDER BY
+    comment_date, comment_user, comment_source;
