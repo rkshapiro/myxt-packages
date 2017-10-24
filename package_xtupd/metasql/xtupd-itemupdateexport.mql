@@ -1,4 +1,11 @@
 -- Group: xtupd
 -- Name:  itemupdateexport
 -- Notes: 
-select * from xtupd.itemupdate_export;
+select * from xtupd.itemupdate_export
+where true
+<? IF EXISTS("classcode_id") ?>
+   AND getclasscodeid(class_code) <= <? value("classcode_id") ?>
+<? ENDIF ?>
+<? IF EXISTS("prodcat_id") ?>
+   AND getprodcatid(product_category) <= <? value("prodcat_id") ?>
+<? ENDIF ?>;
