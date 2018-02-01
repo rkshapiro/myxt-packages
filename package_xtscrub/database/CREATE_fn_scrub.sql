@@ -1,8 +1,8 @@
--- Function: scrub()
+-- Function: xtscrub.scrub()
 
--- DROP FUNCTION scrub();
+-- DROP FUNCTION xtscrub.scrub();
 
-CREATE OR REPLACE FUNCTION scrub()
+CREATE OR REPLACE FUNCTION xtscrub.scrub()
   RETURNS text AS
 $BODY$
 -- Copyright (c) 1999-2012 by OpenMFG LLC, d/b/a xTuple. 
@@ -22,7 +22,7 @@ DECLARE
  
     SELECT  schema,tablename,tablepkey,field,
     format('SELECT %s AS id, %s AS field FROM %s.%s',tablepkey,field,schema,tablename) AS qry
-    FROM scrublist
+    FROM xtscrub.scrublist
  
  LOOP
  
@@ -52,5 +52,5 @@ DECLARE
 $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100;
-ALTER FUNCTION scrub()
+ALTER FUNCTION xtscrub.scrub()
   OWNER TO admin;
