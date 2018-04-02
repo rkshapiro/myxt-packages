@@ -1,0 +1,37 @@
+<!DOCTYPE openCSVAtlasDef>
+<CSVAtlas>
+ <CSVMap>
+  <Name>xpsuggesteditems</Name>
+  <Table>xtimp.xpsuggesteditems</Table>
+  <Action>Insert</Action>
+  <PreSQL>DELETE FROM xtimp.xpsuggesteditems;</PreSQL>
+  <PostSQL>SELECT xtimp.xpsuggesteditemsfix();
+SELECT xtimp.xpsuggesteditemscheck();
+SELECT xtimp.xpsuggesteditemsimport();</PostSQL>
+  <CSVMapField>
+   <Name>xpsuggesteditems_itemnumber</Name>
+   <Type>QString</Type>
+   <Column>1</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>xpsuggesteditems_sugesteditemnumber</Name>
+   <Type>QString</Type>
+   <Column>2</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>xpsuggesteditems_reason</Name>
+   <Type>QString</Type>
+   <Column>3</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>xpsuggesteditems_quantity</Name>
+   <Type>QString</Type>
+   <Column>4</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>xpsuggesteditems_mandatory</Name>
+   <Type>QString</Type>
+   <Column>5</Column>
+  </CSVMapField>
+ </CSVMap>
+</CSVAtlas>

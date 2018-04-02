@@ -1,0 +1,47 @@
+<!DOCTYPE openCSVAtlasDef>
+<CSVAtlas>
+ <CSVMap>
+  <Name>xpitemmarketing</Name>
+  <Table>xtimp.xpitemmarketing</Table>
+  <Action>Insert</Action>
+  <PreSQL>DELETE FROM xtimp.xpitemmarketing;</PreSQL>
+  <PostSQL>SELECT xtimp.xpitemmarketingfix();
+SELECT xtimp.xpitemmarketingcheck();
+SELECT xtimp.xpitemmarketingimport();</PostSQL>
+  <CSVMapField>
+   <Name>xpitemmarketing_itemnumber</Name>
+   <Type>QString</Type>
+   <Column>1</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>xpitemmarketing_title</Name>
+   <Type>QString</Type>
+   <Column>2</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>xpitemmarketing_subtitle</Name>
+   <Type>QString</Type>
+   <Column>3</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>xpitemmarketing_teaser</Name>
+   <Type>QString</Type>
+   <Column>4</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>xpitemmarketing_description</Name>
+   <Type>QString</Type>
+   <Column>5</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>xpitemmarketing_seokeywords</Name>
+   <Type>QString</Type>
+   <Column>6</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>xpitemmarketing_seotitle</Name>
+   <Type>QString</Type>
+   <Column>7</Column>
+  </CSVMapField>
+ </CSVMap>
+</CSVAtlas>

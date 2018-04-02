@@ -1,0 +1,58 @@
+<package id = "package_xtimp"
+         name = "xtimp"
+         developer = "xTuple"
+         descrip = "xTuple Data Import Install"
+         version = "0.1.0"
+         updater = "2.4.0">
+  <pkgnotes>
+         Import Data Install package for xTuple ERP. To support imports for xTupleCommerce.
+  </pkgnotes>
+
+  <prerequisite type="license">
+    <message>
+      This file is part of the xTuple xtimp Package for xTuple ERP, and is Copyright (c) 1999-2017 by OpenMFG LLC, d/b/a xTuple.  It is licensed to you under the xTuple End-User License Agreement ("the EULA"), the full text of which is available at www.xtuple.com/EULA.  While the EULA gives you access to source code and encourages your involvement in the development process, this Package is not free software.  By using this software, you agree to be bound by the terms of the EULA.
+    </message>
+  </prerequisite>
+
+  <prerequisite type="Query" name="Checking for db version">
+    <query>SELECT fetchMetricText('ServerVersion') >= '4.11.0';</query>
+    <message>This version of xTuple xtimp is compatible with xTuple ERP 4.11.x and later.</message>
+  </prerequisite>
+
+  <prerequisite type="Query" name="Checking for prior installation">
+    <query>SELECT COUNT(*)=0 FROM pkghead WHERE pkghead_name = 'xtimp';</query>
+    <message>The xtimp extension package is already installed in this database. Remove the installed package using DELETE FROM pkghead WHERE pkghead_name = 'xtimp'; and try again.</message>
+  </prerequisite>
+  
+  <prerequisite type="Query" name="Checking for xTupleCommerce">
+    <query>SELECT COUNT(*)=1 FROM pkghead WHERE pkghead_name = 'xdruple';</query>
+    <message>The xTupleCommerce package is required and not installed. Please install xTupleCommerce and try again.</message>
+  </prerequisite> 
+
+  <createfunction file="database/functions/xpdocumentsimport.sql"  	  name="xpdocumentsimport" />
+  <createfunction file="database/functions/xpdocumentsfix.sql"  	  name="xpdocumentsfix" />
+  <createfunction file="database/functions/xpdocumentscheck.sql"  	  name="xpdocumentscheck" />
+  <createfunction file="database/functions/xpitemmarketingimport.sql"  	  name="xpitemmarketingimport" />
+  <createfunction file="database/functions/xpitemmarketingfix.sql"  	  name="xpitemmarketingfix" />
+  <createfunction file="database/functions/xpitemmarketingcheck.sql"  	  name="xpitemmarketingcheck" />
+  <createfunction file="database/functions/xpitemattributescheck.sql"  	  name="xpitemattributescheck" />
+  <createfunction file="database/functions/xpitemattributesfix.sql"  	  name="xpitemattributesfix" />
+  <createfunction file="database/functions/xpitemattributesimport.sql"    name="xpitemattributesimport" />
+  <createfunction file="database/functions/xpsuggesteditemsimport.sql"    name="xpsuggesteditemsimport" />
+  <createfunction file="database/functions/xpsuggesteditemscheck.sql"    name="xpsuggesteditemscheck" />
+  <createfunction file="database/functions/xpsuggesteditemsfix.sql"    name="xpsuggesteditemsfix" />
+  <createfunction file="database/functions/xpcatalogitemsfix.sql"    name="xpcatalogitemsfix" />
+  <createfunction file="database/functions/xpcatalogitemscheck.sql"    name="xpcatalogitemscheck" />
+  <createfunction file="database/functions/xpcatalogitemsimport.sql"    name="xpcatalogitemsimport" />
+  <createfunction file="database/functions/xpcataloggroupfix.sql"    name="xpcataloggroupfix" />
+  <createfunction file="database/functions/xpcataloggroupcheck.sql"    name="xpcataloggroupcheck" />
+  <createfunction file="database/functions/xpcataloggroupimport.sql"    name="xpcataloggroupimport" />
+
+  <createtable file = "database/tables/xpdocuments.sql"		name = "xpdocuments" />
+  <createtable file = "database/tables/xpitemmarketing.sql"		name = "xpitemmarketing" />
+  <createtable file = "database/tables/xpsuggesteditems.sql"		name = "xpsuggesteditems" />
+  <createtable file = "database/tables/xpitemattributes.sql"		name = "xpitemattributes" />
+  <createtable file = "database/tables/xpcatalogitems.sql"		name = "xpcatalogitems" />
+  <createtable file = "database/tables/xpcataloggroup.sql"		name = "xpcataloggroup" />
+  
+</package>

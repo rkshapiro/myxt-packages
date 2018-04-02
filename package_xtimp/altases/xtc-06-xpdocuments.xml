@@ -1,0 +1,59 @@
+<!DOCTYPE openCSVAtlasDef>
+<CSVAtlas>
+ <Description>File Import</Description>
+ <CSVMap>
+  <Name>xDruple File Import</Name>
+  <Table>xdruple.documentimport</Table>
+  <Action>Insert</Action>
+  <Description>Use this import to bulk load documents to existing items. The documents can be PDF files or images. Use the public_published flag to make the file available online.</Description>
+  <CSVMapField>
+   <Name>target_code</Name>
+   <isKey/>
+   <Type>QString</Type>
+   <Column>1</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>target_type</Name>
+   <isKey/>
+   <Type>QString</Type>
+   <Column>2</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>doc_title</Name>
+   <isKey/>
+   <Type>QString</Type>
+   <Column>3</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>file_url</Name>
+   <isKey/>
+   <Type>QString</Type>
+   <Column>3</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>file_mime_type</Name>
+   <isKey/>
+   <Type>QString</Type>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>public_published</Name>
+   <isKey/>
+   <Type>bool</Type>
+   <Column>6</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>weight</Name>
+   <isKey/>
+   <Type>int</Type>
+   <Column>7</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>file_data</Name>
+   <isKey/>
+   <Type>QByteArray</Type>
+   <ColumnFromFile>4</ColumnFromFile>
+   <FileType>File</FileType>
+   <AltValue></AltValue>
+  </CSVMapField>
+ </CSVMap>
+</CSVAtlas>

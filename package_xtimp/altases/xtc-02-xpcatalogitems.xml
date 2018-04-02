@@ -1,0 +1,24 @@
+<!DOCTYPE openCSVAtlasDef>
+<CSVAtlas>
+ <Description>Catalog Items</Description>
+ <CSVMap>
+  <Name>xpcatalogitems</Name>
+  <Table>xtimp.xpcatalogitems</Table>
+  <Action>Insert</Action>
+  <Description>Import will map items to defined groups. New groups will be defined as needed though these groups will be orphans and will not be connected to the product catalog. The item number field is mapped as the child of the  group name. Check the xtimp.xpcatalogitems table for error messages after run.</Description>
+  <PreSQL>DELETE FROM xtimp.xpcatalogitems;</PreSQL>
+  <PostSQL>SELECT xtimp.xpcatalogitemsfix();
+SELECT xtimp.xpcatalogitemscheck();
+SELECT xtimp.xpcatalogitemsimport();</PostSQL>
+  <CSVMapField>
+   <Name>xpcatalogitems_itemnumber</Name>
+   <Type>QString</Type>
+   <Column>1</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>xpcatalogitems_groupname</Name>
+   <Type>QString</Type>
+   <Column>2</Column>
+  </CSVMapField>
+ </CSVMap>
+</CSVAtlas>
