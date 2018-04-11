@@ -13,15 +13,27 @@ DECLARE
 
  BEGIN
  FOR _r IN
- (SELECT *, item_id  
+ (SELECT *, item_id, i.chargetype_id as i_chargtype, f.chargetype_id as f_chargetype
  FROM xtimp.xpitemattributes
   LEFT OUTER JOIN item ON (xpitemattributes_itemnumber = item_number)
+  LEFT JOIN xdruple.chargetype i ON i.chargetype_name = xpitemattributes_amountbasis
+  LEFT JOIN xdruple.chargetype f ON f.chargetype_name = xpitemattributes_addfreightbasis
+  
  )
  -- not sure what needs to be checked
     LOOP
 		IF _r.item_id IS NULL THEN
 			_error := _r.xpitemattributes_import_error ||' '|| 'Item unknown;';
 		END IF;
+        
+        IF _r.i_chargtype IS NULL THEN
+            _error := _r.xpitemattributes_import_error ||' '|| 'Invalid insurance charge type;';
+        END IF;
+        
+        IF _r.f_chargetype IS NULL THEN
+            _error := _r.xpitemattributes_import_error ||' '|| 'Invalid freight charge type;';
+        END IF;
+
 
         UPDATE xtimp.xpitemattributes SET xpitemattributes_import_error = _error WHERE xpitemattributes_id = _r.xpitemattributes_id;
 			

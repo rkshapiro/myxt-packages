@@ -30,7 +30,7 @@ DECLARE
 		END IF;	
 		
 		-- check that the quantity is greater than zero
-		IF _r.xpsuggesteditems_quantity <= 0 OR _r.xpsuggesteditems_quantity IS NULL THEN
+		IF _r.xpsuggesteditems_quantity::numeric <= 0 OR _r.xpsuggesteditems_quantity IS NULL THEN
 			_error := _error || 'Quantity invalid;';
 		END IF;
 		

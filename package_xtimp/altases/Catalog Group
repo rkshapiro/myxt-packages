@@ -2,7 +2,7 @@
 <CSVAtlas>
  <Description>Catalog Group</Description>
  <CSVMap>
-  <Name>01-xtc-xpcataloggroup</Name>
+  <Name>xpcataloggroup</Name>
   <Table>xtimp.xpcataloggroup</Table>
   <Action>Insert</Action>
   <Description>Import of item groups for product catalog. Post SQL functions will create the catalog group if not present. They will also create a group if it is new before associating it with the catalog group or another group as indicated. The group item name field is mapped as the child of the parent group name.</Description>

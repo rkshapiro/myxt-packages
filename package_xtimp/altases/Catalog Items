@@ -5,7 +5,7 @@
   <Name>xpcatalogitems</Name>
   <Table>xtimp.xpcatalogitems</Table>
   <Action>Insert</Action>
-  <Description>Import will map items to defined groups. New groups will be defined as needed though these groups will be orphans and will not be connected to the product catalog. The item number field is mapped as the child of the  group name. Check the xtimp.xpcatalogitems table for error messages after run.</Description>
+  <Description>Import will map items to defined groups. New groups will be defined as needed though these groups will be orphans and will not be connected to the product catalog. Check the xtimp.xpcatalogitems table for error messages after run.</Description>
   <PreSQL>DELETE FROM xtimp.xpcatalogitems;</PreSQL>
   <PostSQL>SELECT xtimp.xpcatalogitemsfix();
 SELECT xtimp.xpcatalogitemscheck();

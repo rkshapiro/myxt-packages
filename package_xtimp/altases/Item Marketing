@@ -1,9 +1,11 @@
 <!DOCTYPE openCSVAtlasDef>
 <CSVAtlas>
+ <Description>Item Marketing</Description>
  <CSVMap>
   <Name>xpitemmarketing</Name>
   <Table>xtimp.xpitemmarketing</Table>
   <Action>Insert</Action>
+  <Description>This import will update items with Marketing tab details. All items need to be existing. Check the xtimp.xpitemmarketing table for errors.</Description>
   <PreSQL>DELETE FROM xtimp.xpitemmarketing;</PreSQL>
   <PostSQL>SELECT xtimp.xpitemmarketingfix();
 SELECT xtimp.xpitemmarketingcheck();

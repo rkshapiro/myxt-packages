@@ -29,9 +29,6 @@
     <message>The xTupleCommerce package is required and not installed. Please install xTupleCommerce and try again.</message>
   </prerequisite> 
 
-  <createfunction file="database/functions/xpdocumentsimport.sql"  	  name="xpdocumentsimport" />
-  <createfunction file="database/functions/xpdocumentsfix.sql"  	  name="xpdocumentsfix" />
-  <createfunction file="database/functions/xpdocumentscheck.sql"  	  name="xpdocumentscheck" />
   <createfunction file="database/functions/xpitemmarketingimport.sql"  	  name="xpitemmarketingimport" />
   <createfunction file="database/functions/xpitemmarketingfix.sql"  	  name="xpitemmarketingfix" />
   <createfunction file="database/functions/xpitemmarketingcheck.sql"  	  name="xpitemmarketingcheck" />
@@ -48,7 +45,6 @@
   <createfunction file="database/functions/xpcataloggroupcheck.sql"    name="xpcataloggroupcheck" />
   <createfunction file="database/functions/xpcataloggroupimport.sql"    name="xpcataloggroupimport" />
 
-  <createtable file = "database/tables/xpdocuments.sql"		name = "xpdocuments" />
   <createtable file = "database/tables/xpitemmarketing.sql"		name = "xpitemmarketing" />
   <createtable file = "database/tables/xpsuggesteditems.sql"		name = "xpsuggesteditems" />
   <createtable file = "database/tables/xpitemattributes.sql"		name = "xpitemattributes" />

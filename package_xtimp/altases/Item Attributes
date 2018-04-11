@@ -1,9 +1,11 @@
 <!DOCTYPE openCSVAtlasDef>
 <CSVAtlas>
+ <Description>Item Attributes</Description>
  <CSVMap>
   <Name>xpitemattributes</Name>
   <Table>xtimp.xpitemattributes</Table>
   <Action>Insert</Action>
+  <Description>This import updates existing items with attribute tab details. The item must be exist. Check the xtimp.xpitemattributes table for error messages.</Description>
   <PreSQL>DELETE FROM xtimp.xpitemattributes;</PreSQL>
   <PostSQL>SELECT xtimp.xpitemattributesfix();
 SELECT xtimp.xpitemattributescheck();

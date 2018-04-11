@@ -27,8 +27,8 @@ BEGIN
             itemsuggest_suggested_id, itemsuggest_descrip, 
             itemsuggest_mandatory, itemsuggest_suggested_qty, itemsuggest_source_id, 
             itemsuggest_source_type, itemsuggest_type)
-    VALUES (_r.suggested_itemid, _r.xpsuggesteditems_reason, 
-            _r.xpsuggesteditems_mandatory, _r.xpsuggesteditems_quantity, _r.source_itemid, 
+    VALUES (_r.suggested_itemid::integer, _r.xpsuggesteditems_reason, 
+            _r.xpsuggesteditems_mandatory::boolean, _r.xpsuggesteditems_quantity::numeric, _r.source_itemid::integer, 
             'I', 'S');
 
   END LOOP;
