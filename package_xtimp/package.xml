@@ -44,11 +44,13 @@
   <createfunction file="database/functions/xpcataloggroupfix.sql"    name="xpcataloggroupfix" />
   <createfunction file="database/functions/xpcataloggroupcheck.sql"    name="xpcataloggroupcheck" />
   <createfunction file="database/functions/xpcataloggroupimport.sql"    name="xpcataloggroupimport" />
+  <createfunction file="database/functions/xpstdjrnlimport.sql"    name="xpstdjrnlimport" />
 
   <createtable file = "database/tables/xpitemmarketing.sql"		name = "xpitemmarketing" />
   <createtable file = "database/tables/xpsuggesteditems.sql"		name = "xpsuggesteditems" />
   <createtable file = "database/tables/xpitemattributes.sql"		name = "xpitemattributes" />
   <createtable file = "database/tables/xpcatalogitems.sql"		name = "xpcatalogitems" />
   <createtable file = "database/tables/xpcataloggroup.sql"		name = "xpcataloggroup" />
+  <createtable file = "database/tables/xpstdjrnl.sql"		name = "xpstdjrnl" />
   
 </package>

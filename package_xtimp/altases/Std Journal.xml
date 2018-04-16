@@ -1,0 +1,54 @@
+<!DOCTYPE openCSVAtlasDef>
+<CSVAtlas>
+ <CSVMap>
+  <Name>ImportStandardJournal</Name>
+  <Table>xtimp.xpstdjrnl</Table>
+  <Action>Insert</Action>
+  <PreSQL>DELETE FROM xtimp.xpstdjrnl;</PreSQL>
+  <PostSQL>SELECT xtimp.xpstdjrnlimport();</PostSQL>
+  <CSVMapField>
+   <Name>xpstdjrnl_id</Name>
+   <isKey/>
+   <Type>Int</Type>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>xpstdjrnl_name</Name>
+   <Type>QString</Type>
+   <Column>1</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>xpstdjrnl_descrip</Name>
+   <Type>QString</Type>
+   <Column>2</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>xpstdjrnl_journal_notes</Name>
+   <Type>QString</Type>
+   <Column>2</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>xpstdjrnl_account</Name>
+   <Type>QString</Type>
+   <Column>4</Column>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>xpstdjrnl_debit</Name>
+   <Type>QString</Type>
+   <Column>5</Column>
+   <IfNull>UseAlternateValue</IfNull>
+   <AltValue>0</AltValue>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>xpstdjrnl_credit</Name>
+   <Type>QString</Type>
+   <Column>6</Column>
+   <IfNull>UseAlternateValue</IfNull>
+   <AltValue>0</AltValue>
+  </CSVMapField>
+  <CSVMapField>
+   <Name>xpstdjrnl_entry_notes</Name>
+   <Type>QString</Type>
+   <Column>7</Column>
+  </CSVMapField>
+ </CSVMap>
+</CSVAtlas>

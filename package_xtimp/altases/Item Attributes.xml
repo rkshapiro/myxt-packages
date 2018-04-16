@@ -105,5 +105,10 @@ SELECT xtimp.xpitemattributesimport();</PostSQL>
    <Type>QString</Type>
    <Column>19</Column>
   </CSVMapField>
+  <CSVMapField>
+   <Name>xpitemattributes_quotefreightbyvolume</Name>
+   <Type>QString</Type>
+   <Column>20</Column>
+  </CSVMapField>
  </CSVMap>
 </CSVAtlas>
